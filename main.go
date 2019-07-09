@@ -130,8 +130,9 @@ func main() {
 	uLimit := flag.Int64("ulimit", 1024, "an integer")
 	flag.Parse()
 
+	FileWrtr("PORT SCANS:\n", *outfilePtr)
 	Start(*infilePtr, *outfilePtr, *uLimit, 500*time.Millisecond)
 	sysStats := SysGather()
-	FileWrtr(sysStats, *outfilePtr)
+	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
 
 }

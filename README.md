@@ -47,15 +47,19 @@ As described, `morpheus-fling` defaults to looking for an input file called `net
 
 `morpheus-fling` will generate a report during the run.  Below is an example of the contents.  The deafult is a file in the same directory as the binary called `output.txt` but this can be adjusted by making use of a flag during the run like `--outfile=/home/slimshady/foobar.txt`
 ```
-10.30.21.100:10092 closed
+PORT SCANS:
+10.30.21.100:3306 open
 10.30.21.100:15672 open
 10.30.21.100:5672 closed
-10.30.21.100:3306 open
+10.30.21.100:10092 closed
 10.30.21.193:22 closed
+
+
+OS STATS:
 {
   "sysinfo": {
     "version": "0.9.2",
-    "timestamp": "2019-07-09T10:51:20.863980408-06:00"
+    "timestamp": "2019-07-09T16:12:52.316092459-06:00"
   },
   "node": {
     "hostname": "labs-den-demo-morpheus",

@@ -21,7 +21,7 @@ $ ./morpheus-fling
 
 Or run:
 ```
-$ ./morpheus-fling --infile=foo.txt --outfile=bar.txt
+$ ./morpheus-fling --infile=/path/to/foo.txt --outfile=/path/to/bar.txt
 ```
 
 By default `morpheus-fling` only allows `1024` semaphores to be used based on standard ulimit expectations in environments.  This can also be adjusted by passing a `ulimit` flag.  To use an accurate representation from the system `morpheus-fling` is deployed to run `ulimit -n` on your system and qualify your binary run with this value flagged.

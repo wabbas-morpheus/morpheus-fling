@@ -9,7 +9,7 @@ A small, command line based binary for aggregating useful statistics about large
 
 ### Port Scanning
 
-`morpheus-fling` reads ips and associated ports and performs a scan of these ports to inspect openness. 
+`morpheus-fling` reads ips and associated ports and performs a scan of these ports to inspect openness.
 
 ### OS Statistics
 

@@ -46,6 +46,58 @@ func ScanPort(ip string, port int, timeout time.Duration) string {
 	return ip + ":" + strconv.Itoa(port) + " open\n"
 }
 
+// FileToStructArray takes in a file with a list of ip:port and adds them to an array of structs
+func FileToStructArray(fn string, uLimit int64) []*PortScanner {
+	var psArray []*PortScanner
+	file, err := os.Open(fn)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		s := scanner.Text()
+		parts := strings.Split(s, ":")
+		portInt, err := strconv.Atoi(parts[1])
+		if err != nil {
+			fmt.Println(portInt)
+		}
+		ps := &PortScanner{
+			ip:   parts[0],
+			port: portInt,
+			lock: semaphore.NewWeighted(uLimit),
+		}
+		psArray = append(psArray, ps)
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return psArray
+}
+
+// Start is blah
+func Start(psEntity []*PortScanner, timeout time.Duration) []string {
+
+	MySlice := make([]string, len(psEntity))
+
+	var wg sync.WaitGroup
+	defer wg.Wait()
+	for i, element := range psEntity {
+		wg.Add(1)
+		element.lock.Acquire(context.TODO(), 1)
+		go func(i int, element *PortScanner) {
+			defer element.lock.Release(1)
+			defer wg.Done()
+			scanResult := ScanPort(element.ip, element.port, timeout)
+			MySlice[i] = scanResult
+		}(i, element)
+	}
+	return MySlice
+}
+
+/*
+
 // Start is the method that runs the goroutines the ScanPort is called from
 func Start(fn string, fo string, uLimit int64, timeout time.Duration) {
 
@@ -85,6 +137,7 @@ func Start(fn string, fo string, uLimit int64, timeout time.Duration) {
 		log.Fatal(err)
 	}
 }
+*/
 
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
@@ -131,7 +184,12 @@ func main() {
 	flag.Parse()
 
 	FileWrtr("PORT SCANS:\n", *outfilePtr)
-	Start(*infilePtr, *outfilePtr, *uLimit, 500*time.Millisecond)
+	psArray := FileToStructArray(*infilePtr, *uLimit)
+	//Start(*infilePtr, *outfilePtr, *uLimit, 500*time.Millisecond)
+	destArray := Start(psArray, 500*time.Millisecond)
+	for _, element := range destArray {
+		FileWrtr(element, *outfilePtr)
+	}
 	sysStats := SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
 

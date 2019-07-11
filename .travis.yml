@@ -2,45 +2,37 @@ language: go
 sudo: false
 matrix:
   include:
-    # "1.x" always refers to the latest Go version, inc. the patch release.
-    # e.g. "1.x" is 1.11 until 1.11.1 is available.
-    - go: 1.x
-      env: LATEST=true
-    - go: 1.7.x
-    - go: 1.8.x
-    - go: 1.9.x
-    - go: 1.10.x
-    - go: 1.11.x
-    - go: tip
+  - go: 1.x
+    env: LATEST=true
+  - go: 1.7.x
+  - go: 1.8.x
+  - go: 1.9.x
+  - go: 1.10.x
+  - go: 1.11.x
+  - go: tip
   allow_failures:
-    - go: tip
-
+  - go: tip
 before_install:
-  # gox simplifies building for multiple architectures
-  - go get github.com/mitchellh/gox
-
+- go get github.com/mitchellh/gox
 install:
-  - # skip
-
+- 
 script:
-  - go get -t -v ./...
-  - diff -u <(echo -n) <(gofmt -d .)
-  - go vet $(go list ./... | grep -v /vendor/)
-  - go test -v -race ./...
-  # Only build binaries from the latest Go release.
-  - if [ "${LATEST}" = "true" ]; then gox -os="linux" -arch="amd64" -output="morpheus-fling" -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...; fi
-
+- go get -t -v ./...
+- diff -u <(echo -n) <(gofmt -d .)
+- go vet $(go list ./... | grep -v /vendor/)
+- go test -v -race ./...
+- if [ "${LATEST}" = "true" ]; then gox -os="linux" -arch="amd64" -output="morpheus-fling.."
+  -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...; fi
 deploy:
   provider: releases
   skip_cleanup: true
-  api_key:
-    secure: IUz5TxvBYMGNEyyNQjk7u/RJp4gngy5pd2P6fGi+jnOydmaKGyMaaqXMQyGs5pR0WpBmMAXunHvUNtNueoZbTkm89p+X7IS/peqgj2DjxsjK1iSBh5zlkSQhDMzOReYr5uhVDi2kpeH/iDq86KoC1juv/MOjdv2zZqB2mgTVoXkr0q92IdEwdZqW2Q765Cz194HvaRcriMjsXMmsII2z112wwWUbGtRoVt2+5+YgujBK1l+r/TufFhs1FyLDxF7kTxjh2LeoKd3RKITgLiuH0ZrNQkYLQHaUsx4TPFmOZmDcyj1+L9IBeOzTyje/nqtj9QKTTvvpO4dE2RYKikeqtYCSTwHhRBkLuwo8v3RMeQeeVFSlBtx4uhlIcgbyTJ8ddJLzEehZ3rZEVXNFfRYsN9WjwAxReP3X5CuGqUGZCF8Ky32z7Ldh8lcP6h4xW1Wd9pQYNwO9nclFcL8HrBUxR1pYW9R9GKSN/J5F8MVCDBvllH/8scd9KdQK74bSYh1q034kr8wIZtefAA946szuTHHGEgrywpycCslzwN7xsQrdjedIJk+eZzlcHlE5K6LbqL44tXxNJiuvHGCAHPLL37JYnC9fMGQDwq5N5fmNPZbDFKS5nsw380CFFo9BGrPCkDl28LE5IM0cnbkz3FDRBIhxqibNKmcDh/FUZ4Iqy7A=
+  github-token: "$GITHUB_OAUTH_TOKEN"
   file:
-  # The names of the binaries to output, based on the -output template passed to gox.
-  - morpheus-fling
+  - morpheus-fling.linux.amd64
   on:
-    # What to repository to build
     repo: gomorpheus/morpheus-fling
-    # Only build binaries for tagged commits
     tags: true
-    condition: $LATEST = true
+    condition: "$LATEST = true"
+env:
+  global:
+    secure: I/nIBizm2+FXvPg3AXF+2yZsLqJ0VvnfRFRXFS3kFJXWmODsjvluQ55XZQmFINqOzrzK64nWHVoNzPlMNuIn1FD2oMVN39DPDYyGGVhOs+FFRj60piSKsEjpjBhVmpn6z+FVp0RIA6eSPB+EZ/zjLhtMsvtRYm/L+FIeK5Dy/OzJdUvkR1PrIccPU7+xvdRtEdH59RltkmM/qPf+INYZ/JhBJStX586EVxW/bmDp28E1vp2Qv89871UFYfQj3YvKejMOZhbXVTvyVc+nKGdbk0AH1YA2YUaBNpqG4eNIRh4nSIwWPUH9aCJnrDW+c8r7VsvszaEnpKSXxr869vRFoMQeq1sMgJopTU2SS50ZwiLELeDhfhVd26tRg08EICcrBrxq4OlJUmJB9xBMIskZP543e1bWc6RiWWxPMh29tqLbN+QtIZSbU/7f5neFhW7kl4fGyP0kCkIJdeMyCppPXLaaOMN1aSuDvLXfXIIjA2Osbw8P7ILZUf64DlhOVEygRZ2J4hxzB7nGGFu2E4x2l8Vpjb+RyjbJwLTc35VlBrdiF94R0GgjwI5ZATPzXNgUxmAUOvmPv//17sttW6OKqKV68EsPY1tasjWdOdrPoLvN1CvyHsRSAVvUtquNd9KHt+FDz7LAVoDHczrjEJ1kfem26AnV4t0f6Hjx2sJ05oE=

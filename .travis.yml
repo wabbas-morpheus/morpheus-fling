@@ -33,7 +33,8 @@ script:
 deploy:
   provider: releases
   skip_cleanup: true
-  api_key: "GITHUB OAUTH TOKEN"
+  api_key:
+    secure: gH3+bvmMNL7yFcTr93V0Mx8GyRqGLo7QO0vqA1zvxznPf/7l0tEoWKfaDvuT5YWKwsFIJFlZ2W/zRwru0AcejW9WDJKc1Fp+ceg5rgbs98fDtdjg7253kyA/aHsOhFgYTJrmg3NVEW478LB6tEbGRD+cUa9N8E4/we7o8xz7+ZPqEvdAJELehOGV3A6cmER9e/2w/3HWvjOWL3Q06QKkfVimuIQBFEZqhfQsQXzHld9olGqcPGmItGHhKCebAuEV7XI+gO+TiL608F2R1GsnV7HZ3vWGAsXbpCXcrgj5++Mt5OjMe6dcqYMQg0Mi0845CvEsMHICWPDOHuc9bFzQV/WT4Ieu7NVNA0ZEnPD1zhQHkMR+FEhSWy0LBamz7TMLJUrurLlrF5PDfUeMuuoiSD5Z4YTj1Euyh2Nz/m4DuI8Prr+uuYH7+rtVpHpWZeCx9BL/ox4tUVmeCtaVPB/KbiHF7XSTxR2pU1EqUfKm+6QKx+G0LwOljbjrE76WRSbK/QCVrDPLnldd2tnh3QJZbTLxs95yJ/SdN4EEo+Sqi3L3LenordsaETwaVIRGyacXGYDGVkTJieruBpYLBZ+zw8OSQr1Fd/8SvyKtTjR8wTtG/Qo3HIBuzaymNkdRHTEoKyHnbCcPFOojySUoH+VjjxhtZtMJN0nFZ/1q9Rw8j7s=
   file:
   # The names of the binaries to output, based on the -output template passed to gox.
   - morpheus-fling

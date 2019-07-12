@@ -96,49 +96,6 @@ func Start(psEntity []*PortScanner, timeout time.Duration) []string {
 	return MySlice
 }
 
-/*
-
-// Start is the method that runs the goroutines the ScanPort is called from
-func Start(fn string, fo string, uLimit int64, timeout time.Duration) {
-
-	file, err := os.Open(fn)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	wg := sync.WaitGroup{}
-	defer wg.Wait()
-
-	for scanner.Scan() {
-		s := scanner.Text()
-		parts := strings.Split(s, ":")
-		portInt, err := strconv.Atoi(parts[1])
-		if err != nil {
-			fmt.Println(portInt)
-		}
-		ps := &PortScanner{
-			ip:   parts[0],
-			port: portInt,
-			lock: semaphore.NewWeighted(uLimit),
-		}
-		wg.Add(1)
-		ps.lock.Acquire(context.TODO(), 1)
-		go func(porti int) {
-			defer ps.lock.Release(1)
-			defer wg.Done()
-			scanResult := ScanPort(ps.ip, ps.port, timeout)
-			FileWrtr(scanResult, fo)
-		}(ps.port)
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-}
-*/
-
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
 	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)

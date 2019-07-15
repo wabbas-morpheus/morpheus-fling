@@ -17,7 +17,13 @@ A small, command line based binary for aggregating useful statistics about large
 
 ## Usage
 
-Place binary on filesystem and give posix permissions to be executed.  Binary expects a file to exist called `network.txt`, however user can specify a separate infile.  Similarly, binary will by default write output to a file called `output.txt` but user can flag a separate outfile to be created and appended to.
+Download the binary directly to your server.
+
+```bash
+wget https://github.com/gomorpheus/morpheus-fling/releases/download/v2.0.1/morpheus-fling
+```
+
+Give posix permissions to be executed.  Binary expects a file to exist called `network.txt`, however user can specify a separate infile.  Similarly, binary will by default write output to a file called `output.txt` but user can flag a separate outfile to be created and appended to.
 
 Run:
 

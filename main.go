@@ -15,6 +15,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/mholt/archiver"
 	"github.com/zcalusic/sysinfo"
 	"golang.org/x/sync/semaphore"
 )
@@ -24,6 +25,13 @@ type PortScanner struct {
 	ip   string
 	port int
 	lock *semaphore.Weighted
+}
+
+// ScanResult is the struct of ip objects and the status from running the scan
+type ScanResult struct {
+	Ip     string `json:"ip"`
+	Port   int    `json:"port"`
+	Status string `json:"status"`
 }
 
 // ScanPort is the method that is called to test the port on target ips
@@ -36,14 +44,14 @@ func ScanPort(ip string, port int, timeout time.Duration) string {
 			time.Sleep(timeout)
 			ScanPort(ip, port, timeout)
 		} else {
-			fmt.Println(port, "closed")
-			return ip + ":" + strconv.Itoa(port) + " closed\n"
+			fmt.Println(ip + ":" + strconv.Itoa(port) + " closed\n")
+			return "closed"
 		}
 	}
 
 	conn.Close()
-	fmt.Println(port, "open")
-	return ip + ":" + strconv.Itoa(port) + " open\n"
+	fmt.Println(ip + ":" + strconv.Itoa(port) + " open\n")
+	return "open"
 }
 
 // FileToStructArray takes in a file with a list of ip:port and adds them to an array of structs
@@ -77,9 +85,9 @@ func FileToStructArray(fn string, uLimit int64) []*PortScanner {
 }
 
 // Start is blah
-func Start(psEntity []*PortScanner, timeout time.Duration) []string {
+func Start(psEntity []*PortScanner, timeout time.Duration) string {
 
-	MySlice := make([]string, len(psEntity))
+	scanSlice := make([]ScanResult, len(psEntity))
 
 	var wg sync.WaitGroup
 	defer wg.Wait()
@@ -89,11 +97,22 @@ func Start(psEntity []*PortScanner, timeout time.Duration) []string {
 		go func(i int, element *PortScanner) {
 			defer element.lock.Release(1)
 			defer wg.Done()
-			scanResult := ScanPort(element.ip, element.port, timeout)
-			MySlice[i] = scanResult
+			scanOut := ScanPort(element.ip, element.port, timeout)
+			sr := ScanResult{
+				Ip:     element.ip,
+				Port:   element.port,
+				Status: scanOut,
+			}
+			scanSlice[i] = sr
 		}(i, element)
 	}
-	return MySlice
+
+	scanJson, err := json.MarshalIndent(scanSlice, "", " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
+	}
+
+	return string(scanJson)
 }
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -138,16 +157,26 @@ func main() {
 	infilePtr := flag.String("infile", "network.txt", "a string")
 	outfilePtr := flag.String("outfile", "output.txt", "a string")
 	uLimit := flag.Int64("ulimit", 1024, "an integer")
+	logfilePtr := flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	flag.Parse()
 
 	FileWrtr("PORT SCANS:\n", *outfilePtr)
 	psArray := FileToStructArray(*infilePtr, *uLimit)
-	//Start(*infilePtr, *outfilePtr, *uLimit, 500*time.Millisecond)
+
 	destArray := Start(psArray, 500*time.Millisecond)
-	for _, element := range destArray {
-		FileWrtr(element, *outfilePtr)
+	thisisjson, err := json.MarshalIndent(destArray, "", " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
 	}
+
+	fmt.Println(destArray)
+	fmt.Fprintf(os.Stdout, "%s", thisisjson)
+	FileWrtr(string(thisisjson), *outfilePtr)
+
 	sysStats := SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
+	if err := archiver.Archive([]string{*logfilePtr}, "/tmp/bundler.zip"); err != nil {
+		log.Fatal(err)
+	}
 
 }

@@ -158,6 +158,7 @@ func main() {
 	outfilePtr := flag.String("outfile", "output.txt", "a string")
 	uLimit := flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr := flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
+	bundlerPtr := flag.String("bundler", "/tmp/bundler.zip", "a string")
 	flag.Parse()
 
 	FileWrtr("PORT SCANS:\n", *outfilePtr)
@@ -175,7 +176,7 @@ func main() {
 
 	sysStats := SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
-	if err := archiver.Archive([]string{*logfilePtr}, "/tmp/bundler.zip"); err != nil {
+	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}
 

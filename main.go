@@ -85,7 +85,7 @@ func FileToStructArray(fn string, uLimit int64) []*PortScanner {
 }
 
 // Start is blah
-func Start(psEntity []*PortScanner, timeout time.Duration) string {
+func Start(psEntity []*PortScanner, timeout time.Duration) []ScanResult {
 
 	scanSlice := make([]ScanResult, len(psEntity))
 
@@ -107,12 +107,7 @@ func Start(psEntity []*PortScanner, timeout time.Duration) string {
 		}(i, element)
 	}
 
-	scanJson, err := json.MarshalIndent(scanSlice, "", " ")
-	if err != nil {
-		log.Fatal("Can't encode to JSON", err)
-	}
-
-	return string(scanJson)
+	return scanSlice
 }
 
 // FileWrtr takes content and an outfile and appends content to the outfile

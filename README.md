@@ -6,6 +6,7 @@ A small, command line based binary for aggregating useful statistics about large
 
 1. Port Scanning
 2. OS Statistics
+3. Bundling of output files and log file
 
 ### Port Scanning
 
@@ -14,6 +15,10 @@ A small, command line based binary for aggregating useful statistics about large
 ### OS Statistics
 
 `morpheus-fling` aggregates statistics about the OS it is installed on utilizing Linux kernel syscalls including memory, CPU, and available disk.
+
+### Bundling
+
+By default `morpheus-fling` will bundle your Morpheus `current` log file for the `morpheus-ui` service with the output file created from the system and port scan.
 
 ## Usage
 
@@ -46,6 +51,16 @@ slimshady@morpheus1:~# ulimit -n
 slimshady@morpheus1:~# ./morpheus-fling --ulimit=204800
 ```
 
+### Other Options
+
+`morpheus-fling` also allows arguments to be pass for specific bundling of a logfile and specific naming of the archive.  Without specification the default is to look for `/var/log/morpheus-morpheus-ui/current` and bundle that with the outfile into `/tmp/bundler.zip`.
+
+If you like you can do this, however
+
+```bash
+slimshady@morpheus1:~# ./morpheus-fling --logfile=/path/to/file --bundler=/path/to/archive_name.zip
+```
+
 ### Inputs
 
 As described, `morpheus-fling` defaults to looking for an input file called `network.txt`.  Format for the entries in this file should follow `ip:port` notation as below.
@@ -64,11 +79,33 @@ As described, `morpheus-fling` defaults to looking for an input file called `net
 
 ```text
 PORT SCANS:
-10.30.21.100:3306 open
-10.30.21.100:15672 open
-10.30.21.100:5672 closed
-10.30.21.100:10092 closed
-10.30.21.193:22 closed
+[
+ {
+  "ip": "10.30.21.100",
+  "port": 10092,
+  "status": "closed"
+ },
+ {
+  "ip": "10.30.21.100",
+  "port": 3306,
+  "status": "open"
+ },
+ {
+  "ip": "10.30.21.193",
+  "port": 22,
+  "status": "closed"
+ },
+ {
+  "ip": "10.30.21.100",
+  "port": 15672,
+  "status": "open"
+ },
+ {
+  "ip": "10.30.21.100",
+  "port": 5672,
+  "status": "closed"
+ }
+]
 
 
 OS STATS:

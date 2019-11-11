@@ -2,61 +2,25 @@ package main
 
 import (
 	"bufio"
-	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
-	"net"
 	"os"
 	"os/user"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/mholt/archiver"
+	portscanner "github.com/tadamhicks/morpheus-fling/portScanner"
 	"github.com/zcalusic/sysinfo"
 	"golang.org/x/sync/semaphore"
 )
 
-// PortScanner is the struct of the ip objects and weighted semaphore arguments for cpu arch
-type PortScanner struct {
-	ip   string
-	port int
-	lock *semaphore.Weighted
-}
-
-// ScanResult is the struct of ip objects and the status from running the scan
-type ScanResult struct {
-	Ip     string `json:"ip"`
-	Port   int    `json:"port"`
-	Status string `json:"status"`
-}
-
-// ScanPort is the method that is called to test the port on target ips
-func ScanPort(ip string, port int, timeout time.Duration) string {
-	target := fmt.Sprintf("%s:%d", ip, port)
-	conn, err := net.DialTimeout("tcp", target, timeout)
-
-	if err != nil {
-		if strings.Contains(err.Error(), "too many open files") {
-			time.Sleep(timeout)
-			ScanPort(ip, port, timeout)
-		} else {
-			fmt.Println(ip + ":" + strconv.Itoa(port) + " closed\n")
-			return "closed"
-		}
-	}
-
-	conn.Close()
-	fmt.Println(ip + ":" + strconv.Itoa(port) + " open\n")
-	return "open"
-}
-
 // FileToStructArray takes in a file with a list of ip:port and adds them to an array of structs
-func FileToStructArray(fn string, uLimit int64) []*PortScanner {
-	var psArray []*PortScanner
+func FileToStructArray(fn string, uLimit int64) []*portscanner.PortScanner {
+	var psArray []*portscanner.PortScanner
 	file, err := os.Open(fn)
 	if err != nil {
 		log.Fatal(err)
@@ -71,10 +35,10 @@ func FileToStructArray(fn string, uLimit int64) []*PortScanner {
 		if err != nil {
 			fmt.Println(portInt)
 		}
-		ps := &PortScanner{
-			ip:   parts[0],
-			port: portInt,
-			lock: semaphore.NewWeighted(uLimit),
+		ps := &portscanner.PortScanner{
+			Ip:   parts[0],
+			Port: portInt,
+			Lock: semaphore.NewWeighted(uLimit),
 		}
 		psArray = append(psArray, ps)
 	}
@@ -82,32 +46,6 @@ func FileToStructArray(fn string, uLimit int64) []*PortScanner {
 		log.Fatal(err)
 	}
 	return psArray
-}
-
-// Start is blah
-func Start(psEntity []*PortScanner, timeout time.Duration) []ScanResult {
-
-	scanSlice := make([]ScanResult, len(psEntity))
-
-	var wg sync.WaitGroup
-	defer wg.Wait()
-	for i, element := range psEntity {
-		wg.Add(1)
-		element.lock.Acquire(context.TODO(), 1)
-		go func(i int, element *PortScanner) {
-			defer element.lock.Release(1)
-			defer wg.Done()
-			scanOut := ScanPort(element.ip, element.port, timeout)
-			sr := ScanResult{
-				Ip:     element.ip,
-				Port:   element.port,
-				Status: scanOut,
-			}
-			scanSlice[i] = sr
-		}(i, element)
-	}
-
-	return scanSlice
 }
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -159,7 +97,7 @@ func main() {
 	FileWrtr("PORT SCANS:\n", *outfilePtr)
 	psArray := FileToStructArray(*infilePtr, *uLimit)
 
-	destArray := Start(psArray, 500*time.Millisecond)
+	destArray := portscanner.Start(psArray, 500*time.Millisecond)
 	thisisjson, err := json.MarshalIndent(destArray, "", " ")
 	if err != nil {
 		log.Fatal("Can't encode to JSON", err)

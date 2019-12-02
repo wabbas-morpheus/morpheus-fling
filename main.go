@@ -6,13 +6,12 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/user"
 	"time"
 
 	"github.com/mholt/archiver"
 	filereader "github.com/tadamhicks/morpheus-fling/fileReader"
 	portscanner "github.com/tadamhicks/morpheus-fling/portScanner"
-	"github.com/zcalusic/sysinfo"
+	sysgatherer "github.com/tadamhicks/morpheus-fling/sysGatherer"
 )
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -25,30 +24,6 @@ func FileWrtr(content string, fileName string) {
 	if _, err := f.WriteString(content); err != nil {
 		log.Println(err)
 	}
-}
-
-// SysGather gathers system statistics and returns them as a string
-func SysGather() string {
-	current, err := user.Current()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if current.Uid != "0" {
-		log.Fatal("requires superuser privilege")
-	}
-
-	var si sysinfo.SysInfo
-
-	si.GetSysInfo()
-
-	data, err := json.MarshalIndent(&si, "", "  ")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(data))
-	return string(data)
 }
 
 // Need to initialize the ini file and pass into another function to iterate?
@@ -74,7 +49,7 @@ func main() {
 	fmt.Fprintf(os.Stdout, "%s", thisisjson)
 	FileWrtr(string(thisisjson), *outfilePtr)
 
-	sysStats := SysGather()
+	sysStats := sysgatherer.SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
 	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)

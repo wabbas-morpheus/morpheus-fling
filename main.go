@@ -1,52 +1,19 @@
 package main
 
 import (
-	"bufio"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"os/user"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/mholt/archiver"
+	filereader "github.com/tadamhicks/morpheus-fling/fileReader"
 	portscanner "github.com/tadamhicks/morpheus-fling/portScanner"
 	"github.com/zcalusic/sysinfo"
-	"golang.org/x/sync/semaphore"
 )
-
-// FileToStructArray takes in a file with a list of ip:port and adds them to an array of structs
-func FileToStructArray(fn string, uLimit int64) []*portscanner.PortScanner {
-	var psArray []*portscanner.PortScanner
-	file, err := os.Open(fn)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		s := scanner.Text()
-		parts := strings.Split(s, ":")
-		portInt, err := strconv.Atoi(parts[1])
-		if err != nil {
-			fmt.Println(portInt)
-		}
-		ps := &portscanner.PortScanner{
-			Ip:   parts[0],
-			Port: portInt,
-			Lock: semaphore.NewWeighted(uLimit),
-		}
-		psArray = append(psArray, ps)
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-	return psArray
-}
 
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
@@ -95,7 +62,7 @@ func main() {
 	flag.Parse()
 
 	FileWrtr("PORT SCANS:\n", *outfilePtr)
-	psArray := FileToStructArray(*infilePtr, *uLimit)
+	psArray := filereader.FileToStructArray(*infilePtr, *uLimit)
 
 	destArray := portscanner.Start(psArray, 500*time.Millisecond)
 	thisisjson, err := json.MarshalIndent(destArray, "", " ")

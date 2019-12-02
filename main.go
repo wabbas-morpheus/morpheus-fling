@@ -8,10 +8,10 @@ import (
 	"os"
 	"time"
 
+	filereader "github.com/gomorpheus/morpheus-fling/fileReader"
+	portscanner "github.com/gomorpheus/morpheus-fling/portScanner"
+	sysgatherer "github.com/gomorpheus/morpheus-fling/sysGatherer"
 	"github.com/mholt/archiver"
-	filereader "github.com/tadamhicks/morpheus-fling/fileReader"
-	portscanner "github.com/tadamhicks/morpheus-fling/portScanner"
-	sysgatherer "github.com/tadamhicks/morpheus-fling/sysGatherer"
 )
 
 // FileWrtr takes content and an outfile and appends content to the outfile

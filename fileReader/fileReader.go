@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	portscanner "github.com/tadamhicks/morpheus-fling/portScanner"
+	portscanner "github.com/gomorpheus/morpheus-fling/portScanner"
 	"golang.org/x/sync/semaphore"
 )
 

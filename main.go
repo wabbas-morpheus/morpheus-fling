@@ -54,5 +54,4 @@ func main() {
 	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}
-
 }

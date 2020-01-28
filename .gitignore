@@ -3,3 +3,6 @@ morpheus-fling
 current
 bundler.zip
 .vscode
+go.sum
+go_build_github_com_gomorpheus_morpheus_fling_linux
+.idea

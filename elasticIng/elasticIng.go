@@ -2,7 +2,7 @@ package elasticing
 
 import (
 	"context"
-	"encoding/json"
+	//"encoding/json"
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"log"

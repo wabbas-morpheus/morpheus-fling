@@ -6,6 +6,9 @@ require (
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/elastic/go-elasticsearch/v7 v7.5.0
 	github.com/golang/snappy v0.0.1 // indirect
+	github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776
+	github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776
+	github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/nwaples/rardecode v1.0.0 // indirect
 	github.com/pierrec/lz4 v2.4.1+incompatible // indirect

@@ -1,14 +1,14 @@
-package morpheus_fling
+package main
 
 import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	elasticing "github.com/gomorpheus/morpheus-fling/elasticIng"
 	"log"
 	"os"
 	"time"
 
-	elasticsearch7 "github.com/elastic/go-elasticsearch/v7"
 	filereader "github.com/gomorpheus/morpheus-fling/fileReader"
 	portscanner "github.com/gomorpheus/morpheus-fling/portScanner"
 	sysgatherer "github.com/gomorpheus/morpheus-fling/sysGatherer"
@@ -52,6 +52,8 @@ func main() {
 
 	sysStats := sysgatherer.SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
+	esStuff := elasticing.ElasticHealth()
+	FileWrtr("\n\nES STATS:\n"+esStuff, *outfilePtr)
 	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}

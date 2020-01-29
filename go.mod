@@ -4,8 +4,9 @@ go 1.13
 
 require (
 	github.com/dsnet/compress v0.0.1 // indirect
-	github.com/elastic/go-elasticsearch/v7 v7.5.0
+	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200126095918-3dc5ce76b869
 	github.com/golang/snappy v0.0.1 // indirect
+	github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200129224322-b6fef043f7ba
 	github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776
 	github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776
 	github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776

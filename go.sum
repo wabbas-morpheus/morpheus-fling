@@ -4,9 +4,13 @@ github.com/dsnet/golib v0.0.0-20171103203638-1ea166775780/go.mod h1:Lj+Z9rebOhdf
 github.com/elastic/go-elasticsearch v0.0.0 h1:Pd5fqOuBxKxv83b0+xOAJDAkziWYwFinWnBO0y+TZaA=
 github.com/elastic/go-elasticsearch/v7 v7.5.0 h1:kXW+EKls2BwsyQujTmVrxANb3U0qoz9wEq8Zkf/JEco=
 github.com/elastic/go-elasticsearch/v7 v7.5.0/go.mod h1:OJ4wdbtDNk5g503kvlHLyErCgQwwzmDtaFC4XyOxXA4=
+github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200126095918-3dc5ce76b869 h1:2o1LF/quazVU6jANDKVe5TijWte8ywa/HCE0fZq14o0=
+github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200126095918-3dc5ce76b869/go.mod h1:OJ4wdbtDNk5g503kvlHLyErCgQwwzmDtaFC4XyOxXA4=
 github.com/golang/snappy v0.0.1 h1:Qgr9rKW7uDUkrbSmQeiDsGa8SjGyCOGtuasMWwvp2P4=
 github.com/golang/snappy v0.0.1/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEWrmP2Q=
 github.com/gomorpheus/morpheus-fling v2.0.1+incompatible h1:7kDKznnCfBFU1einQEiNeW7ldd9aQOaBDjaEHHC+M94=
+github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200129224322-b6fef043f7ba h1:D9BR5GO7CphLTPVO9kulj8522/R9soZP69An/aEhauA=
+github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200129224322-b6fef043f7ba/go.mod h1:HOB+TtEZKSz0JxZwajLIi+yNPv+bpr64HpUsnKsUM8E=
 github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776 h1:J8EVWLkO3I4Z+SiyOsupxYHTIylgtjLOUn2VGUSPwtw=
 github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776/go.mod h1:L5lxd4wqcmpVb1x9n0LdJdBw4wpCrzx1Yrj3BJ5DugU=
 github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776 h1:WbNxXPhb0+79VrKnhpIQ4unCt7qlf1tazPfldJbXZfs=

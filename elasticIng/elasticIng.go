@@ -21,7 +21,7 @@ func ElasticIndices() *esapi.Response {
 		log.Fatalf("Error creating the client: %s", err)
 	}
 
-	req := easpi.CatIndicesRequest{
+	req := esapi.CatIndicesRequest{
 		Format: "json",
 		Pretty: false,
 	}
@@ -49,7 +49,7 @@ func ElasticHealth() *esapi.Response {
 		log.Fatalf("Error creating the client: %s", err)
 	}
 
-	req := easpi.CatHealthRequest{
+	req := esapi.CatHealthRequest{
 		Format: "json",
 		Pretty: false,
 	}

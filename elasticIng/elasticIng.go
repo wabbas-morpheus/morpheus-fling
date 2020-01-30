@@ -2,14 +2,16 @@ package elasticing
 
 import (
 	"context"
-	//"encoding/json"
+	"encoding/json"
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"log"
 )
 
 //ElasticIndices Cats the active ES indices found
-func ElasticIndices() *esapi.Response {
+func ElasticIndices() map[string]interface{} {
+
+	var r map[string]interface{}
 
 	cfg := elasticsearch.Config{
 		Addresses: []string{
@@ -32,12 +34,19 @@ func ElasticIndices() *esapi.Response {
 	}
 
 	defer res.Body.Close()
-	return res
+
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		log.Printf("Error parsing the response body: %s", err)
+	}
+
+	return r
 
 }
 
 // ElasticHealth returns a esapi.Response of Health
-func ElasticHealth() *esapi.Response {
+func ElasticHealth() map[string]interface{} {
+
+	var r map[string]interface{}
 
 	cfg := elasticsearch.Config{
 		Addresses: []string{
@@ -60,5 +69,10 @@ func ElasticHealth() *esapi.Response {
 	}
 
 	defer res.Body.Close()
-	return res
+
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		log.Printf("Error parsing the response body: %s", err)
+	}
+
+	return r
 }

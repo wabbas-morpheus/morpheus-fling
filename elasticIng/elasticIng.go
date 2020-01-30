@@ -6,7 +6,7 @@ import (
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"log"
-	"github.com/mitchellh/mapstructure"
+	//"github.com/mitchellh/mapstructure"
 )
 
 //ElasticIndices Cats the active ES indices found
@@ -76,5 +76,5 @@ func ElasticHealth() string {
 	}
 
 	b, _ := json.Marshal(r)
-	return r
+	return string(b)
 }

@@ -17,6 +17,8 @@ github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200130183910-18815573af
 github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200130183910-18815573af65/go.mod h1:HOB+TtEZKSz0JxZwajLIi+yNPv+bpr64HpUsnKsUM8E=
 github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200130185538-99e5e39c6c49 h1:f+EUphHEJkDVOMYZtBCnTbSVGOnmB7f/rRauJpm8VOo=
 github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200130185538-99e5e39c6c49/go.mod h1:HOB+TtEZKSz0JxZwajLIi+yNPv+bpr64HpUsnKsUM8E=
+github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200130185655-801619f9097f h1:Yxs0na0eM15nECqeUTqJX8sYcIRlvY6gY6lavc7TzG0=
+github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200130185655-801619f9097f/go.mod h1:HOB+TtEZKSz0JxZwajLIi+yNPv+bpr64HpUsnKsUM8E=
 github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776 h1:J8EVWLkO3I4Z+SiyOsupxYHTIylgtjLOUn2VGUSPwtw=
 github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776/go.mod h1:L5lxd4wqcmpVb1x9n0LdJdBw4wpCrzx1Yrj3BJ5DugU=
 github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776 h1:WbNxXPhb0+79VrKnhpIQ4unCt7qlf1tazPfldJbXZfs=

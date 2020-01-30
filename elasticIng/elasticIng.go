@@ -44,9 +44,11 @@ func ElasticIndices() map[string]interface{} {
 }
 
 // ElasticHealth returns a esapi.Response of Health
-func ElasticHealth() map[string]interface{} {
+func ElasticHealth() string {
 
-	var r map[string]interface{}
+	var (
+		r map[string]
+	)
 
 	cfg := elasticsearch.Config{
 		Addresses: []string{
@@ -74,7 +76,6 @@ func ElasticHealth() map[string]interface{} {
 		log.Printf("Error parsing the response body: %s", err)
 	}
 
-	s := r.(string)
-
+	var s = r.(string)
 	return s
 }

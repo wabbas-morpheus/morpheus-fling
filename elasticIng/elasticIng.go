@@ -6,6 +6,7 @@ import (
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"log"
+	"github.com/mitchellh/mapstructure"
 )
 
 //ElasticIndices Cats the active ES indices found
@@ -46,9 +47,7 @@ func ElasticIndices() map[string]interface{} {
 // ElasticHealth returns a esapi.Response of Health
 func ElasticHealth() string {
 
-	var (
-		r map[string]
-	)
+	var r map[string]interface{}
 
 	cfg := elasticsearch.Config{
 		Addresses: []string{
@@ -76,6 +75,6 @@ func ElasticHealth() string {
 		log.Printf("Error parsing the response body: %s", err)
 	}
 
-	var s = r.(string)
-	return s
+	b, _ := json.Marshal(r)
+	return r
 }

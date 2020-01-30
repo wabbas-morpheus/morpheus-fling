@@ -53,7 +53,7 @@ func main() {
 	sysStats := sysgatherer.SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
 	esStuff := elasticing.ElasticHealth()
-	FileWrtr("\n\nES STATS:\n"+esStuff, *outfilePtr)
+	FileWrtr("\n\nES STATS:\n" + esStuff, *outfilePtr)
 	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}

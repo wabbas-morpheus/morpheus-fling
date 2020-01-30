@@ -74,5 +74,7 @@ func ElasticHealth() map[string]interface{} {
 		log.Printf("Error parsing the response body: %s", err)
 	}
 
-	return r
+	s := r.(string)
+
+	return s
 }

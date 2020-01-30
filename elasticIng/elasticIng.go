@@ -80,5 +80,5 @@ func ElasticHealth() string {
 	buf.ReadFrom(res.Body)
 	s := buf.String()
 
-	//return string(b)
+	return s
 }

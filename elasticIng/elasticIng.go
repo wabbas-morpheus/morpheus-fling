@@ -2,14 +2,12 @@ package elasticing
 
 import (
 	"fmt"
-	"bytes"
 	"context"
 	"encoding/json"
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"log"
 	"github.com/mitchellh/mapstructure"
-	"sync"
 )
 
 

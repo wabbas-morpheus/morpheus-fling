@@ -6,7 +6,7 @@ require (
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200126095918-3dc5ce76b869
 	github.com/golang/snappy v0.0.1 // indirect
-	github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200131033800-5a812d8adc03
+	github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200131232423-a2e7c97bd6be
 	github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776
 	github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776
 	github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776

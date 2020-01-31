@@ -9,6 +9,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"log"
 	"github.com/mitchellh/mapstructure"
+	"sync"
 )
 
 
@@ -29,11 +30,24 @@ type Esstats []struct {
 	ActiveShardsPercent string `json:"active_shards_percent"`
 }
 
+type Esindices struct {
+	Health string `json:"health"`
+	Status string `json:"status"`
+	Index string `json:"index"`
+	Uuid string `json:"uuid"`
+	Pri int `json:"pri"`
+	Rep int `json:"rep"`
+	DocsCount int `json:"docs.count"`
+	DocsDeleted int `json:"docs.deleted"`
+	StoreSize string `json:"store.size"`
+	PriStoreSize string `json:"pri.store.size"`
+}
+
 
 //ElasticIndices Cats the active ES indices found
-func ElasticIndices() string {
+func ElasticIndices() []*Esindices {
 
-	//var r map[string]interface{}
+	var r []map[string]interface{}
 
 	cfg := elasticsearch.Config{
 		Addresses: []string{
@@ -57,15 +71,25 @@ func ElasticIndices() string {
 
 	defer res.Body.Close()
 
-	//if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-	//	log.Printf("Error parsing the response body: %s", err)
-	//}
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		log.Printf("Error parsing the response body: %s", err)
+	}
 
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(res.Body)
-	s := buf.String()
+	indexSlice := make([]*Esindices, len(r))
 
-	return s
+	for i, element := range r {
+		result := &Esindices{}
+		cfg := &mapstructure.DecoderConfig{
+			Metadata: nil,
+			Result:   &result,
+			TagName:  "json",
+		}
+		decoder, _ := mapstructure.NewDecoder(cfg)
+		decoder.Decode(element)
+		indexSlice[i] = result
+	}
+
+	return indexSlice
 
 }
 
@@ -104,7 +128,6 @@ func ElasticHealth() *Esstats {
 	decoder.Decode(r)
 
 	data, err := json.MarshalIndent(&result, "", "  ")
-
 	if err != nil {
 		log.Fatal(err)
 	}

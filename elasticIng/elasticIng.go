@@ -1,13 +1,14 @@
 package elasticing
 
 import (
+	"fmt"
 	"bytes"
 	"context"
 	"encoding/json"
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"log"
-	//"github.com/mitchellh/mapstructure"
+	"github.com/mitchellh/mapstructure"
 )
 
 
@@ -69,7 +70,7 @@ func ElasticIndices() string {
 }
 
 // ElasticHealth returns a esapi.Response of Health
-func ElasticHealth() []Esstats {
+func ElasticHealth() *Esstats {
 	var r []map[string]interface{}
 	es, err := elasticsearch.NewDefaultClient()
 	if err != nil {

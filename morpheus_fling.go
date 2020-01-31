@@ -53,7 +53,11 @@ func main() {
 	sysStats := sysgatherer.SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
 	esStuff := elasticing.ElasticHealth()
-	FileWrtr("\n\nES STATS:\n" + esStuff, *outfilePtr)
+	morejson, err := json.MarshalIndent(esStuff, "". " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
+	}
+	FileWrtr("\n\nES STATS:\n" + morejson, *outfilePtr)
 	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}

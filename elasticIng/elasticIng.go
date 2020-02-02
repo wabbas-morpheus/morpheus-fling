@@ -8,6 +8,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/mitchellh/mapstructure"
 	"log"
+	"sync"
 )
 
 
@@ -73,7 +74,7 @@ func ElasticIndices() []*Esindices {
 		log.Printf("Error parsing the response body: %s", err)
 	}
 
-	indexSlice := make([]*Esindices, len(r))
+	indexSlice := make([]Esindices, len(r))
 
 	var wg sync.WaitGroup
 	for i, element := range r {

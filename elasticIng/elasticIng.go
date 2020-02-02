@@ -44,7 +44,7 @@ type Esindices struct {
 
 
 //ElasticIndices Cats the active ES indices found
-func ElasticIndices() []*Esindices {
+func ElasticIndices() []Esindices {
 
 	var r []map[string]interface{}
 

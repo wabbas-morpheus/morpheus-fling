@@ -1,13 +1,13 @@
 package elasticing
 
 import (
-	"fmt"
 	"context"
 	"encoding/json"
+	"fmt"
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
-	"log"
 	"github.com/mitchellh/mapstructure"
+	"log"
 )
 
 
@@ -75,17 +75,23 @@ func ElasticIndices() []*Esindices {
 
 	indexSlice := make([]*Esindices, len(r))
 
+	var wg sync.WaitGroup
 	for i, element := range r {
-		result := &Esindices{}
-		cfg := &mapstructure.DecoderConfig{
-			Metadata: nil,
-			Result:   &result,
-			TagName:  "json",
-		}
-		decoder, _ := mapstructure.NewDecoder(cfg)
-		decoder.Decode(element)
-		indexSlice[i] = result
+		wg.Add(1)
+		go func(i int, element map[string]interface{}) {
+			defer wg.Done()
+			result := Esindices{}
+			cfg := &mapstructure.DecoderConfig{
+				Metadata: nil,
+				Result:   &result,
+				TagName:  "json",
+			}
+			decoder, _ := mapstructure.NewDecoder(cfg)
+			decoder.Decode(element)
+			indexSlice[i] = result
+		}(i, element)
 	}
+	wg.Wait()
 
 	return indexSlice
 

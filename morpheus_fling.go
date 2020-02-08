@@ -12,6 +12,7 @@ import (
 	filereader "github.com/gomorpheus/morpheus-fling/fileReader"
 	portscanner "github.com/gomorpheus/morpheus-fling/portScanner"
 	sysgatherer "github.com/gomorpheus/morpheus-fling/sysGatherer"
+	encryptText "github.com/gomorpheus/morpheus-fling/encryptText"
 	"github.com/mholt/archiver"
 )
 

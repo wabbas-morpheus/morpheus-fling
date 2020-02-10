@@ -49,7 +49,7 @@ func encryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (encryptedTe
 	return
 }
 
-func encryptItAll(pubKeyFile string, inputKey string, plaintext string) EncryptResult {
+func EncryptItAll(pubKeyFile string, inputKey string, plaintext string) EncryptResult {
 	var err error
 	var privateKey *rsa.PrivateKey
 	var publicKey *rsa.PublicKey

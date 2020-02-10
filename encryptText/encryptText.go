@@ -8,7 +8,7 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"golang.org/x/sync/errgroup"
+	//"golang.org/x/sync/errgroup"
 	"hash"
 	"io"
 	"io/ioutil"
@@ -51,7 +51,6 @@ func encryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (encryptedTe
 
 func EncryptItAll(pubKeyFile string, inputKey string, plaintext string) EncryptResult {
 	var err error
-	var privateKey *rsa.PrivateKey
 	var publicKey *rsa.PublicKey
 	var ciphertext, encryptedKey, label []byte
 
@@ -66,10 +65,7 @@ func EncryptItAll(pubKeyFile string, inputKey string, plaintext string) EncryptR
 		log.Fatalf("Error reading public key file: %s", err)
 	}
 
-	pubPem, err := pem.Decode([]byte(pubby))
-	if err != nil {
-		log.Fatalf("Could not decode public key: %s", err)
-	}
+	pubPem, _ := pem.Decode([]byte(pubby))
 
 	parsedKey, err := x509.ParsePKIXPublicKey(pubPem.Bytes)
 	if err != nil {

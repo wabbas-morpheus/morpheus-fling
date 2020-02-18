@@ -4,7 +4,8 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/md5"
-	"crypto/rand"
+	rand "math/rand"
+	crand "crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
@@ -29,7 +30,7 @@ func genRandom() string {
 	all := "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
 		"abcdefghijklmnopqrstuvwxyz" +
 		digits + specials
-	length := 8
+	length := 32
 	buf := make([]byte, length)
 	buf[0] = digits[rand.Intn(len(digits))]
 	buf[1] = specials[rand.Intn(len(specials))]
@@ -55,7 +56,7 @@ func encryptText(plaintext []byte, key []byte) ([]byte, error) {
 	}
 
 	nonce := make([]byte, gcm.NonceSize())
-	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
+	if _, err = io.ReadFull(crand.Reader, nonce); err != nil {
 		return nil, err
 	}
 
@@ -66,7 +67,7 @@ func encryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (encryptedTe
 	var err error
 	var md5_hash hash.Hash
 	md5_hash = md5.New()
-	if encryptedText, err = rsa.EncryptOAEP(md5_hash, rand.Reader, publicKey, sourceText, label); err != nil {
+	if encryptedText, err = rsa.EncryptOAEP(md5_hash, crand.Reader, publicKey, sourceText, label); err != nil {
 		log.Fatal(err)
 	}
 	return

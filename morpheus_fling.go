@@ -77,7 +77,7 @@ func main() {
 
 	sysStats := sysgatherer.SysGather()
 	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
-	nonSense := encryptText.EncryptItAll("/tmp/this.pub", "AES256Key-32Characters1234567890", sysStats)
+	nonSense := encryptText.EncryptItAll("/tmp/this.pub", sysStats)
 	nonText := nonSense.Ciphertext
 	nonKey := nonSense.EncryptedKey
 	FileWrtr(string(nonText), *outfilePtr)

@@ -10,7 +10,7 @@ import (
 )
 
 // SysGather gathers system statistics and returns them as a string
-func SysGather() string {
+func SysGather() []byte {
 	current, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
@@ -30,5 +30,5 @@ func SysGather() string {
 	}
 
 	fmt.Println(string(data))
-	return string(data)
+	return data
 }

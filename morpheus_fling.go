@@ -17,6 +17,13 @@ import (
 	"github.com/mholt/archiver"
 )
 
+type Statstruct struct {
+	Esindices []elasticing.Esindices `json:"es_indices"`
+	Eshealth []elasticing.Esstats `json:"es_health"`
+	Systemstats string `json:"system_stats"`
+
+}
+
 var (
 	infilePtr = flag.String("infile", "", "a string")
 	outfilePtr = flag.String("outfile", path.Join(".", "output.txt"), "a string")
@@ -38,9 +45,8 @@ Examples:
 Generates a bundle with port scans, system stats, elasticsearch results and morpheus logs
    $ ./morpheus-fling -infile="/home/slimshady/network.txt"
 
-Generates a statik package only with the ".js" files
-from the ./public directory.
-   $ statik -include=*.js
+Generates a bundle with no portscans in it at /tmp/bundler.zip
+   $ ./morpheus-fling
 `
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -83,11 +89,17 @@ func main() {
 	FileWrtr(string(nonText), *outfilePtr)
 	FileWrtr(string(nonKey), *outfilePtr)
 	esStuff := elasticing.ElasticHealth()
+	esIndices := elasticing.ElasticIndices()
 	morejson, err := json.MarshalIndent(esStuff, "", " ")
 	if err != nil {
 		log.Fatal("Can't encode to JSON", err)
 	}
+	yetmorejson, err := json.MarshalIndent(esIndices, "", " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
+	}
 	FileWrtr("\n\nES STATS:\n" + string(morejson), *outfilePtr)
+	FileWrtr("\n\nES INDICES:\n" + string(yetmorejson), *outfilePtr)
 	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}

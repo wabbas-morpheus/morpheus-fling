@@ -22,7 +22,7 @@ import (
 
 var (
 	infilePtr = flag.String("infile", "", "a string")
-	outfilePtr = flag.String("outfile", path.Join(".", "output.txt"), "a string")
+	outfilePtr = flag.String("outfile", path.Join(".", "output.json"), "a string")
 	uLimit = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")

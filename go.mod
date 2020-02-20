@@ -15,5 +15,6 @@ require (
 	github.com/nwaples/rardecode v1.0.0 // indirect
 	github.com/pierrec/lz4 v2.4.1+incompatible // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
+	github.com/zcalusic/sysinfo v0.0.0-20200109185024-6491b6eabd49
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 )

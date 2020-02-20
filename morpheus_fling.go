@@ -10,19 +10,14 @@ import (
 	"path"
 	"time"
 
+	encryptText "github.com/gomorpheus/morpheus-fling/encryptText"
 	filereader "github.com/gomorpheus/morpheus-fling/fileReader"
 	portscanner "github.com/gomorpheus/morpheus-fling/portScanner"
 	sysgatherer "github.com/gomorpheus/morpheus-fling/sysGatherer"
-	encryptText "github.com/gomorpheus/morpheus-fling/encryptText"
 	"github.com/mholt/archiver"
+	"github.com/zcalusic/sysinfo"
 )
 
-type Statstruct struct {
-	Esindices []elasticing.Esindices `json:"es_indices"`
-	Eshealth []elasticing.Esstats `json:"es_health"`
-	Systemstats string `json:"system_stats"`
-
-}
 
 var (
 	infilePtr = flag.String("infile", "", "a string")
@@ -49,6 +44,13 @@ Generates a bundle with no portscans in it at /tmp/bundler.zip
    $ ./morpheus-fling
 `
 
+type Results struct {
+	ElasticStats	*elasticing.Esstats	`json:"es_stats"`
+	ElasticIndices	[]elasticing.Esindices	`json:"es_indices"`
+	System	*sysinfo.SysInfo	`json:"system_stats"`
+	Scans 	[]portscanner.ScanResult	`json:"port_scans,omitempty"`
+}
+
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
 	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -66,7 +68,7 @@ func main() {
 
 	flag.Usage = help
 	flag.Parse()
-	if *infilePtr != "" {
+	//if *infilePtr != "" {
 		FileWrtr("PORT SCANS:\n", *outfilePtr)
 		psArray := filereader.FileToStructArray(*infilePtr, *uLimit)
 
@@ -79,15 +81,13 @@ func main() {
 		fmt.Fprintf(os.Stdout, "%s", thisisjson)
 		FileWrtr(string(thisisjson), *outfilePtr)
 
-	}
 
 	sysStats := sysgatherer.SysGather()
-	FileWrtr("\n\nOS STATS:\n"+sysStats, *outfilePtr)
-	nonSense := encryptText.EncryptItAll("/tmp/this.pub", sysStats)
-	nonText := nonSense.Ciphertext
-	nonKey := nonSense.EncryptedKey
-	FileWrtr(string(nonText), *outfilePtr)
-	FileWrtr(string(nonKey), *outfilePtr)
+	haveajson, err := json.MarshalIndent(sysStats, "", " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
+	}
+	FileWrtr("\n\nOS STATS:\n" + string(haveajson), *outfilePtr)
 	esStuff := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
 	morejson, err := json.MarshalIndent(esStuff, "", " ")
@@ -103,6 +103,24 @@ func main() {
 	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}
+	lolol := Results{
+		ElasticStats:   esStuff,
+		ElasticIndices: esIndices,
+		System:         sysStats,
+		Scans:          destArray,
+	}
+
+	ultimatejson, err := json.MarshalIndent(lolol, "", " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
+	}
+
+	FileWrtr("\n\nULTIMATE:\n" + string(ultimatejson), *outfilePtr)
+	nonSense := encryptText.EncryptItAll("/tmp/this.pub", string(ultimatejson))
+	nonText := nonSense.Ciphertext
+	nonKey := nonSense.EncryptedKey
+	FileWrtr(string(nonText), *outfilePtr)
+	FileWrtr(string(nonKey), *outfilePtr)
 }
 
 func help() {

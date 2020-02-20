@@ -1,16 +1,15 @@
 package sysgatherer
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
 	"os/user"
 
 	"github.com/zcalusic/sysinfo"
 )
 
+
 // SysGather gathers system statistics and returns them as a string
-func SysGather() []byte {
+func SysGather() *sysinfo.SysInfo {
 	current, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
@@ -24,11 +23,13 @@ func SysGather() []byte {
 
 	si.GetSysInfo()
 
-	data, err := json.MarshalIndent(&si, "", "  ")
-	if err != nil {
-		log.Fatal(err)
-	}
+	return &si
 
-	fmt.Println(string(data))
-	return data
+	//data, err := json.MarshalIndent(&si, "", "  ")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//
+	//fmt.Println(string(data))
+	//return string(data)
 }

@@ -10,7 +10,7 @@ require (
 	github.com/gomorpheus/morpheus-fling/encryptText v0.0.0-20200218155506-c45154273eb5
 	github.com/gomorpheus/morpheus-fling/fileReader v0.0.0-20200128172445-c12e969c0776
 	github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776
-	github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776
+	github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200220025947-74ac8bf99840
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/nwaples/rardecode v1.0.0 // indirect
 	github.com/pierrec/lz4 v2.4.1+incompatible // indirect

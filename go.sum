@@ -53,6 +53,8 @@ github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0
 github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776/go.mod h1:wM24tRwd7RfKJ6uAUEeqLB0v5RTusNFUng+n0fd12NI=
 github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776 h1:q22haySSjqnxDW43vjBjrtZlZYRNs8+3HusG18duE2k=
 github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776/go.mod h1:x6pcmnNUBaSRv7MMgPMRUQfdBXz8kl7QNxAcSK+Jyto=
+github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200220025947-74ac8bf99840 h1:z8hEsCNriYK0mUzNT09i09rvq277GsmTVfgO9ROE22A=
+github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200220025947-74ac8bf99840/go.mod h1:x6pcmnNUBaSRv7MMgPMRUQfdBXz8kl7QNxAcSK+Jyto=
 github.com/klauspost/compress v1.4.1/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
 github.com/klauspost/cpuid v1.2.0/go.mod h1:Pj4uuM528wm8OyEC2QMXAi2YiTZ96dNQPGgoMS4s3ek=
 github.com/mholt/archiver v3.1.1+incompatible h1:1dCVxuqs0dJseYEhi5pl7MYPH9zDa1wBi7mF09cbNkU=

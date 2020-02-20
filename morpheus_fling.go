@@ -25,6 +25,7 @@ var (
 	uLimit = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")
+	keyfilePtr = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
 )
 
 const helpText = `morpheus-fling [options]
@@ -34,6 +35,7 @@ Options:
 -ulimit     Ulimit of the system, defaults to 1024.
 -logfile    Logfile to add to the bundle.  Defaults to "/var/log/morpheus/morpheus-ui/current".
 -bundler    Path and file to bundle into.  Defaults to "/tmp/bundler.zip".
+-keyfile    Path and file to put the public key encrypted AES-GCM key into.  Defaults to "/tmp/bundlerkey.enc"
 
 -help    Prints this text.
 Examples:
@@ -68,59 +70,49 @@ func main() {
 
 	flag.Usage = help
 	flag.Parse()
-	//if *infilePtr != "" {
-		FileWrtr("PORT SCANS:\n", *outfilePtr)
+
+	// Initialize an empty ScanResult slice, omitted from result if empty
+	var destArray []portscanner.ScanResult
+	if *infilePtr != "" {
 		psArray := filereader.FileToStructArray(*infilePtr, *uLimit)
-
-		destArray := portscanner.Start(psArray, 500*time.Millisecond)
-		thisisjson, err := json.MarshalIndent(destArray, "", " ")
-		if err != nil {
-			log.Fatal("Can't encode to JSON", err)
-		}
-		fmt.Println(destArray)
-		fmt.Fprintf(os.Stdout, "%s", thisisjson)
-		FileWrtr(string(thisisjson), *outfilePtr)
+		destArray = portscanner.Start(psArray, 500*time.Millisecond)
+	}
 
 
+	// Gather system stats into a si array
 	sysStats := sysgatherer.SysGather()
-	haveajson, err := json.MarshalIndent(sysStats, "", " ")
-	if err != nil {
-		log.Fatal("Can't encode to JSON", err)
-	}
-	FileWrtr("\n\nOS STATS:\n" + string(haveajson), *outfilePtr)
-	esStuff := elasticing.ElasticHealth()
+
+	// Gather elasticsearch health and indices into structs for results
+	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
-	morejson, err := json.MarshalIndent(esStuff, "", " ")
-	if err != nil {
-		log.Fatal("Can't encode to JSON", err)
-	}
-	yetmorejson, err := json.MarshalIndent(esIndices, "", " ")
-	if err != nil {
-		log.Fatal("Can't encode to JSON", err)
-	}
-	FileWrtr("\n\nES STATS:\n" + string(morejson), *outfilePtr)
-	FileWrtr("\n\nES INDICES:\n" + string(yetmorejson), *outfilePtr)
-	if err := archiver.Archive([]string{*outfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
-		log.Fatal(err)
-	}
-	lolol := Results{
-		ElasticStats:   esStuff,
+
+	// Create instance of results struct from packages returns
+	results := Results{
+		ElasticStats:   esHealth,
 		ElasticIndices: esIndices,
 		System:         sysStats,
 		Scans:          destArray,
 	}
 
-	ultimatejson, err := json.MarshalIndent(lolol, "", " ")
+	resultjson, err := json.MarshalIndent(results, "", " ")
 	if err != nil {
 		log.Fatal("Can't encode to JSON", err)
 	}
 
-	FileWrtr("\n\nULTIMATE:\n" + string(ultimatejson), *outfilePtr)
-	nonSense := encryptText.EncryptItAll("/tmp/this.pub", string(ultimatejson))
+	fmt.Fprintf(os.Stdout, "%s", resultjson)
+	//FileWrtr("\nULTIMATE:\n" + string(resultjson), *outfilePtr)
+
+	// Base resultjson into Encryption package and write encrypted file and key
+	nonSense := encryptText.EncryptItAll("/tmp/this.pub", string(resultjson))
 	nonText := nonSense.Ciphertext
 	nonKey := nonSense.EncryptedKey
 	FileWrtr(string(nonText), *outfilePtr)
-	FileWrtr(string(nonKey), *outfilePtr)
+	FileWrtr(string(nonKey), *keyfilePtr)
+
+	// Bundle the whole shebang
+	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func help() {

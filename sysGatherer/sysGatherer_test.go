@@ -1,6 +1,7 @@
 package sysgatherer
 
 import (
+	"github.com/zcalusic/sysinfo"
 	"reflect"
 	"testing"
 )
@@ -8,7 +9,7 @@ import (
 func TestSysGather(t *testing.T) {
 	tests := []struct {
 		name string
-		want []byte
+		want *sysinfo.SysInfo
 	}{
 		// TODO: Add test cases.
 	}

@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	elasticing "github.com/gomorpheus/morpheus-fling/elasticIng"
+	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -51,6 +52,7 @@ type Results struct {
 	ElasticIndices	[]elasticing.Esindices	`json:"es_indices"`
 	System	*sysinfo.SysInfo	`json:"system_stats"`
 	Scans 	[]portscanner.ScanResult	`json:"port_scans,omitempty"`
+	MorphLogs	string	`json:"morpheus_logs"`
 }
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -86,12 +88,18 @@ func main() {
 	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
 
+	morpheus, err := ioutil.ReadFile(*logfilePtr)
+	if err != nil {
+		log.Fatalf("Error reading public key file: %s", err)
+	}
+
 	// Create instance of results struct from packages returns
 	results := Results{
 		ElasticStats:   esHealth,
 		ElasticIndices: esIndices,
 		System:         sysStats,
 		Scans:          destArray,
+		MorphLogs:      string(morpheus),
 	}
 
 	resultjson, err := json.MarshalIndent(results, "", " ")
@@ -110,7 +118,7 @@ func main() {
 	FileWrtr(string(nonKey), *keyfilePtr)
 
 	// Bundle the whole shebang
-	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr, *logfilePtr}, *bundlerPtr); err != nil {
+	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}
 }

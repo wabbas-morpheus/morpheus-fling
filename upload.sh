@@ -13,6 +13,6 @@ echo "Ready to push $NEWVERSION (cntrl-c to quit)?"
 read ANS
 git add .
 git commit -m "Version $NEWVERSION"
-git push origin master
 git tag --force  -a $NEWVERSION -m v$NEWVERSION
 git push origin --tags
+git push origin master

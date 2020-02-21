@@ -36,7 +36,7 @@ master file.  It encrypts the content and places a key into a .zip file with the
 Download the binary directly to your server.
 
 ```bash
-wget https://github.com/gomorpheus/morpheus-fling/releases/download/v2.1.1/morpheus-fling
+wget https://github.com/gomorpheus/morpheus-fling/releases/download/v2.1.2/morpheus-fling
 ```
 
 Give posix permissions to be executed.  Binary allows the specification of an `-infile` for port scanning.  Binary will by default write output to a file called `output.txt` but user can flag a separate outfile to be created and appended to.

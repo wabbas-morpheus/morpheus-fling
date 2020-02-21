@@ -6,13 +6,9 @@ matrix:
   include:
   - go: 1.x
     env: LATEST=true
-  - go: 1.11.x
-  - go: 1.12.x
   - go: 1.13.x
   - go: tip
   allow_failures:
-  - go: 1.11.x
-  - go: 1.12.x
   - go: tip
 before_install:
 - go get github.com/mitchellh/gox

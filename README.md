@@ -6,29 +6,40 @@ A small, command line based binary for aggregating useful statistics about large
 
 1. Port Scanning
 2. OS Statistics
-3. Bundling of output files and log file
+3. Elasticsearch Health
+4. Elasticsearch Indices
+5. Bundling and encrypting of output files and log file
 
 ### Port Scanning
 
-`morpheus-fling` reads ips and associated ports and performs a scan of these ports to inspect openness.
+`morpheus-fling` optionally reads ips from a file and associated ports and performs a scan of these ports to inspect openness.
 
 ### OS Statistics
 
 `morpheus-fling` aggregates statistics about the OS it is installed on utilizing Linux kernel syscalls including memory, CPU, and available disk.
 
+### Elasticsearch Health
+
+`morpheus-fling` queries the localhost provided Elasticsearch REST API to get a health output.
+
+### Elasticsearch Indices
+
+`morpheus-fling` queries the localhost provided Elasticsearch REST API to get a breakdown of all indices and their respective health.
+
 ### Bundling
 
-By default `morpheus-fling` will bundle your Morpheus `current` log file for the `morpheus-ui` service with the output file created from the system and port scan.
+By default `morpheus-fling` will read your `current` log file for your running `morpheus-ui` service and place it as a json value in the
+master file.  It encrypts the content and places a key into a .zip file with the output bundle.
 
 ## Usage
 
 Download the binary directly to your server.
 
 ```bash
-wget https://github.com/gomorpheus/morpheus-fling/releases/download/v2.1.0/morpheus-fling
+wget https://github.com/gomorpheus/morpheus-fling/releases/download/v2.1.1/morpheus-fling
 ```
 
-Give posix permissions to be executed.  Binary expects a file to exist called `network.txt`, however user can specify a separate infile.  Similarly, binary will by default write output to a file called `output.txt` but user can flag a separate outfile to be created and appended to.
+Give posix permissions to be executed.  Binary allows the specification of an `-infile` for port scanning.  Binary will by default write output to a file called `output.txt` but user can flag a separate outfile to be created and appended to.
 
 Run:
 
@@ -63,7 +74,7 @@ slimshady@morpheus1:~# ./morpheus-fling --logfile=/path/to/file --bundler=/path/
 
 ### Inputs
 
-As described, `morpheus-fling` defaults to looking for an input file called `network.txt`.  Format for the entries in this file should follow `ip:port` notation as below.
+As described, `morpheus-fling` allows an argument for a file of `ip:port` to be scanned for openness.  Format for the entries in this file should follow `ip:port` notation as below.
 
 ```text
 10.30.21.100:10092

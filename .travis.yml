@@ -4,12 +4,11 @@ env:
 sudo: false
 matrix:
   include:
- # - go: 1.x
- #   env: LATEST=true
+  - go: 1.x
+    env: LATEST=true
   - go: 1.11.x
   - go: 1.12.x
   - go: 1.13.x
-    env: LATEST=true
   - go: tip
   allow_failures:
   - go: 1.11.x
@@ -25,8 +24,8 @@ script:
 #- diff -u <(echo -n) <(gofmt -d .)
 - go vet $(go list ./... | grep -v /vendor/)
 - go test -v -race ./...
-- if ["${LATEST}" = "true"]; then env GOOS=linux GOARCH=amd64 go build; fi
-#- if [ "${LATEST}" = "true" ]; then gox -os="linux" -arch="amd64" -output="morpheus-fling" -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...; fi
+# - if ["${LATEST}" = "true"]; then env GOOS=linux GOARCH=amd64 go build; fi
+- if [ "${LATEST}" = "true" ]; then gox -os="linux" -arch="amd64" -output="morpheus-fling" -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...; fi
 deploy:
   provider: releases
   skip_cleanup: true

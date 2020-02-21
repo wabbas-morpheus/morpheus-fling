@@ -62,6 +62,27 @@ slimshady@morpheus1:~# ulimit -n
 slimshady@morpheus1:~# ./morpheus-fling --ulimit=204800
 ```
 
+### Usage
+
+```bash
+morpheus-fling [options]
+Options:
+-infile     The source file for network port scanning.  If none is provided port scans will be skipped.
+-outfile    The destination directory of the generated package, "output.txt" by default.
+-ulimit     Ulimit of the system, defaults to 1024.
+-logfile    Logfile to add to the bundle.  Defaults to "/var/log/morpheus/morpheus-ui/current".
+-bundler    Path and file to bundle into.  Defaults to "/tmp/bundler.zip".
+-keyfile    Path and file to put the public key encrypted AES-GCM key into.  Defaults to "/tmp/bundlerkey.enc"
+
+-help    Prints this text.
+Examples:
+Generates a bundle with port scans, system stats, elasticsearch results and morpheus logs
+   $ ./morpheus-fling -infile="/home/slimshady/network.txt"
+
+Generates a bundle with no portscans in it at /tmp/bundler.zip
+   $ ./morpheus-fling
+```
+
 ### Other Options
 
 `morpheus-fling` also allows arguments to be pass for specific bundling of a logfile and specific naming of the archive.  Without specification the default is to look for `/var/log/morpheus-morpheus-ui/current` and bundle that with the outfile into `/tmp/bundler.zip`.
@@ -86,134 +107,7 @@ As described, `morpheus-fling` allows an argument for a file of `ip:port` to be 
 
 ### Report
 
-`morpheus-fling` will generate a report during the run.  Below is an example of the contents.  The deafult is a file in the same directory as the binary called `output.txt` but this can be adjusted by making use of a flag during the run like `--outfile=/home/slimshady/foobar.txt`
+`morpheus-fling` will generate a report during the run. The default is a file in the same directory as the binary called `output.txt` but this can be adjusted by making use of a flag during the run like `--outfile=/home/slimshady/foobar.txt`
 
-```text
-PORT SCANS:
-[
- {
-  "ip": "10.30.21.100",
-  "port": 10092,
-  "status": "closed"
- },
- {
-  "ip": "10.30.21.100",
-  "port": 3306,
-  "status": "open"
- },
- {
-  "ip": "10.30.21.193",
-  "port": 22,
-  "status": "closed"
- },
- {
-  "ip": "10.30.21.100",
-  "port": 15672,
-  "status": "open"
- },
- {
-  "ip": "10.30.21.100",
-  "port": 5672,
-  "status": "closed"
- }
-]
-
-
-OS STATS:
-{
-  "sysinfo": {
-    "version": "0.9.2",
-    "timestamp": "2019-07-09T16:12:52.316092459-06:00"
-  },
-  "node": {
-    "hostname": "labs-den-demo-morpheus",
-    "machineid": "2f67b055ae2d1078d70401de58a63a28",
-    "timezone": "America/Denver"
-  },
-  "os": {
-    "name": "Ubuntu 14.04.5 LTS",
-    "vendor": "ubuntu",
-    "version": "14.04",
-    "release": "14.04.5",
-    "architecture": "amd64"
-  },
-  "kernel": {
-    "release": "4.2.0-42-generic",
-    "version": "#49~14.04.1-Ubuntu SMP Wed Jun 29 20:22:11 UTC 2016",
-    "architecture": "x86_64"
-  },
-  "product": {
-    "name": "MBI-6219G-T-Pack",
-    "vendor": "Supermicro",
-    "version": "0123456789",
-    "serial": "S215034X6B37474"
-  },
-  "board": {
-    "name": "B2SS2-F",
-    "vendor": "Supermicro",
-    "version": "1.01",
-    "serial": "ZD16BS000265",
-    "assettag": "To be filled by O.E.M."
-  },
-  "chassis": {
-    "type": 1,
-    "vendor": "Supermicro",
-    "version": "0123456789",
-    "serial": "0123456789",
-    "assettag": "To be filled by O.E.M."
-  },
-  "bios": {
-    "vendor": "American Megatrends Inc.",
-    "version": "1.0c",
-    "date": "04/29/2016"
-  },
-  "cpu": {
-    "vendor": "GenuineIntel",
-    "model": "Intel(R) Xeon(R) CPU E3-1240 v5 @ 3.50GHz",
-    "speed": 3500,
-    "cache": 8192,
-    "cpus": 1,
-    "cores": 4,
-    "threads": 8
-  },
-  "memory": {
-    "type": "DDR4",
-    "speed": 2400,
-    "size": 65536
-  },
-  "storage": [
-    {
-      "name": "sda",
-      "driver": "sd",
-      "vendor": "ATA",
-      "model": "SanDisk SD8SB8U2",
-      "serial": "163047802208",
-      "size": 256
-    },
-    {
-      "name": "sdb",
-      "driver": "sd",
-      "vendor": "ATA",
-      "model": "SanDisk SD8SB8U1",
-      "serial": "164103801795",
-      "size": 1024
-    }
-  ],
-  "network": [
-    {
-      "name": "eth0",
-      "driver": "igb",
-      "macaddress": "0c:c4:7a:98:ba:8a",
-      "port": "fibre",
-      "speed": 1000
-    },
-    {
-      "name": "eth1",
-      "driver": "igb",
-      "macaddress": "0c:c4:7a:98:ba:8b",
-      "port": "fibre",
-      "speed": 1000
-    }
-  ]
-}
-```
+The contents of the output file is encrypted, while the plaintext is displayed via standard out.  The encrypted output file and the 
+public key encrypted AES256-GCM key are then bundled by default in `/tmp/bundler.zip`

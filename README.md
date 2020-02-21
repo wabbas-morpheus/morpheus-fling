@@ -64,7 +64,7 @@ slimshady@morpheus1:~# ./morpheus-fling --ulimit=204800
 
 ### Usage
 
-```bash
+```text
 morpheus-fling [options]
 Options:
 -infile     The source file for network port scanning.  If none is provided port scans will be skipped.

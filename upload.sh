@@ -8,11 +8,11 @@ then
     echo 'Old version $OLDVERSION same as $NEWVERSION'
     read ANS
 fi
-git tag -a $NEWVERSION -m v$NEWVERSION
+git tag -a $NEWVERSION -m $NEWVERSION
 echo "Ready to push $NEWVERSION (cntrl-c to quit)?"
 read ANS
 git add .
 git commit -m "Version $NEWVERSION"
-git tag --force  -a $NEWVERSION -m v$NEWVERSION
+git tag --force  -a $NEWVERSION -m $NEWVERSION
 git push origin --tags
 git push origin master

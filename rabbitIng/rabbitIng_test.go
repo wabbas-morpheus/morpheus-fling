@@ -8,7 +8,7 @@ import (
 func TestRabbitStats(t *testing.T) {
 	tests := []struct {
 		name string
-		want *RabbitResults
+		want []RabbitResults
 	}{
 		// TODO: Add test cases.
 	}

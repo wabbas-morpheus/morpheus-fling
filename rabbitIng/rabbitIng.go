@@ -33,7 +33,7 @@ func RabbitStats() []RabbitResults {
 	}
 
 	//value := &RabbitResults{}
-	value := make([]Queue, 0)
+	value := make([]RabbitResults, 0)
 
 	json.NewDecoder(resp.Body).Decode(&value)
 

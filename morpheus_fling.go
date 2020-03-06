@@ -20,11 +20,10 @@ import (
 	"github.com/zcalusic/sysinfo"
 )
 
-
 var (
-	infilePtr = flag.String("infile", "", "a string")
+	infilePtr  = flag.String("infile", "", "a string")
 	outfilePtr = flag.String("outfile", path.Join(".", "output.json"), "a string")
-	uLimit = flag.Int64("ulimit", 1024, "an integer")
+	uLimit     = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")
 	keyfilePtr = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
@@ -49,12 +48,12 @@ Generates a bundle with no portscans in it at /tmp/bundler.zip
 `
 
 type Results struct {
-	ElasticStats	*elasticing.Esstats	`json:"es_stats"`
-	ElasticIndices	[]elasticing.Esindices	`json:"es_indices"`
-	System	*sysinfo.SysInfo	`json:"system_stats"`
-	Scans 	[]portscanner.ScanResult	`json:"port_scans,omitempty"`
-	RabbitStatistics	[]rabbiting.RabbitResults `json:"rabbit_stats"`
-	MorphLogs	string	`json:"morpheus_logs"`
+	ElasticStats     *elasticing.Esstats       `json:"es_stats"`
+	ElasticIndices   []elasticing.Esindices    `json:"es_indices"`
+	System           *sysinfo.SysInfo          `json:"system_stats"`
+	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
+	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
+	MorphLogs        string                    `json:"morpheus_logs"`
 }
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -82,7 +81,6 @@ func main() {
 		destArray = portscanner.Start(psArray, 500*time.Millisecond)
 	}
 
-
 	// Gather system stats into a si array
 	sysStats := sysgatherer.SysGather()
 
@@ -98,12 +96,12 @@ func main() {
 
 	// Create instance of results struct from packages returns
 	results := Results{
-		ElasticStats:   esHealth,
-		ElasticIndices: esIndices,
-		System:         sysStats,
-		Scans:          destArray,
-		RabbitStatistics:    rabbitStuff,
-		MorphLogs:      string(morpheus),
+		ElasticStats:     esHealth,
+		ElasticIndices:   esIndices,
+		System:           sysStats,
+		Scans:            destArray,
+		RabbitStatistics: rabbitStuff,
+		MorphLogs:        string(morpheus),
 	}
 
 	resultjson, err := json.MarshalIndent(results, "", " ")

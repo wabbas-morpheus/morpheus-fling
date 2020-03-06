@@ -53,6 +53,8 @@ github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0
 github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200128172445-c12e969c0776/go.mod h1:wM24tRwd7RfKJ6uAUEeqLB0v5RTusNFUng+n0fd12NI=
 github.com/gomorpheus/morpheus-fling/rabbitIng v0.0.0-20200305213641-5fa1e113e717 h1:4Jes49ZdXYB6JhnI/OkHwCRecYSwmGVuaY8HXu0YtF0=
 github.com/gomorpheus/morpheus-fling/rabbitIng v0.0.0-20200305213641-5fa1e113e717/go.mod h1:UsysJLulGQafJcl0LxW7nWiWWADGmBGeYkhcUY7436k=
+github.com/gomorpheus/morpheus-fling/rabbitIng v0.0.0-20200306213123-ab47c9e4fb49 h1:bRWfl4BzO9KogQfXJiYiDK0bF/ssK8RpDbjDxJgEfTQ=
+github.com/gomorpheus/morpheus-fling/rabbitIng v0.0.0-20200306213123-ab47c9e4fb49/go.mod h1:UsysJLulGQafJcl0LxW7nWiWWADGmBGeYkhcUY7436k=
 github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776 h1:q22haySSjqnxDW43vjBjrtZlZYRNs8+3HusG18duE2k=
 github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200128172445-c12e969c0776/go.mod h1:x6pcmnNUBaSRv7MMgPMRUQfdBXz8kl7QNxAcSK+Jyto=
 github.com/gomorpheus/morpheus-fling/sysGatherer v0.0.0-20200220025947-74ac8bf99840 h1:z8hEsCNriYK0mUzNT09i09rvq277GsmTVfgO9ROE22A=

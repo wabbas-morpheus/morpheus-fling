@@ -53,7 +53,7 @@ type Results struct {
 	ElasticIndices	[]elasticing.Esindices	`json:"es_indices"`
 	System	*sysinfo.SysInfo	`json:"system_stats"`
 	Scans 	[]portscanner.ScanResult	`json:"port_scans,omitempty"`
-	RabbitStatistics	*rabbiting.RabbitResults `json:"rabbit_stats"`
+	RabbitStatistics	[]rabbiting.RabbitResults `json:"rabbit_stats"`
 	MorphLogs	string	`json:"morpheus_logs"`
 }
 

@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	elasticing "github.com/gomorpheus/morpheus-fling/elasticIng"
+	rabbiting "github.com/gomorpheus/morpheus-fling/rabbitIng"
 	"io/ioutil"
 	"log"
 	"os"
@@ -52,6 +53,7 @@ type Results struct {
 	ElasticIndices	[]elasticing.Esindices	`json:"es_indices"`
 	System	*sysinfo.SysInfo	`json:"system_stats"`
 	Scans 	[]portscanner.ScanResult	`json:"port_scans,omitempty"`
+	RabbitStatistics	*rabbiting.RabbitResults `json:"rabbit_stats"`
 	MorphLogs	string	`json:"morpheus_logs"`
 }
 
@@ -87,6 +89,7 @@ func main() {
 	// Gather elasticsearch health and indices into structs for results
 	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
+	rabbitStuff := rabbiting.RabbitStats()
 
 	morpheus, err := ioutil.ReadFile(*logfilePtr)
 	if err != nil {
@@ -99,6 +102,7 @@ func main() {
 		ElasticIndices: esIndices,
 		System:         sysStats,
 		Scans:          destArray,
+		RabbitStatistics:    rabbitStuff,
 		MorphLogs:      string(morpheus),
 	}
 
@@ -107,7 +111,7 @@ func main() {
 		log.Fatal("Can't encode to JSON", err)
 	}
 
-	fmt.Fprintf(os.Stdout, "%s", resultjson)
+	//fmt.Fprintf(os.Stdout, "%s", resultjson)
 	//FileWrtr("\nULTIMATE:\n" + string(resultjson), *outfilePtr)
 
 	// Base resultjson into Encryption package and write encrypted file and key

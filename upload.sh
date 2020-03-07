@@ -8,6 +8,7 @@ then
     echo 'Old version $OLDVERSION same as $NEWVERSION'
     read ANS
 fi
+vi CHANGELOG.md
 git tag -a $NEWVERSION -m $NEWVERSION
 echo "Ready to push $NEWVERSION (cntrl-c to quit)?"
 read ANS

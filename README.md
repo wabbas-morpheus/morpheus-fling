@@ -36,7 +36,7 @@ master file.  It encrypts the content and places a key into a .zip file with the
 Download the binary directly to your server.
 
 ```bash
-wget https://github.com/gomorpheus/morpheus-fling/releases/download/v2.1.3/morpheus-fling
+wget https://github.com/gomorpheus/morpheus-fling/releases/download/v2.1.4/morpheus-fling
 ```
 
 Give posix permissions to be executed.  Binary allows the specification of an `-infile` for port scanning.  Binary will by default write output to a file called `output.txt` but user can flag a separate outfile to be created and appended to.
@@ -68,6 +68,7 @@ slimshady@morpheus1:~# ./morpheus-fling --ulimit=204800
 morpheus-fling [options]
 Options:
 -infile     The source file for network port scanning.  If none is provided port scans will be skipped.
+-secfile    The morpheus secrets file.  Defaults to "/etc/morpheus/morpheus-secrets.json".
 -outfile    The destination directory of the generated package, "output.txt" by default.
 -ulimit     Ulimit of the system, defaults to 1024.
 -logfile    Logfile to add to the bundle.  Defaults to "/var/log/morpheus/morpheus-ui/current".

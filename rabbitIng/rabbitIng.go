@@ -18,7 +18,7 @@ type RabbitResults struct{
 	Consumers int    `json:consumer`
 }
 
-func RabbitStats() []RabbitResults {
+func RabbitStats(user string, password string) []RabbitResults {
 	manager := "http://127.0.0.1:15672/api/queues/"
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", manager, nil)
@@ -26,7 +26,7 @@ func RabbitStats() []RabbitResults {
 		log.Fatalf("Error getting response: %s", err)
 	}
 
-	req.SetBasicAuth("morpheus", "7f4a6fd594a8b962")
+	req.SetBasicAuth(user, password)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatalf("Error getting response: %s", err)

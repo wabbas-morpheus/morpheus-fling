@@ -6,6 +6,7 @@ import (
 	"fmt"
 	elasticing "github.com/gomorpheus/morpheus-fling/elasticIng"
 	rabbiting "github.com/gomorpheus/morpheus-fling/rabbitIng"
+	secparse "github.com/gomorpheus/morpheus-fling/secParse"
 	"io/ioutil"
 	"log"
 	"os"
@@ -22,6 +23,7 @@ import (
 
 var (
 	infilePtr  = flag.String("infile", "", "a string")
+	secfilePtr = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
 	outfilePtr = flag.String("outfile", path.Join(".", "output.json"), "a string")
 	uLimit     = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
@@ -32,6 +34,7 @@ var (
 const helpText = `morpheus-fling [options]
 Options:
 -infile     The source file for network port scanning.  If none is provided port scans will be skipped.
+-secfile    The morpheus secrets file.  Defaults to "/etc/morpheus/morpheus-secrets.json".
 -outfile    The destination directory of the generated package, "output.txt" by default.
 -ulimit     Ulimit of the system, defaults to 1024.
 -logfile    Logfile to add to the bundle.  Defaults to "/var/log/morpheus/morpheus-ui/current".
@@ -81,13 +84,16 @@ func main() {
 		destArray = portscanner.Start(psArray, 500*time.Millisecond)
 	}
 
+	superSecrets := secparse.ParseSecrets(*secfilePtr)
+	password := superSecrets.Rabbitmq.MorpheusPassword
+
 	// Gather system stats into a si array
 	sysStats := sysgatherer.SysGather()
 
 	// Gather elasticsearch health and indices into structs for results
 	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
-	rabbitStuff := rabbiting.RabbitStats()
+	rabbitStuff := rabbiting.RabbitStats("morpheus", password)
 
 	morpheus, err := ioutil.ReadFile(*logfilePtr)
 	if err != nil {

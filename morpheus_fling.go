@@ -29,6 +29,7 @@ var (
 	logfilePtr = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")
 	keyfilePtr = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
+	pubPtr     = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
 )
 
 const helpText = `morpheus-fling [options]
@@ -40,6 +41,7 @@ Options:
 -logfile    Logfile to add to the bundle.  Defaults to "/var/log/morpheus/morpheus-ui/current".
 -bundler    Path and file to bundle into.  Defaults to "/tmp/bundler.zip".
 -keyfile    Path and file to put the public key encrypted AES-GCM key into.  Defaults to "/tmp/bundlerkey.enc"
+-pubfile    Path and file for the public key used for encrypting the AES-GCM key.  Defaults to "/tmp/morpheus.pub"
 
 -help    Prints this text.
 Examples:
@@ -85,7 +87,7 @@ func main() {
 	}
 
 	superSecrets := secparse.ParseSecrets(*secfilePtr)
-	password := superSecrets.Rabbitmq.MorpheusPassword
+	rmqpassword := superSecrets.Rabbitmq.MorpheusPassword
 
 	// Gather system stats into a si array
 	sysStats := sysgatherer.SysGather()
@@ -93,7 +95,7 @@ func main() {
 	// Gather elasticsearch health and indices into structs for results
 	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
-	rabbitStuff := rabbiting.RabbitStats("morpheus", password)
+	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
 
 	morpheus, err := ioutil.ReadFile(*logfilePtr)
 	if err != nil {
@@ -119,7 +121,7 @@ func main() {
 	//FileWrtr("\nULTIMATE:\n" + string(resultjson), *outfilePtr)
 
 	// Base resultjson into Encryption package and write encrypted file and key
-	nonSense := encryptText.EncryptItAll("/tmp/this.pub", string(resultjson))
+	nonSense := encryptText.EncryptItAll(*pubPtr, string(resultjson))
 	nonText := nonSense.Ciphertext
 	nonKey := nonSense.EncryptedKey
 	FileWrtr(string(nonText), *outfilePtr)

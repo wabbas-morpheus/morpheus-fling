@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/dsnet/compress v0.0.1 // indirect
-	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200126095918-3dc5ce76b869
+	github.com/frankban/quicktest v1.7.3 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/gomorpheus/morpheus-fling/elasticIng v0.0.0-20200202194406-70554c8c7384
 	github.com/gomorpheus/morpheus-fling/encryptText v0.0.0-20200218155506-c45154273eb5
@@ -18,5 +18,4 @@ require (
 	github.com/pierrec/lz4 v2.4.1+incompatible // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	github.com/zcalusic/sysinfo v0.0.0-20200109185024-6491b6eabd49
-	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 )

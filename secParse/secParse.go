@@ -27,10 +27,13 @@ type Secret struct {
 func ParseSecrets(secfilePtr string) Secret {
 	jsonFile, err := os.Open(secfilePtr)
 	if err != nil {
-		log.Fatalf("Error reading secrets file: %s", err)
+		log.Fatalf("Error opening secrets file: %s", err)
 	}
 	defer jsonFile.Close()
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		log.Fatalf("Error reading secrets file: %s", err)
+	}
 	var secrets Secret
 	if err := json.Unmarshal(byteValue, &secrets); err != nil {
 		log.Fatalf("Error unmarshalling secrets file: %s", err)

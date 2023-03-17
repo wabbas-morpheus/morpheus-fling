@@ -1,7 +1,7 @@
 package filereader
 
 import (
-	portscanner "github.com/gomorpheus/morpheus-fling/portScanner"
+	portscanner "github.com/wabbas-morpheus/morpheus-fling/portScanner"
 	"reflect"
 	"testing"
 )

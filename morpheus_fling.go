@@ -131,6 +131,9 @@ func main() {
 	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {
 		log.Fatal(err)
 	}
+
+	decryptedText := encryptText.decryptedText(*pubPtr, string(resultjson))
+	fmt.Println(decryptedText)
 }
 
 func help() {

@@ -106,3 +106,8 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 	return resultStruct
 
 }
+
+func DecryptItAll(pubKeyFile string, plaintext string) EncryptResult {
+
+	return "Decrypted text "
+}

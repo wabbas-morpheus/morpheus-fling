@@ -1,5 +1,5 @@
-module github.com/gomorpheus/morpheus-fling/sysGatherer
+module sysGatherer
 
-go 1.13
+go 1.20
 
-require github.com/zcalusic/sysinfo v0.0.0-20200109185024-6491b6eabd49
+require github.com/zcalusic/sysinfo v0.9.5

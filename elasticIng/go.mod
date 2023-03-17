@@ -1,8 +1,8 @@
-module github.com/gomorpheus/morpheus-fling/elasticIng
+module elasticIng
+
+go 1.20
 
 require (
-	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200126095918-3dc5ce76b869
-	github.com/mitchellh/mapstructure v1.1.2
+	github.com/elastic/go-elasticsearch/v7 v7.17.7
+	github.com/mitchellh/mapstructure v1.5.0
 )
-
-go 1.13

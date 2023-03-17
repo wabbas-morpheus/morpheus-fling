@@ -1,3 +1,3 @@
-module github.com/gomorpheus/morpheus-fling/secParse
+module secParse
 
-go 1.13
+go 1.20

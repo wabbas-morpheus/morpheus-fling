@@ -1,5 +1,5 @@
-github.com/gomorpheus/morpheus-fling v2.0.1+incompatible h1:7kDKznnCfBFU1einQEiNeW7ldd9aQOaBDjaEHHC+M94=
-github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200218155506-c45154273eb5 h1:yRf9RyVnde/y4wuoN+p4ALAqfZgjfej09RzZcAtUE8o=
-github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200218155506-c45154273eb5/go.mod h1:wM24tRwd7RfKJ6uAUEeqLB0v5RTusNFUng+n0fd12NI=
-golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e h1:vcxGaoTs7kV8m5Np9uUNQin4BrLOthgV7252N8V+FwY=
+github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200430142930-d7b7555e7ad0 h1:jAFmZb5SAnFlPpyqpjMgEcZl/nJHchKBipyxedI44n4=
+github.com/gomorpheus/morpheus-fling/portScanner v0.0.0-20200430142930-d7b7555e7ad0/go.mod h1:wM24tRwd7RfKJ6uAUEeqLB0v5RTusNFUng+n0fd12NI=
 golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.1.0 h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=
+golang.org/x/sync v0.1.0/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=

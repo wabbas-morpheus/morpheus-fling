@@ -1,4 +1,4 @@
-module sysGatherer
+module github.com/wabbas-morpheus/morpheus-fling/sysGatherer
 
 go 1.20
 

@@ -1,4 +1,4 @@
-module portScanner
+module github.com/wabbas-morpheus/morpheus-fling/portScanner
 
 go 1.20
 

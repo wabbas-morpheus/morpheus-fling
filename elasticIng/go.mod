@@ -1,4 +1,4 @@
-module elasticIng
+module github.com/wabbas-morpheus/morpheus-fling/elasticIng
 
 go 1.20
 

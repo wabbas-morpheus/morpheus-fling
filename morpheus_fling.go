@@ -132,7 +132,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	decryptedText := encryptText.decryptedText(*pubPtr, string(resultjson))
+	decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
 	fmt.Println(decryptedText)
 }
 

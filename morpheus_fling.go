@@ -122,8 +122,8 @@ func main() {
 
 	// Base resultjson into Encryption package and write encrypted file and key
 	nonSense := encryptText.EncryptItAll(*pubPtr, string(resultjson))
-	nonText := nonSense.Ciphertext
-	nonKey := nonSense.EncryptedKey
+	_ nonText := nonSense.Ciphertext
+	_ nonKey := nonSense.EncryptedKey
 	//FileWrtr(string(nonText), *outfilePtr)
 	//FileWrtr(string(nonKey), *keyfilePtr)
 

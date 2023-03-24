@@ -16,6 +16,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"fmt"
 )
 
 type EncryptResult struct {
@@ -108,6 +109,6 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 }
 
 func DecryptItAll(pubKeyFile string, plaintext string) string {
-
+	fmt.Println("Hello World!")
 	return "Decrypted text "
 }

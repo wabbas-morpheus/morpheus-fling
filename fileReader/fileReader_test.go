@@ -4,6 +4,7 @@ import (
 	portscanner "github.com/wabbas-morpheus/morpheus-fling/portScanner"
 	"reflect"
 	"testing"
+	
 )
 
 func TestFileToStructArray(t *testing.T) {

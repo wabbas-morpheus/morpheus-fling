@@ -136,7 +136,7 @@ func main() {
 
 	decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
 	fmt.Println(decryptedText)
-	fmt.Println("Hello World 2")
+	
 }
 
 func help() {

@@ -126,7 +126,7 @@ func main() {
 	nonKey := nonSense.EncryptedKey
 	_ = nonText
 	_ = nonKey
-	FileWrtr(string("hello"), *outfilePtr)
+	FileWrtr(string(nonText), *outfilePtr)
 	FileWrtr(string(nonKey), *keyfilePtr)
 
 	// Bundle the whole shebang

@@ -124,8 +124,8 @@ func main() {
 	nonSense := encryptText.EncryptItAll(*pubPtr, string(resultjson))
 	nonText := nonSense.Ciphertext
 	nonKey := nonSense.EncryptedKey
-	FileWrtr(string(nonText), *outfilePtr)
-	FileWrtr(string(nonKey), *keyfilePtr)
+	//FileWrtr(string(nonText), *outfilePtr)
+	//FileWrtr(string(nonKey), *keyfilePtr)
 
 	// Bundle the whole shebang
 	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {

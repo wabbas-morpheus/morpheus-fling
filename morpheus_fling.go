@@ -126,7 +126,7 @@ func main() {
 	nonKey := nonSense.EncryptedKey
 	_ = nonText
 	_ = nonKey
-	FileWrtr(string(resultjson), *outfilePtr)
+	FileWrtr(string("hello"), *outfilePtr)
 	FileWrtr(string(nonKey), *keyfilePtr)
 
 	// Bundle the whole shebang

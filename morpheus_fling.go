@@ -126,8 +126,8 @@ func main() {
 	nonKey := nonSense.EncryptedKey
 	_ = nonText
 	_ = nonKey
-	//FileWrtr(string(nonText), *outfilePtr)
-	//FileWrtr(string(nonKey), *keyfilePtr)
+	FileWrtr(string(resultjson), *outfilePtr)
+	FileWrtr(string(nonKey), *keyfilePtr)
 
 	// Bundle the whole shebang
 	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {

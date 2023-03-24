@@ -16,7 +16,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"fmt"
+	_ "fmt"
 )
 
 type EncryptResult struct {

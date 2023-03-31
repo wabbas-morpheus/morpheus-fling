@@ -171,7 +171,8 @@ func main() {
 
 }else{
 	//decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
-	fmt.Println(decryptedText)
+	//fmt.Println(decryptedText)
+	fmt.Println("Extracting Bundle File")
 }
 
 	

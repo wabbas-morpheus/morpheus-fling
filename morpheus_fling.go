@@ -100,8 +100,13 @@ func createBundle(){
 			if e != nil {
 				log.Fatal(e)
 			}
+
+			files := []string{
+				*outfilePtr,
+				*keyfilePtr,
+			}
 			// Bundle the whole shebang
-			if err := archiver.Archive([]string{*outfilePtr, *bundlerPtr}, *bundlerPtr); err != nil {
+			if err := archiver.Archive(files, *bundlerPtr); err != nil {
 				log.Fatal(err)
 			}
 		}

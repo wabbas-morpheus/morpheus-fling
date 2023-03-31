@@ -191,12 +191,19 @@ func main() {
 	//fmt.Println(decryptedText)
 	fmt.Println("Extracting Bundle File")
 	extractBundle()
-	//nonText, err := os.ReadFile("extracted/output.json")
+	nonText, err := os.ReadFile("extracted/output.json")
+	if err != nil {
+		log.Fatal("Can't load key file", err)
+	}
+
 	nonKey, err := os.ReadFile("extracted/bundlerkey.enc")
 	if err != nil {
 		log.Fatal("Can't load key file", err)
 	}
-	fmt.Println(string(nonKey))
+
+	decryptedText := encryptText.DecryptItAll(*pubPtr, string(nonText),string(nonKey))
+	fmt.Println("Decryptedkey = ",decryptedText)
+	
 }
 
 	

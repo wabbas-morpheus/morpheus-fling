@@ -73,16 +73,16 @@ func FileWrtr(content string, fileName string) {
 			if e != nil {
 				log.Fatal(e)
 			}
-		}else{
-			f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-			if err != nil {
-				log.Println(err)
-			}
-			defer f.Close()
-			if _, err := f.WriteString(content); err != nil {
-				log.Println(err)
-			}
-	}
+		}
+		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Println(err)
+		}
+		defer f.Close()
+		if _, err := f.WriteString(content); err != nil {
+			log.Println(err)
+		}
+	
 }
 
 func fileExists(filename string) bool {
@@ -102,17 +102,17 @@ func createBundle(){
 			if e != nil {
 				log.Fatal(e)
 			}
-		}else{
-
-			files := []string{
-				*outfilePtr,
-				*keyfilePtr,
-			}
-			// Bundle the whole shebang
-			if err := archiver.Archive(files, *bundlerPtr); err != nil {
-				log.Fatal(err)
-			}
 		}
+
+		files := []string{
+			*outfilePtr,
+			*keyfilePtr,
+		}
+		// Bundle the whole shebang
+		if err := archiver.Archive(files, *bundlerPtr); err != nil {
+			log.Fatal(err)
+		}
+		
 	
 }
 

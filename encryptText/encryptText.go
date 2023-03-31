@@ -123,7 +123,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 	var err error
 	var privateKey *rsa.PrivateKey
 	var decryptedKey, label []byte
-	
+	var parsedKey interface{}
 
 	pubby, err := ioutil.ReadFile(privateKeyFile)
 	if err != nil {
@@ -132,7 +132,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err := x509.ParsePKCS8PrivateKey(pubPem.Bytes)
+	parsedKey, err := x509.ParsePKCS1PrivateKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}

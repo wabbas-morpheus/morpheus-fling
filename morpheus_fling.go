@@ -111,7 +111,7 @@ func createBundle(){
 func extractBundle(){
 
 	// Bundle the whole shebang
-	if err := archiver.Extract(*bundlerPtr,"bundlerkey.enc","/tmp/myfiles"); err != nil {
+	if err := archiver.Unarchive(*bundlerPtr,"extracted/"); err != nil {
 		log.Fatal(err)
 	}
 

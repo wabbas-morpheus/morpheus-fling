@@ -191,9 +191,9 @@ func main() {
 	//fmt.Println(decryptedText)
 	fmt.Println("Extracting Bundle File")
 	extractBundle()
-	nonText, err := os.ReadFile("extracted/output.json")
+	//nonText, err := os.ReadFile("extracted/output.json")
 	nonKey, err := os.ReadFile("extracted/bundlerkey.enc")
-	fmt.Println(String(nonKey))
+	fmt.Println(string(nonKey))
 }
 
 	

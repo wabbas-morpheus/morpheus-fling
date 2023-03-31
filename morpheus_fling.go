@@ -84,6 +84,19 @@ func fileExists(filename string) bool {
     return !info.IsDir()
 }
 
+func createBundle(*bundleFilePath){
+
+	if (fileExists(*bundlerPtr)){
+		fmt.Println("Bundler File already exists")
+	} else
+	{
+		// Bundle the whole shebang
+		if err := archiver.Archive([]string{*outfilePtr, *bundleFilePath}, *bundlerPtr); err != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
 // Need to initialize the ini file and pass into another function to iterate?
 func main() {
 
@@ -141,15 +154,7 @@ func main() {
 	FileWrtr(string(nonKey), *keyfilePtr)
 
 
-	if (fileExists(*bundlerPtr)){
-		fmt.Println("Bundler File already exists")
-	} else
-	{
-		// Bundle the whole shebang
-		if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {
-			log.Fatal(err)
-		}
-	}
+	createBundle(*bundlerPtr)
 
 	
 

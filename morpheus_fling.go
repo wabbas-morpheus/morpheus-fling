@@ -193,6 +193,9 @@ func main() {
 	extractBundle()
 	//nonText, err := os.ReadFile("extracted/output.json")
 	nonKey, err := os.ReadFile("extracted/bundlerkey.enc")
+	if err != nil {
+		log.Fatal("Can't load key file", err)
+	}
 	fmt.Println(string(nonKey))
 }
 

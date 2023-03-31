@@ -68,7 +68,7 @@ type Results struct {
 func FileWrtr(content string, fileName string) {
 	
 
-		f, err := os.Create(fileName, os.O_APPEND|os.O_CREATE|os.O_TRUNC, 0644)
+		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_TRUNC, 0644)
 		if err != nil {
 			log.Println(err)
 		}

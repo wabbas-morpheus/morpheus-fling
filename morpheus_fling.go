@@ -170,7 +170,7 @@ func main() {
 	createBundle()
 
 }else{
-	decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
+	//decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
 	fmt.Println(decryptedText)
 }
 

@@ -88,7 +88,6 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 	var err error
 	var publicKey *rsa.PublicKey
 	var ciphertext, encryptedKey, label []byte
-	var parsedKey interface{}
 
 	message := []byte(plaintext)
 	key := []byte(genRandom())
@@ -103,7 +102,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err = x509.ParsePKCS1PublicKey(pubPem.Bytes)
+	parsedKey, err := x509.ParsePKCS1PublicKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}
@@ -133,7 +132,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err = x509.ParsePKCS1PrivateKey(pubPem.Bytes)
+	parsedKey, err := x509.ParsePKCS1PrivateKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}

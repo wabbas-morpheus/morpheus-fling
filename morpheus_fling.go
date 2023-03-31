@@ -147,15 +147,12 @@ func main() {
 	else
 	{
 		// Bundle the whole shebang
-	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {
-		log.Fatal(err)
-	}
+		if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {
+			log.Fatal(err)
+		}
 	}
 
-	// Bundle the whole shebang
-	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {
-		log.Fatal(err)
-	}
+	
 
 	decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
 	fmt.Println(decryptedText)

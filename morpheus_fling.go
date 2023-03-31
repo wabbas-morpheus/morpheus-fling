@@ -84,14 +84,14 @@ func fileExists(filename string) bool {
     return !info.IsDir()
 }
 
-func createBundle(*bundleFilePath){
+func createBundle(){
 
 	if (fileExists(*bundlerPtr)){
 		fmt.Println("Bundler File already exists")
 	} else
 	{
 		// Bundle the whole shebang
-		if err := archiver.Archive([]string{*outfilePtr, *bundleFilePath}, *bundlerPtr); err != nil {
+		if err := archiver.Archive([]string{*outfilePtr, *bundlerPtr}, *bundlerPtr); err != nil {
 			log.Fatal(err)
 		}
 	}
@@ -154,7 +154,7 @@ func main() {
 	FileWrtr(string(nonKey), *keyfilePtr)
 
 
-	createBundle(*bundlerPtr)
+	createBundle()
 
 	
 

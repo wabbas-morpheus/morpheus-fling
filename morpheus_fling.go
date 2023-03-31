@@ -108,6 +108,15 @@ func createBundle(){
 	
 }
 
+func extractBundle(){
+
+	// Bundle the whole shebang
+	if err := archiver.Extract(*bundlerPtr,"bundlerkey.enc","output/myfiles"); err != nil {
+		log.Fatal(err)
+	}
+
+}
+
 // Need to initialize the ini file and pass into another function to iterate?
 func main() {
 
@@ -173,6 +182,7 @@ func main() {
 	//decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
 	//fmt.Println(decryptedText)
 	fmt.Println("Extracting Bundle File")
+	extractBundle()
 }
 
 	

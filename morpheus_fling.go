@@ -30,7 +30,7 @@ var (
 	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")
 	keyfilePtr = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
 	pubPtr     = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
-	privatekeyPtr = flag.String("privatefile", "/root/morpheus-fling/morpheus.pem", "a string")
+	privatekeyPtr = flag.String("privatefile", "/root/morpheus.pem", "a string")
 	extractPtr    = flag.Bool("extract",false,"a bool")
 )
 

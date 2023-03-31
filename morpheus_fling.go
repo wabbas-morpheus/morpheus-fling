@@ -141,10 +141,9 @@ func main() {
 	FileWrtr(string(nonKey), *keyfilePtr)
 
 
-	if (fileExists){
+	if (fileExists(*bundlerPtr)){
 		fmt.Println("Bundler File already exists")
-	}
-	else
+	} else
 	{
 		// Bundle the whole shebang
 		if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {

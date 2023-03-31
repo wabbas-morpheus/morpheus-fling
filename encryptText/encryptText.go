@@ -16,7 +16,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	_ "fmt"
+	"fmt"
 )
 
 type EncryptResult struct {
@@ -91,6 +91,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 	message := []byte(plaintext)
 	key := []byte(genRandom())
+	fmt.Println("key before encryption=",string(key))
 	ciphertext, err = encryptText(message, key)
 	if err != nil {
 		log.Fatalf("Error encrypting text: %s", err)
@@ -102,7 +103,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err := x509.ParsePKIXPublicKey(pubPem.Bytes)
+	parsedKey, err := x509.ParsePKCS1PublicKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}
@@ -132,7 +133,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err = x509.ParsePKCS1PrivateKey(pubPem.Bytes)
+	parsedKey, err := x509.ParsePKCS1PrivateKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}

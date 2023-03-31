@@ -137,7 +137,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}
 
-	privateKey = parsedKey.(*rsa.PrivateKey)
+	privateKey = parsedKey.(rsa.PrivateKey)
 	decryptedKey = decryptKey(privateKey, encryptedKey, label)
 
 	return string(decryptedKey)

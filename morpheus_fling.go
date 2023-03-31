@@ -66,7 +66,7 @@ type Results struct {
 
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
-	
+		//Remove existing files
 		e := os.Remove(fileName)
 		if e != nil {
 			log.Fatal(e)
@@ -92,6 +92,7 @@ func fileExists(filename string) bool {
 
 func createBundle(){
 
+		//Remove exiting bundle file
 		if (fileExists(*bundlerPtr)){
 			fmt.Println("Bundler File already exists. Replacing file")
 			e := os.Remove(*bundlerPtr)

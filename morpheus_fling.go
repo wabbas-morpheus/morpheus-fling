@@ -30,6 +30,7 @@ var (
 	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")
 	keyfilePtr = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
 	pubPtr     = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
+	extractPtr    = flag.Bool("extract",false,"a bool")
 )
 
 const helpText = `morpheus-fling [options]
@@ -113,6 +114,8 @@ func main() {
 	flag.Usage = help
 	flag.Parse()
 
+	
+	if !*extractPtr{
 	// Initialize an empty ScanResult slice, omitted from result if empty
 	var destArray []portscanner.ScanResult
 	if *infilePtr != "" {
@@ -166,10 +169,12 @@ func main() {
 
 	createBundle()
 
-	
-
+}else{
 	decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
 	fmt.Println(decryptedText)
+}
+
+	
 	
 }
 

@@ -67,8 +67,11 @@ type Results struct {
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
 	
-
-		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_TRUNC, 0644)
+		e := os.Remove(fileName)
+		if e != nil {
+			log.Fatal(e)
+		}
+		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			log.Println(err)
 		}

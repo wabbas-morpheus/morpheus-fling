@@ -50,6 +50,9 @@ Generates a bundle with port scans, system stats, elasticsearch results and morp
 
 Generates a bundle with no portscans in it at /tmp/bundler.zip
    $ ./morpheus-fling
+
+Specify current directory for bundler and keyfile path
+   $ go run morpheus_fling.go -bundler bundler.zip -keyfile bundlerkey.enc
 `
 
 type Results struct {
@@ -71,6 +74,14 @@ func FileWrtr(content string, fileName string) {
 	if _, err := f.WriteString(content); err != nil {
 		log.Println(err)
 	}
+}
+
+func fileExists(filename string) bool {
+    info, err := os.Stat(filename)
+    if os.IsNotExist(err) {
+        return false
+    }
+    return !info.IsDir()
 }
 
 // Need to initialize the ini file and pass into another function to iterate?
@@ -128,6 +139,18 @@ func main() {
 	_ = nonKey
 	FileWrtr(string(nonText), *outfilePtr)
 	FileWrtr(string(nonKey), *keyfilePtr)
+
+
+	if (fileExists){
+		fmt.Println("Bundler File already exists")
+	}
+	else
+	{
+		// Bundle the whole shebang
+	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {
+		log.Fatal(err)
+	}
+	}
 
 	// Bundle the whole shebang
 	if err := archiver.Archive([]string{*outfilePtr, *keyfilePtr}, *bundlerPtr); err != nil {

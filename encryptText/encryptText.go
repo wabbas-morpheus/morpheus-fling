@@ -121,7 +121,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byte) string {
 
 	var err error
-	var privateKey rsa.PrivateKey
+	var privateKey crypto.PrivateKey
 	var decryptedKey, label []byte
 	
 
@@ -137,7 +137,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}
 
-	privateKey = parsedKey.(rsa.PrivateKey)
+	privateKey = parsedKey.(crypto.PrivateKey)
 	decryptedKey = decryptKey(privateKey, encryptedKey, label)
 
 	return string(decryptedKey)

@@ -118,26 +118,26 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 }
 
-func DecryptItAll(pubKeyFile string, encryptedText string,encryptedKey string) string {
+func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey string) string {
 
 	var err error
-	var publicKey *rsa.PublicKey
-	var ciphertext, encryptedKey, label []byte
+	var privateKey *rsa.PrivateKey
+	//var ciphertext, encryptedKey, label []byte
 
-	pubby, err := ioutil.ReadFile(pubKeyFile)
+	pubby, err := ioutil.ReadFile(privateKeyFile)
 	if err != nil {
 		log.Fatalf("Error reading public key file: %s", err)
 	}
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err := x509.ParsePKIXPublicKey(pubPem.Bytes)
+	parsedKey, err := x509.ParsePKIXPrivateKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}
 
-	publicKey = parsedKey.(*rsa.PublicKey)
-	decryptedKey = decryptKey(publicKey, encryptedKey, label)
+	privateKey = parsedKey.(*rsa.PrivateKey)
+	decryptedKey = decryptKey(privateKey, encryptedKey, label)
 
 	return string(decryptedKey)
 }

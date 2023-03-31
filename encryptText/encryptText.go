@@ -74,7 +74,7 @@ func encryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (encryptedTe
 	return
 }
 
-func decryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (decryptedText string) {
+func decryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (decryptedText []byte) {
 	var err error
 	var md5_hash hash.Hash
 	md5_hash = md5.New()

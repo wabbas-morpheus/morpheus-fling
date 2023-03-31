@@ -30,6 +30,7 @@ var (
 	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")
 	keyfilePtr = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
 	pubPtr     = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
+	privatekeyPtr = flag.String("pubfile", "/root/morpheus-fling/morpheus.pem", "a string")
 	extractPtr    = flag.Bool("extract",false,"a bool")
 )
 
@@ -201,7 +202,7 @@ func main() {
 		log.Fatal("Can't load key file", err)
 	}
 
-	decryptedText := encryptText.DecryptItAll(*pubPtr, string(nonText),string(nonKey))
+	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, string(nonText),string(nonKey))
 	fmt.Println("Decryptedkey = ",decryptedText)
 	
 }

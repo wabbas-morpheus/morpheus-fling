@@ -68,19 +68,21 @@ type Results struct {
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
 		//Remove existing files
-		e := os.Remove(fileName)
-		if e != nil {
-			log.Fatal(e)
-		}
-		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			log.Println(err)
-		}
-		defer f.Close()
-		if _, err := f.WriteString(content); err != nil {
-			log.Println(err)
-		}
-	
+		if (fileExists(fileName)){
+			e := os.Remove(fileName)
+			if e != nil {
+				log.Fatal(e)
+			}
+		}else{
+			f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			if err != nil {
+				log.Println(err)
+			}
+			defer f.Close()
+			if _, err := f.WriteString(content); err != nil {
+				log.Println(err)
+			}
+	}
 }
 
 func fileExists(filename string) bool {
@@ -100,6 +102,7 @@ func createBundle(){
 			if e != nil {
 				log.Fatal(e)
 			}
+		}else{
 
 			files := []string{
 				*outfilePtr,

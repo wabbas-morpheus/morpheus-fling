@@ -16,7 +16,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	_ "fmt"
+	"fmt"
 )
 
 type EncryptResult struct {
@@ -91,6 +91,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 	message := []byte(plaintext)
 	key := []byte(genRandom())
+	fmt.Println("key before encryption = ",strin(key))
 	ciphertext, err = encryptText(message, key)
 	if err != nil {
 		log.Fatalf("Error encrypting text: %s", err)

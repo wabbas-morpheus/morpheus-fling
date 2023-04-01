@@ -102,7 +102,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err := x509.ParsePKCS1PublicKey(pubPem.Bytes)
+	parsedKey, err := x509.ParsePKIXPublicKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}

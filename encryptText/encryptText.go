@@ -123,7 +123,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 	var err error
 	var privateKey *rsa.PrivateKey
 	var decryptedKey, label []byte
-	// var parsedKey interface{}
+	var parsedKey interface{}
 
 	pubby, err := ioutil.ReadFile(privateKeyFile)
 	if err != nil {

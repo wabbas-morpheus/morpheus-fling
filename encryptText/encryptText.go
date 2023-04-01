@@ -132,7 +132,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 
 	pubPem, _ := pem.Decode([]byte(pubby))
 
-	parsedKey, err := x509.ParsePKCS1PrivateKey(pubPem.Bytes)
+	parsedKey, err = x509.ParsePKCS1PrivateKey(pubPem.Bytes)
 	if err != nil {
 		log.Fatalf("Error parsing PKIX: %s", err)
 	}

@@ -91,7 +91,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 	message := []byte(plaintext)
 	key := []byte(genRandom())
-	fmt.Println("key before encryption = ",strin(key))
+	fmt.Println("key before encryption = ",string(key))
 	ciphertext, err = encryptText(message, key)
 	if err != nil {
 		log.Fatalf("Error encrypting text: %s", err)

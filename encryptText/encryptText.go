@@ -147,8 +147,9 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 
 	var err error
 	var privateKey *rsa.PrivateKey
-	var decryptedKey, label []byte
+	var decryptedKey,plaintext label []byte
 	var parsedKey interface{}
+
 
 	pubby, err := ioutil.ReadFile(privateKeyFile)
 	if err != nil {
@@ -164,7 +165,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 	//
 	privateKey = parsedKey.(*rsa.PrivateKey)
 	decryptedKey = decryptKey(privateKey, encryptedKey, label)
-	plaintext = decryptText(encryptedText,decryptedKey)
+	plaintext, _ = decryptText(encryptedText,decryptedKey)
 
 	return string(decryptedKey)
 }

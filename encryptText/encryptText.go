@@ -166,6 +166,6 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 	privateKey = parsedKey.(*rsa.PrivateKey)
 	decryptedKey = decryptKey(privateKey, encryptedKey, label)
 	plaintext, _ = decryptText(encryptedText,decryptedKey)
-
+	fmt.Println("plainText =",string(plaintext))
 	return string(decryptedKey)
 }

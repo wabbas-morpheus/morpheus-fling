@@ -80,7 +80,7 @@ func decryptText(ciphertext []byte, key []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
+	plaintext, err := gcm.Open(nonce, nonce, ciphertext, nil)
 	if err != nil {
 		panic(err.Error())
 	}

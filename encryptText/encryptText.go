@@ -147,7 +147,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 
 	var err error
 	var privateKey *rsa.PrivateKey
-	var decryptedKey,plaintext label []byte
+	var decryptedKey,plaintext, label []byte
 	var parsedKey interface{}
 
 

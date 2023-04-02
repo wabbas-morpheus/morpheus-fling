@@ -64,6 +64,30 @@ func encryptText(plaintext []byte, key []byte) ([]byte, error) {
 	return gcm.Seal(nonce, nonce, plaintext, nil), nil
 }
 
+func decryptText(ciphertext []byte, key []byte) ([]byte, error) {
+	c, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+
+	gcm, err := cipher.NewGCM(c)
+	if err != nil {
+		return nil, err
+	}
+
+	nonce := make([]byte, gcm.NonceSize())
+	if _, err = io.ReadFull(crand.Reader, nonce); err != nil {
+		return nil, err
+	}
+
+	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return plaintext
+}
+
 func encryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (encryptedText []byte) {
 	var err error
 	var md5_hash hash.Hash
@@ -140,6 +164,7 @@ func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byt
 	//
 	privateKey = parsedKey.(*rsa.PrivateKey)
 	decryptedKey = decryptKey(privateKey, encryptedKey, label)
+	plaintext = decryptText(encryptedText,decryptedKey)
 
 	return string(decryptedKey)
 }

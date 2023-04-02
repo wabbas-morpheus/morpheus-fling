@@ -202,7 +202,7 @@ func main() {
 		log.Fatal("Can't load key file", err)
 	}
 
-	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, string(nonText),nonKey)
+	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText,nonKey)
 	fmt.Println("Decryptedkey = ",decryptedText)
 	
 }

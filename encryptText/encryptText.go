@@ -143,7 +143,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 }
 
-func DecryptItAll(privateKeyFile string, encryptedText string,encryptedKey []byte) string {
+func DecryptItAll(privateKeyFile string, encryptedText []byte,encryptedKey []byte) string {
 
 	var err error
 	var privateKey *rsa.PrivateKey

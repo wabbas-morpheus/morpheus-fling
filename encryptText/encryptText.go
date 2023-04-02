@@ -85,7 +85,7 @@ func decryptText(ciphertext []byte, key []byte) ([]byte, error) {
 		panic(err.Error())
 	}
 
-	return plaintext
+	return plaintext, nil
 }
 
 func encryptKey(publicKey *rsa.PublicKey, sourceText, label []byte) (encryptedText []byte) {

@@ -208,14 +208,12 @@ func main() {
 	fmt.Println("Decrypted Text = ",decryptedText)
 	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
 
-	type info struct {
-		Data Results
-	}
-
-	var i info
 	
 
-	if err := json.Unmarshal((decryptedText), &i); err != nil {
+	var i []Results
+	
+
+	if err := json.Unmarshal([]byte(decryptedText), &i); err != nil {
         fmt.Println("ugh: ", err)
     }
 	fmt.Println("logs: ",i.Data.MorphLogs)

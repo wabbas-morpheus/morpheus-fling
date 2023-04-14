@@ -75,7 +75,7 @@ func decryptText(ciphertext []byte, key []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	nonceSize := make([]byte, gcm.NonceSize())
+	nonceSize := gcm.NonceSize()
 	 if len(ciphertext) < nonceSize {
         fmt.Println(err)
     }

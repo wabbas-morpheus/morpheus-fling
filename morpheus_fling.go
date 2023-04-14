@@ -216,7 +216,7 @@ func main() {
 	if err := json.Unmarshal([]byte(decryptedText), &i); err != nil {
         fmt.Println("ugh: ", err)
     }
-	fmt.Println("logs: ",i.Data.MorphLogs)
+	fmt.Println("logs: ",i.MorphLogs)
 	
 }
 

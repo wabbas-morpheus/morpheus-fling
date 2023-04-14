@@ -120,8 +120,8 @@ func createBundle(){
 func extractBundle(){
 
 	// Extract the encrypted bundle
-	t:= time.now()
-	timeStamp = t.Format("20060102150405")
+	t := time.now()
+	timeStamp := t.Format("20060102150405")
 	folderName := "extracted_"+timeStamp
 	if err := archiver.Unarchive(*bundlerPtr,folderName+"/"); err != nil {
 		log.Fatal(err)

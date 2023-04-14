@@ -119,8 +119,11 @@ func createBundle(){
 
 func extractBundle(){
 
-	// Bundle the whole shebang
-	if err := archiver.Unarchive(*bundlerPtr,"extracted/"); err != nil {
+	// Extract the encrypted bundle
+	t:= time.now()
+	timeStamp = t.Format("20060102150405")
+	folderName := "extracted_"+timeStamp
+	if err := archiver.Unarchive(*bundlerPtr,folderName+"/"); err != nil {
 		log.Fatal(err)
 	}
 
@@ -194,7 +197,7 @@ func main() {
 	extractBundle()
 	nonText, err := os.ReadFile("extracted/output.json")
 	if err != nil {
-		log.Fatal("Can't load key file", err)
+		log.Fatal("Can't load key output file", err)
 	}
 
 	nonKey, err := os.ReadFile("extracted/bundlerkey.enc")

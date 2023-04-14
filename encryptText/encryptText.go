@@ -75,12 +75,15 @@ func decryptText(ciphertext []byte, key []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	nonce := make([]byte, gcm.NonceSize())
-	if _, err = io.ReadFull(crand.Reader, nonce); err != nil {
-		return nil, err
-	}
-
-	plaintext, err := gcm.Open(nonce, nonce, ciphertext, nil)
+	nonceSize := make([]byte, gcm.NonceSize())
+	 if len(ciphertext) < nonceSize {
+        fmt.Println(err)
+    }
+	// if _, err = io.ReadFull(crand.Reader, nonce); err != nil {
+	// 	return nil, err
+	// }
+	nonce, ciphertext := ciphertext[:nonceSize], ciphertext[nonceSize:]
+	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
 	if err != nil {
 		panic(err.Error())
 	}

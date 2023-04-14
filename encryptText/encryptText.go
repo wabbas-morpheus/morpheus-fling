@@ -24,6 +24,7 @@ type EncryptResult struct {
 	EncryptedKey []byte
 }
 
+
 func genRandom() string {
 	rand.Seed(time.Now().UnixNano())
 	digits := "0123456789"
@@ -169,6 +170,6 @@ func DecryptItAll(privateKeyFile string, encryptedText []byte,encryptedKey []byt
 	privateKey = parsedKey.(*rsa.PrivateKey)
 	decryptedKey = decryptKey(privateKey, encryptedKey, label)
 	plaintext, _ = decryptText(encryptedText,decryptedKey)
-	fmt.Println("plainText =",string(plaintext))
-	return string(decryptedKey)
+	fmt.Println("Decrypted Key =",string(decryptedKey))
+	return string(plaintext)
 }

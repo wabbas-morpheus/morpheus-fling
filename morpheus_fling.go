@@ -117,7 +117,7 @@ func createBundle(){
 	
 }
 
-func extractBundle(){
+func extractBundle() string {
 
 	// Extract the encrypted bundle
 	t := time.Now()
@@ -126,7 +126,7 @@ func extractBundle(){
 	if err := archiver.Unarchive(*bundlerPtr,folderName+"/"); err != nil {
 		log.Fatal(err)
 	}
-
+	return folderName
 }
 
 // Need to initialize the ini file and pass into another function to iterate?
@@ -191,22 +191,22 @@ func main() {
 	createBundle()
 
 }else{
-	//decryptedText := encryptText.DecryptItAll(*pubPtr, string(resultjson))
-	//fmt.Println(decryptedText)
+	
 	fmt.Println("Extracting Bundle File")
-	extractBundle()
-	nonText, err := os.ReadFile("extracted/output.json")
+	folderName := extractBundle()
+	nonText, err := os.ReadFile(folderName+"/output.json")
 	if err != nil {
-		log.Fatal("Can't load key output file", err)
+		log.Fatal("Can't load output file", err)
 	}
 
-	nonKey, err := os.ReadFile("extracted/bundlerkey.enc")
+	nonKey, err := os.ReadFile(folderName+"/bundlerkey.enc")
 	if err != nil {
 		log.Fatal("Can't load key file", err)
 	}
 
 	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText,nonKey)
-	fmt.Println("Decryptedkey = ",decryptedText)
+	fmt.Println("Decrypted Text = ",decryptedText)
+	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
 	
 }
 

@@ -164,7 +164,10 @@ func checkHealth(){
     var result map[string]interface{}
     json.Unmarshal([]byte(byteValue), &result)
 
-    fmt.Println(result["es_stats"][0])
+	for key, value := range result {
+		fmt.Printf("Key: %s === Value: %s \n", key, value)
+	}
+    // fmt.Println(result["es_stats"][0])
 }
 }
 

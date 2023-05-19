@@ -164,12 +164,12 @@ func checkHealth(){
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
 	// we initialize our Users array
-	var results Results.ElasticStats
+	var es *elasticing.Esstats
 
-	json.Unmarshal(byteValue, &results)
+	json.Unmarshal(byteValue, &es)
 
-	for i := 0; i < len(results.Esstats); i++ {
-		fmt.Println("ES Type: " + results.ElasticStats.Esstats[i])
+	for i := 0; i < len(es); i++ {
+		fmt.Println("ES Type: " + es[i])
 		
 	}
 }

@@ -185,7 +185,12 @@ func checkHealth(){
 	MaxTaskWaitTime string `json:"max_task_wait_time"`
 	ActiveShardsPercent string `json:"active_shards_percent"`
 	}
-	var es ESstats
+	type R struct {
+		ElasticStats     ESstats       `json:"es_stats"`
+		
+	}
+
+	var es R
 
 	json.Unmarshal(byteValue, &es)
 	fmt.Println(es)

@@ -188,7 +188,7 @@ func checkHealth(){
 	var es ESstats
 
 	json.Unmarshal(byteValue, &es)
-	fmt.Println(es.Status)
+	fmt.Println(es)
 }
 }
 

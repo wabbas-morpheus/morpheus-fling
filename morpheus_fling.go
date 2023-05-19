@@ -164,7 +164,7 @@ func checkHealth(){
     var result map[string]interface{}
     json.Unmarshal([]byte(byteValue), &result)
 
-    fmt.Println(result["es_stats"])
+    fmt.Println(result["es_stats"]["status"])
 }
 }
 

@@ -67,6 +67,8 @@ type Results struct {
 	MorphLogs        string                    `json:"morpheus_logs"`
 }
 
+
+
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
 		//Remove existing files
@@ -146,6 +148,31 @@ func extractBundle(){
 
 func checkHealth(){
 	fmt.Println("Checking health status")
+
+	if *infilePtr != "" {
+	// Open our jsonFile
+	jsonFile, err := os.Open(*infilePtr)
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Successfully Opened json file")
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer jsonFile.Close()
+
+	// read our opened jsonFile as a byte array.
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	// we initialize our Users array
+	var results Results
+
+	json.Unmarshal(byteValue, &results)
+
+	for i := 0; i < len(results.ElasticStats.Esstats); i++ {
+		fmt.Println("ES Type: " + users.ElasticStats.Esstats[i])
+		
+	}
+}
 }
 
 

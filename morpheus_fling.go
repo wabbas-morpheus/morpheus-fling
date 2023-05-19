@@ -152,27 +152,19 @@ func checkHealth(){
 	if *infilePtr != "" {
 	// Open our jsonFile
 	jsonFile, err := os.Open(*infilePtr)
-	// if we os.Open returns an error then handle it
 	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("Successfully Opened json file")
-	// defer the closing of our jsonFile so that we can parse it later on
-	defer jsonFile.Close()
+        fmt.Println(err)
+    }
+    fmt.Println("Successfully Opened users.json")
+    // defer the closing of our jsonFile so that we can parse it later on
+    defer jsonFile.Close()
 
-	// read our opened jsonFile as a byte array.
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+    byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	// we initialize our Users array
-	var es *elasticing.Esstats
+    var result map[string]interface{}
+    json.Unmarshal([]byte(byteValue), &result)
 
-	json.Unmarshal(byteValue, &es)
-	fmt.Println(es)
-
-	// for i := 0; i < len(es); i++ {
-	// 	fmt.Println("ES Type: " + es[i])
-		
-	// }
+    fmt.Println(result["es_stats"])
 }
 }
 

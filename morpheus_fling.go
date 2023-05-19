@@ -169,7 +169,7 @@ func checkHealth(){
 	json.Unmarshal(byteValue, &results)
 
 	for i := 0; i < len(results.ElasticStats.Esstats); i++ {
-		fmt.Println("ES Type: " + users.ElasticStats.Esstats[i])
+		fmt.Println("ES Type: " + results.ElasticStats.Esstats[i])
 		
 	}
 }

@@ -161,15 +161,33 @@ func checkHealth(){
 
     byteValue, _ := ioutil.ReadAll(jsonFile)
 
-    var result map[string]interface{}
-    json.Unmarshal([]byte(byteValue), &result)
+    // var result map[string]interface{}
+    // json.Unmarshal([]byte(byteValue), &result)
 
-	m := result.(map[string]interface{})
-
-	for key, value := range m {
-		fmt.Printf("Key: %s === Value: %s \n", key, value)
-	}
+	// for key, value := range result {
+	// 	fmt.Printf("Key: %s === Value: %s \n", key, value)
+	// }
     // fmt.Println(result["es_stats"][0])
+
+	type ESstats struct {
+	Epoch string `json:"epoch"`
+	Timestamp string `json:"timestamp"`
+	Cluster string `json:"cluster"`
+	Status string `json:"status"`
+	NodeTotal string `json:"node.total"`
+	NodeData string `json:"node.data"`
+	Shards string `json:"shards"`
+	Pri string `json:"pri"`
+	Relo string `json:"relo"`
+	Init string `json:"init"`
+	Unassign string `json:"unassign"`
+	PendingTasks string `json:"pending_tasks"`
+	MaxTaskWaitTime string `json:"max_task_wait_time"`
+	ActiveShardsPercent string `json:"active_shards_percent"`
+	}
+	var es ESstats
+
+	json.Unmarshal(byteValue, &es)
 }
 }
 

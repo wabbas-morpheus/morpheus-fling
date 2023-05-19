@@ -167,7 +167,7 @@ func checkHealth(){
 	var es *elasticing.Esstats
 
 	json.Unmarshal(byteValue, &es)
-	fmt.Println(str(es))
+	fmt.Println(String(es))
 
 	// for i := 0; i < len(es); i++ {
 	// 	fmt.Println("ES Type: " + es[i])

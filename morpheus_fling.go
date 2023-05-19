@@ -118,7 +118,7 @@ func createBundle(){
 	
 }
 
-func extractBundle() string {
+func extractBundle(){
 
 	// Extract the encrypted bundle
 	t := time.Now()
@@ -144,8 +144,7 @@ func extractBundle() string {
 	
 }
 
-func checkHealth()
-{
+func checkHealth(){
 	fmt.Println("Checking health status")
 }
 

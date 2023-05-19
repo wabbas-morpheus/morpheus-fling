@@ -32,6 +32,7 @@ var (
 	pubPtr     = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
 	privatekeyPtr = flag.String("privatefile", "/root/morpheus.pem", "a string")
 	extractPtr    = flag.Bool("extract",false,"a bool")
+	healthPtr    = flag.Bool("health",false,"a bool")
 )
 
 const helpText = `morpheus-fling [options]
@@ -126,8 +127,29 @@ func extractBundle() string {
 	if err := archiver.Unarchive(*bundlerPtr,folderName+"/"); err != nil {
 		log.Fatal(err)
 	}
-	return folderName
+	fmt.Println("Extracting Bundle File")
+	nonText, err := os.ReadFile(folderName+"/output.json")
+	if err != nil {
+		log.Fatal("Can't load output file", err)
+	}
+
+	nonKey, err := os.ReadFile(folderName+"/bundlerkey.enc")
+	if err != nil {
+		log.Fatal("Can't load key file", err)
+	}
+
+	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText,nonKey)
+	//fmt.Println("Decrypted Text = ",decryptedText)
+	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
+	
 }
+
+func checkHealth()
+{
+	fmt.Println("Checking health status")
+}
+
+
 
 // Need to initialize the ini file and pass into another function to iterate?
 func main() {
@@ -136,7 +158,21 @@ func main() {
 	flag.Parse()
 
 	
-	if !*extractPtr{
+	if *extractPtr{ //Extract 
+
+		extractBundle()
+
+
+	} else if *healthPtr { //check health from log files
+
+		checkHealth()
+
+	} else { // Encrypt and bundle log file
+
+	
+
+	
+
 	// Initialize an empty ScanResult slice, omitted from result if empty
 	var destArray []portscanner.ScanResult
 	if *infilePtr != "" {
@@ -189,36 +225,6 @@ func main() {
 
 
 	createBundle()
-
-}else{
-	
-	fmt.Println("Extracting Bundle File")
-	folderName := extractBundle()
-	nonText, err := os.ReadFile(folderName+"/output.json")
-	if err != nil {
-		log.Fatal("Can't load output file", err)
-	}
-
-	nonKey, err := os.ReadFile(folderName+"/bundlerkey.enc")
-	if err != nil {
-		log.Fatal("Can't load key file", err)
-	}
-
-	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText,nonKey)
-	//fmt.Println("Decrypted Text = ",decryptedText)
-	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
-
-	type info struct {
-		Data Results
-	}
-
-	var i info
-	
-
-	if err := json.Unmarshal([]byte(decryptedText), &i); err != nil {
-        fmt.Println("ugh: ", err)
-    }
-	//fmt.Println("logs: ",i.Data.MorphLogs)
 	
 }
 

@@ -169,7 +169,7 @@ func checkHealth(){
 	// }
     // fmt.Println(result["es_stats"][0])
 
-	type ESstats struct {
+	type ESstats []struct {
 	Epoch string `json:"epoch"`
 	Timestamp string `json:"timestamp"`
 	Cluster string `json:"cluster"`

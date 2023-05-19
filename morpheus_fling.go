@@ -193,7 +193,7 @@ func checkHealth(){
 	var es R
 
 	json.Unmarshal(byteValue, &es)
-	fmt.Println(es.ESstats.Status)
+	fmt.Println(es[0])
 }
 }
 

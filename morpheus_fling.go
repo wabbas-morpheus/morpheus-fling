@@ -205,7 +205,7 @@ func main() {
 	}
 
 	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText,nonKey)
-	fmt.Println("Decrypted Text = ",decryptedText)
+	//fmt.Println("Decrypted Text = ",decryptedText)
 	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
 
 	type info struct {
@@ -218,7 +218,7 @@ func main() {
 	if err := json.Unmarshal([]byte(decryptedText), &i); err != nil {
         fmt.Println("ugh: ", err)
     }
-	fmt.Println("logs: ",i.Data.MorphLogs)
+	//fmt.Println("logs: ",i.Data.MorphLogs)
 	
 }
 

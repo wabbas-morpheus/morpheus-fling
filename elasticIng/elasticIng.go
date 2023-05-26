@@ -135,7 +135,7 @@ func ElasticWatermarkSettings(){
 
 	json.Unmarshal(responseData, &appData)
 
-    fmt.Println(string(responseData))
+    // fmt.Println(string(responseData))
 
 	fmt.Println(string(appData.ElasticWaterMark.High))
 

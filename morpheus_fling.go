@@ -225,7 +225,7 @@ func main() {
 	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
 	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
-	fmt.Println("Watermark = "+string(esWaterMarkSettings.Eswater_mark_settings.FloodStage))
+	fmt.Println("Watermark = "+string(esWaterMarkSettings.FloodStage))
 	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
 
 	morpheus, err := ioutil.ReadFile(*logfilePtr)

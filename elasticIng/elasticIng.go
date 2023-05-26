@@ -9,6 +9,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"log"
 	"sync"
+	"net/http"
 )
 
 
@@ -116,47 +117,18 @@ func newTrue() *bool {
 
 func ElasticWatermarkSettings(){
 
-	var r []map[string]interface{}
-	es, err := elasticsearch.NewDefaultClient()
-	if err != nil {
-		log.Fatalf("Error creating client: %s", err)
-	}
+	response, err := http.Get("http://localhost:9200/_cluster/settings?pretty&include_defaults")
 
-	req := esapi.ClusterGetSettingsRequest{
-		// IncludeDefaults:newTrue(),
-		Pretty:	false,
-	}
-	res, err := req.Do(context.Background(), es)
-	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
-	}
+    if err != nil {
+        fmt.Print(err.Error())
+        os.Exit(1)
+    }
 
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-		log.Fatalf("Error parsing the response body: %s", err)
-	}
-	
-	defer res.Body.Close()
-
-	// result := &Eswater_mark_settings{}
-
-	// cfg := &mapstructure.DecoderConfig{
-	// 	Metadata: nil,
-	// 	Result:   &result,
-	// 	TagName:  "json",
-	// }
-
-	// decoder, _ := mapstructure.NewDecoder(cfg)
-
-	// decoder.Decode(r)
-
-	// data, err := json.MarshalIndent(&result, "", "  ")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// fmt.Println(string(data))
-
-	// return result
+    responseData, err := ioutil.ReadAll(response.Body)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(string(responseData))
 
 
 }

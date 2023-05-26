@@ -176,6 +176,7 @@ func checkHealth(){
 		ElasticStats     elasticing.Esstats       `json:"es_stats"`
 	}
 
+
 	var appData APP_DATA
 
 	json.Unmarshal(byteValue, &appData)

@@ -112,10 +112,7 @@ func ElasticIndices() []Esindices {
 
 }
 
-func newTrue() *bool {
-    b := true
-    return &b
-}
+
 
 func ElasticWatermarkSettings(){
 
@@ -130,7 +127,17 @@ func ElasticWatermarkSettings(){
     if err != nil {
         log.Fatal(err)
     }
+
+	type APP_DATA struct {
+		ElasticWaterMark elasticing.Eswater_mark_settings `json:"watermark"`
+	}
+	var appData APP_DATA
+
+	json.Unmarshal(responseData, &appData)
+
     fmt.Println(string(responseData))
+
+	fmt.Println(string(appData.ElasticWaterMark.High))
 
 
 }

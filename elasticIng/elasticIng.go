@@ -129,13 +129,13 @@ func ElasticWatermarkSettings(){
     }
 
 	
-	var appData Eswater_mark_settings
+	var appData Eswatermark
 
 	json.Unmarshal(responseData, &appData)
 
     // fmt.Println(string(responseData))
 
-	fmt.Println("Watermark= "+appData["defaults"].Low)
+	fmt.Println("Watermark= "+appData.Low)
 
 	// var result map[string]interface{}
     // json.Unmarshal([]byte(responseData), &result)

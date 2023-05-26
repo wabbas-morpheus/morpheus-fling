@@ -123,7 +123,7 @@ func ElasticWatermarkSettings(){
 	}
 
 	req := esapi.ClusterGetSettingsRequest{
-		IncludeDefaults:newTrue(),
+		// IncludeDefaults:newTrue(),
 		Pretty:	false,
 	}
 	res, err := req.Do(context.Background(), es)

@@ -129,7 +129,7 @@ func ElasticWatermarkSettings(){
     }
 
 	type APP_DATA struct {
-		ElasticWaterMark elasticing.Eswater_mark_settings `json:"watermark"`
+		ElasticWaterMark Eswater_mark_settings `json:"watermark"`
 	}
 	var appData APP_DATA
 

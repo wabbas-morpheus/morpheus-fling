@@ -186,7 +186,8 @@ func checkHealth(){
 	ActiveShardsPercent string `json:"active_shards_percent"`
 	}
 	type R struct {
-		ElasticStats     ESstats       `json:"es_stats"`
+		ElasticStats     *elasticing.Esstats       `json:"es_stats"`
+		// ElasticStats     ESstats       `json:"es_stats"`
 		
 	}
 

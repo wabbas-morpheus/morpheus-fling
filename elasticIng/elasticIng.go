@@ -137,6 +137,14 @@ func ElasticWatermarkSettings(){
 
 	fmt.Println("Watermark= "+appData.Low)
 
+	var result map[string]interface{}
+    json.Unmarshal([]byte(responseData), &result)
+
+	for key, value := range result {
+		fmt.Printf("Key: %s === Value: %s \n", key, value)
+	}
+    fmt.Println(result)
+
 
 }
 

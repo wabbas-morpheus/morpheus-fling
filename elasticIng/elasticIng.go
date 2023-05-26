@@ -134,6 +134,7 @@ func ElasticWatermarkSettings() *Eswater_mark_settings{
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		log.Fatalf("Error parsing the response body: %s", err)
 	}
+	fmt.Println(string(res.Body))
 	defer res.Body.Close()
 
 	result := &Eswater_mark_settings{}

@@ -109,6 +109,11 @@ func ElasticIndices() []Esindices {
 
 }
 
+func newTrue() *bool {
+    b := true
+    return &b
+}
+
 func ElasticWatermarkSettings() *Eswater_mark_settings{
 
 	var r []map[string]interface{}
@@ -118,7 +123,7 @@ func ElasticWatermarkSettings() *Eswater_mark_settings{
 	}
 
 	req := esapi.ClusterGetSettingsRequest{
-		IncludeDefaults:true,
+		IncludeDefaults:newTrue(),
 		Pretty:	false,
 	}
 	res, err := req.Do(context.Background(), es)

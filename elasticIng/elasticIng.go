@@ -137,7 +137,7 @@ func ElasticWatermarkSettings(){
 
     // fmt.Println(string(responseData))
 
-	fmt.Println("Watermark= "+string(appData.ElasticWaterMark.High))
+	fmt.Println("Watermark= "+string(appData.ElasticWaterMark))
 
 
 }

@@ -180,7 +180,7 @@ func checkHealth(){
 
 	json.Unmarshal(byteValue, &appData)
 	caser := cases.Title(language.English) //Capitalise first letter
-	fmt.Println("Elasticsearch-> \n\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
+	fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
 }
 }
 

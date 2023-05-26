@@ -169,31 +169,14 @@ func checkHealth(){
 	// }
     // fmt.Println(result["es_stats"][0])
 
-	type ESstats []struct {
-	Epoch string `json:"epoch"`
-	Timestamp string `json:"timestamp"`
-	Cluster string `json:"cluster"`
-	Status string `json:"status"`
-	NodeTotal string `json:"node.total"`
-	NodeData string `json:"node.data"`
-	Shards string `json:"shards"`
-	Pri string `json:"pri"`
-	Relo string `json:"relo"`
-	Init string `json:"init"`
-	Unassign string `json:"unassign"`
-	PendingTasks string `json:"pending_tasks"`
-	MaxTaskWaitTime string `json:"max_task_wait_time"`
-	ActiveShardsPercent string `json:"active_shards_percent"`
-	}
-	type R struct {
+	
+	type APP_DATA struct {
 		ElasticStats     elasticing.Esstats       `json:"es_stats"`
-		// ElasticStats     ESstats       `json:"es_stats"`
-		
 	}
 
-	var es R
+	var appData APP_DATA
 
-	json.Unmarshal(byteValue, &es)
+	json.Unmarshal(byteValue, &appData)
 	fmt.Println(es.ElasticStats[0].Status)
 }
 }

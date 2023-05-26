@@ -29,7 +29,7 @@ type Esstats []struct {
 	ActiveShardsPercent string `json:"active_shards_percent"`
 }
 
-type Eswater_mark_settings []struct {
+type Eswater_mark_settings struct {
 
 	MaxHeadRoom string `json:"flood_stage.frozen.max_headroom"`
 	FloodStage string `json:"flood_stage"`

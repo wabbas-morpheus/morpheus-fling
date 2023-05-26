@@ -109,7 +109,7 @@ func ElasticIndices() []Esindices {
 
 }
 
-func ElasticWatermarkSettings *Eswater_mark_settings(){
+func ElasticWatermarkSettings() *Eswater_mark_settings(){
 
 	var r []map[string]interface{}
 	es, err := elasticsearch.NewDefaultClient()

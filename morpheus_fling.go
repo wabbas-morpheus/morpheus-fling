@@ -181,6 +181,8 @@ func checkHealth(){
 	json.Unmarshal(byteValue, &appData)
 	caser := cases.Title(language.English) //Capitalise first letter
 	fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
+	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
+	fmt.Println("Watermark = "+string(esWaterMarkSettings.FloodStage))
 }
 }
 
@@ -224,8 +226,7 @@ func main() {
 	// Gather elasticsearch health and indices into structs for results
 	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices()
-	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
-	fmt.Println("Watermark = "+string(esWaterMarkSettings.FloodStage))
+	
 	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
 
 	morpheus, err := ioutil.ReadFile(*logfilePtr)

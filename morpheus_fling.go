@@ -177,7 +177,8 @@ func checkHealth(){
 	var appData APP_DATA
 
 	json.Unmarshal(byteValue, &appData)
-	fmt.Println(appData.ElasticStats[0].Status)
+
+	fmt.Println("Elasticsearch-> Status: "+appData.ElasticStats[0].Status + " Total Nodes: "+appData.ElasticStats[0].NodeTotal)
 }
 }
 

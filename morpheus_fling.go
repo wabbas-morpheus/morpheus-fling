@@ -19,6 +19,8 @@ import (
 	sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
 	"github.com/mholt/archiver"
 	"github.com/zcalusic/sysinfo"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 var (
@@ -177,8 +179,8 @@ func checkHealth(){
 	var appData APP_DATA
 
 	json.Unmarshal(byteValue, &appData)
-
-	fmt.Println("Elasticsearch-> \n\tStatus: "+strings.Title(appData.ElasticStats[0].Status) + "\n\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
+	caser = cases.Title(language.English) //Capitalise first letter
+	fmt.Println("Elasticsearch-> \n\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
 }
 }
 

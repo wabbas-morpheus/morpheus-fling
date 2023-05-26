@@ -114,7 +114,7 @@ func newTrue() *bool {
     return &b
 }
 
-func ElasticWatermarkSettings() *Eswater_mark_settings{
+func ElasticWatermarkSettings(){
 
 	var r []map[string]interface{}
 	es, err := elasticsearch.NewDefaultClient()
@@ -134,29 +134,29 @@ func ElasticWatermarkSettings() *Eswater_mark_settings{
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		log.Fatalf("Error parsing the response body: %s", err)
 	}
-	fmt.Println(string(res.Body))
+	
 	defer res.Body.Close()
 
-	result := &Eswater_mark_settings{}
+	// result := &Eswater_mark_settings{}
 
-	cfg := &mapstructure.DecoderConfig{
-		Metadata: nil,
-		Result:   &result,
-		TagName:  "json",
-	}
+	// cfg := &mapstructure.DecoderConfig{
+	// 	Metadata: nil,
+	// 	Result:   &result,
+	// 	TagName:  "json",
+	// }
 
-	decoder, _ := mapstructure.NewDecoder(cfg)
+	// decoder, _ := mapstructure.NewDecoder(cfg)
 
-	decoder.Decode(r)
+	// decoder.Decode(r)
 
-	data, err := json.MarshalIndent(&result, "", "  ")
-	if err != nil {
-		log.Fatal(err)
-	}
+	// data, err := json.MarshalIndent(&result, "", "  ")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	fmt.Println(string(data))
+	// fmt.Println(string(data))
 
-	return result
+	// return result
 
 
 }

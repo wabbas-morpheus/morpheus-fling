@@ -118,7 +118,6 @@ func ElasticWatermarkSettings() *Eswater_mark_settings{
 	}
 
 	req := esapi.ClusterGetSettingsRequest{
-		Format: "json",
 		Pretty:	false,
 	}
 	res, err := req.Do(context.Background(), es)

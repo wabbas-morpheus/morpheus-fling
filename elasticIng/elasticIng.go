@@ -128,16 +128,14 @@ func ElasticWatermarkSettings(){
         log.Fatal(err)
     }
 
-	type APP_DATA struct {
-		ElasticWaterMark Eswater_mark_settings `json:"watermark"`
-	}
-	var appData APP_DATA
+	
+	var appData Eswater_mark_settings
 
 	json.Unmarshal(responseData, &appData)
 
     // fmt.Println(string(responseData))
 
-	fmt.Println("Watermark= "+string(appData.ElasticWaterMark.High))
+	fmt.Println("Watermark= "+string(appData.High))
 
 
 }

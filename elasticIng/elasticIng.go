@@ -29,6 +29,17 @@ type Esstats []struct {
 	ActiveShardsPercent string `json:"active_shards_percent"`
 }
 
+type Eswater_mark_settings struct {
+
+	MaxHeadRoom string `json:"flood_stage.frozen.max_headroom"`
+	FloodStage string `json:"flood_stage"`
+	High string `json:"high"`
+	Low string `json:"low"`
+	EnableSDN string `json:"enable_for_single_data_node"`
+	FloodStageFrozen string `json:"flood_stage.frozen"`
+
+}
+
 type Esindices struct {
 	Health string `json:"health"`
 	Status string `json:"status"`
@@ -95,6 +106,52 @@ func ElasticIndices() []Esindices {
 	wg.Wait()
 
 	return indexSlice
+
+}
+
+func ElasticWatermarkSettings *Eswater_mark_settings(){
+
+	var r []map[string]interface{}
+	es, err := elasticsearch.NewDefaultClient()
+	if err != nil {
+		log.Fatalf("Error creating client: %s", err)
+	}
+
+	req := esapi.ClusterGetSettingsRequest{
+		Format: "json",
+		Pretty:	false,
+	}
+	res, err := req.Do(context.Background(), es)
+	if err != nil {
+		log.Fatalf("Error getting response: %s", err)
+	}
+
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		log.Fatalf("Error parsing the response body: %s", err)
+	}
+	defer res.Body.Close()
+
+	result := &Eswater_mark_settings{}
+
+	cfg := &mapstructure.DecoderConfig{
+		Metadata: nil,
+		Result:   &result,
+		TagName:  "json",
+	}
+
+	decoder, _ := mapstructure.NewDecoder(cfg)
+
+	decoder.Decode(r)
+
+	data, err := json.MarshalIndent(&result, "", "  ")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(string(data))
+
+	return result
+
 
 }
 

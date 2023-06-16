@@ -137,7 +137,7 @@ func ElasticIndices() []Esindices {
 
 
 
-func ElasticWatermarkSettings() ESWaterMarkSettings{
+func ElasticWatermarkSettings() *ESWaterMarkSettings{
 
 	response, err := http.Get("http://localhost:9200/_cluster/settings?pretty&include_defaults")
 
@@ -176,45 +176,45 @@ func ElasticWatermarkSettings() ESWaterMarkSettings{
 }
 
 // ElasticHealth returns a esapi.Response of Health
-func ElasticHealth() *Esstats {
-	var r []map[string]interface{}
-	es, err := elasticsearch.NewDefaultClient()
-	if err != nil {
-		log.Fatalf("Error creating client: %s", err)
-	}
+// func ElasticHealth() *Esstats {
+// 	var r []map[string]interface{}
+// 	es, err := elasticsearch.NewDefaultClient()
+// 	if err != nil {
+// 		log.Fatalf("Error creating client: %s", err)
+// 	}
 
-	req := esapi.CatHealthRequest{
-		Format: "json",
-		Pretty:	false,
-	}
-	res, err := req.Do(context.Background(), es)
-	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
-	}
+// 	req := esapi.CatHealthRequest{
+// 		Format: "json",
+// 		Pretty:	false,
+// 	}
+// 	res, err := req.Do(context.Background(), es)
+// 	if err != nil {
+// 		log.Fatalf("Error getting response: %s", err)
+// 	}
 
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-		log.Fatalf("Error parsing the response body: %s", err)
-	}
-	defer res.Body.Close()
+// 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+// 		log.Fatalf("Error parsing the response body: %s", err)
+// 	}
+// 	defer res.Body.Close()
 
-	result := &Esstats{}
+// 	result := &Esstats{}
 
-	cfg := &mapstructure.DecoderConfig{
-		Metadata: nil,
-		Result:   &result,
-		TagName:  "json",
-	}
+// 	cfg := &mapstructure.DecoderConfig{
+// 		Metadata: nil,
+// 		Result:   &result,
+// 		TagName:  "json",
+// 	}
 
-	decoder, _ := mapstructure.NewDecoder(cfg)
+// 	decoder, _ := mapstructure.NewDecoder(cfg)
 
-	decoder.Decode(r)
+// 	decoder.Decode(r)
 
-	data, err := json.MarshalIndent(&result, "", "  ")
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	data, err := json.MarshalIndent(&result, "", "  ")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	fmt.Println(string(data))
+// 	fmt.Println(string(data))
 
-	return result
-}
+// 	return result
+// }

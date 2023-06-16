@@ -4,7 +4,6 @@ import (
 	"log"
 	"os/user"
 	"os/exec"
-    "runtime"
     "bufio"
     "strings"
     "strconv"
@@ -45,7 +44,7 @@ func getStorageUsed() int{
     // if there is an error with our execution
     // handle it here
     if err != nil {
-        fmt.Printf("%s", err)
+        log.Fatal(err)
     }
     // as the out variable defined above is of type []byte we need to convert
     // this to a string or else we will see garbage printed out in our console
@@ -58,9 +57,9 @@ func getStorageUsed() int{
                 mountPoint := line[5] //get mount point info
                 storageUsedPercent := line[4] //get storage used info
                 if mountPoint=="/"{
-                        fmt.Println(line)
+                        //fmt.Println(line)
                         used = storageUsedPercent[0:len(storageUsedPercent)-1]
-                        fmt.Println(used)
+                        //fmt.Println(used)
                 }
         }
         if err := scanner.Err(); err != nil {

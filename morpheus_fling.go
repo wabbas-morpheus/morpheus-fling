@@ -63,6 +63,7 @@ Specify current directory for bundler and keyfile path
 type Results struct {
 	ElasticStats     *elasticing.Esstats       `json:"es_stats"`
 	ElasticIndices   []elasticing.Esindices    `json:"es_indices"`
+	ElasticSettings  *elasticing.ESWaterMarkSettings `json:"es_settings"`
 	System           *sysinfo.SysInfo          `json:"system_stats"`
 	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
 	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`

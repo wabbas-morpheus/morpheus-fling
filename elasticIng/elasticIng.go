@@ -32,19 +32,19 @@ type Esstats []struct {
 	ActiveShardsPercent string `json:"active_shards_percent"`
 }
 
-type Eswatermark struct {
+type ESWaterMarkSettings struct{
 
-	MaxHeadRoom string `json:"flood_stage.frozen.max_headroom"`
-	FloodStage string `json:"flood_stage"`
-	High string `json:"high"`
-	Low string `json:"low"`
-	EnableSDN string `json:"enable_for_single_data_node"`
-	FloodStageFrozen string `json:"flood_stage.frozen"`
+	MaxHeadRoom string
+	FloodStage string
+	High string
+	Low string
+	EnableSDN string
+	FloodStageFrozen string
 
 }
 
 
-type d struct {
+type Essettings struct {
 
 	Defaults struct {
 		Cluster struct {
@@ -137,7 +137,7 @@ func ElasticIndices() []Esindices {
 
 
 
-func ElasticWatermarkSettings(){
+func ElasticWatermarkSettings() ESWaterMarkSettings{
 
 	response, err := http.Get("http://localhost:9200/_cluster/settings?pretty&include_defaults")
 
@@ -152,24 +152,27 @@ func ElasticWatermarkSettings(){
     }
 
 	
-	var appData d
+	var elastic_settings Essettings
 
-	json.Unmarshal(responseData, &appData)
+	json.Unmarshal(responseData, &elastic_settings)
 
     fmt.Println(string(responseData))
 
-	fmt.Println("Watermark= "+appData.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage)
+	
+
+	wmSettings := new(ESWaterMarkSettings)
+	wmSettings.MaxHeadRoom = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.MaxHeadRoom
+	wmSettings.FloodStage = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage
+	wmSettings.High = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.High
+	wmSettings.Low = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.Low
+	wmSettings.EnableSDN = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.EnableSDN
+	wmSettings.FloodStageFrozen = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStageFrozen
+
+
+	fmt.Println("Watermark= "+elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage)
 	fmt.Printf("struct: %+v\n", appData)
 
-	// var result map[string]interface{}
-    // json.Unmarshal([]byte(responseData), &result)
-
-	// for key, value := range result {
-	// 	fmt.Printf("Key: %s === Value: %s \n", key, value)
-	// }
-    // fmt.Println(result)
-
-
+	return wmSettings
 }
 
 // ElasticHealth returns a esapi.Response of Health

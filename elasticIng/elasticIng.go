@@ -43,6 +43,29 @@ type Eswatermark struct {
 
 }
 
+
+type d struct {
+
+	Defaults struct {
+		Cluster struct {
+			Routing struct {
+				Allocation struct {
+					Disk struct {
+						Watermark struct {
+							MaxHeadRoom string `json:"flood_stage.frozen.max_headroom"`
+							FloodStage string `json:"flood_stage"`
+							High string `json:"high"`
+							Low string `json:"low"`
+							EnableSDN string `json:"enable_for_single_data_node"`
+							FloodStageFrozen string `json:"flood_stage.frozen"`
+						}`json:"watermark"`
+					}`json:"disk"`
+				}`json:"allocation"`
+			}`json:"routing"`
+		}`json:"cluster"`
+	}`json:"defaults"`
+}
+
 type Esindices struct {
 	Health string `json:"health"`
 	Status string `json:"status"`
@@ -129,7 +152,7 @@ func ElasticWatermarkSettings(){
     }
 
 	
-	var appData Eswatermark
+	var appData d
 
 	json.Unmarshal(responseData, &appData)
 

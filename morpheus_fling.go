@@ -241,6 +241,7 @@ func main() {
 	results := Results{
 		ElasticStats:     esHealth,
 		ElasticIndices:   esIndices,
+		ElasticSettings:  esWaterMarkSettings,
 		System:           sysStats,
 		Scans:            destArray,
 		RabbitStatistics: rabbitStuff,

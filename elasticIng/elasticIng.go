@@ -175,7 +175,7 @@ func ElasticWatermarkSettings() *ESWaterMarkSettings{
 	return wmSettings
 }
 
-ElasticHealth returns a esapi.Response of Health
+//ElasticHealth returns a esapi.Response of Health
 func ElasticHealth() *Esstats {
 	var r []map[string]interface{}
 	es, err := elasticsearch.NewDefaultClient()

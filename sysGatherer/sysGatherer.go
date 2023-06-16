@@ -37,7 +37,7 @@ func SysGather() *sysinfo.SysInfo {
 	//return string(data)
 }
 
-func getStorageUsed() int{
+func GetStorageUsed() int{
 
     out, err := exec.Command("df","-h").Output()
 

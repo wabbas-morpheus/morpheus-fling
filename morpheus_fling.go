@@ -12,6 +12,7 @@ import (
 	"os"
 	"path"
 	"time"
+	"strconv"
 
 	encryptText "github.com/wabbas-morpheus/morpheus-fling/encryptText"
 	filereader "github.com/wabbas-morpheus/morpheus-fling/fileReader"
@@ -187,7 +188,7 @@ func checkHealth(){
 	//esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
 	//fmt.Println("Watermark = "+string(esWaterMarkSettings))
 
-	fmt.Println("Storage Used = " + caser.String(sysgatherer.GetStorageUsed()))
+	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 
 
 }

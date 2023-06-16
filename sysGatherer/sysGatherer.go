@@ -3,7 +3,11 @@ package sysgatherer
 import (
 	"log"
 	"os/user"
-
+	"os/exec"
+    "runtime"
+    "bufio"
+    "strings"
+    "strconv"
 	"github.com/zcalusic/sysinfo"
 )
 
@@ -32,4 +36,36 @@ func SysGather() *sysinfo.SysInfo {
 	//
 	//fmt.Println(string(data))
 	//return string(data)
+}
+
+func getStorageUsed() int{
+
+    out, err := exec.Command("df","-h").Output()
+
+    // if there is an error with our execution
+    // handle it here
+    if err != nil {
+        fmt.Printf("%s", err)
+    }
+    // as the out variable defined above is of type []byte we need to convert
+    // this to a string or else we will see garbage printed out in our console
+    // this is how we convert it to a string
+    output := string(out[:])
+    used := ""
+    scanner := bufio.NewScanner(strings.NewReader(output))
+        for scanner.Scan() { //iterate of each line
+                line := strings.Fields(scanner.Text())//convert line text in a list
+                mountPoint := line[5] //get mount point info
+                storageUsedPercent := line[4] //get storage used info
+                if mountPoint=="/"{
+                        fmt.Println(line)
+                        used = storageUsedPercent[0:len(storageUsedPercent)-1]
+                        fmt.Println(used)
+                }
+        }
+        if err := scanner.Err(); err != nil {
+                log.Fatal(err)
+        }
+        rtn, err :=  strconv.Atoi(used)//Convert to integer
+return rtn
 }

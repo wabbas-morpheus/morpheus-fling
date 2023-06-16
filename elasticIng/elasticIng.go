@@ -158,7 +158,7 @@ func ElasticWatermarkSettings(){
 
     fmt.Println(string(responseData))
 
-	// fmt.Println("Watermark= "+appData.Low)
+	fmt.Println("Watermark= "+appData.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage)
 	fmt.Printf("struct: %+v\n", appData)
 
 	// var result map[string]interface{}

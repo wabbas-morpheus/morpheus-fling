@@ -66,6 +66,50 @@ type Essettings struct {
 	}`json:"defaults"`
 }
 
+type EssettingsTransient struct {
+
+	Defaults struct {
+		Cluster struct {
+			Routing struct {
+				Allocation struct {
+					Disk struct {
+						Watermark struct {
+							MaxHeadRoom string `json:"flood_stage.frozen.max_headroom"`
+							FloodStage string `json:"flood_stage"`
+							High string `json:"high"`
+							Low string `json:"low"`
+							EnableSDN string `json:"enable_for_single_data_node"`
+							FloodStageFrozen string `json:"flood_stage.frozen"`
+						}`json:"watermark"`
+					}`json:"disk"`
+				}`json:"allocation"`
+			}`json:"routing"`
+		}`json:"cluster"`
+	}`json:"transient"`
+}
+
+type EssettingsPersistent struct {
+
+	Defaults struct {
+		Cluster struct {
+			Routing struct {
+				Allocation struct {
+					Disk struct {
+						Watermark struct {
+							MaxHeadRoom string `json:"flood_stage.frozen.max_headroom"`
+							FloodStage string `json:"flood_stage"`
+							High string `json:"high"`
+							Low string `json:"low"`
+							EnableSDN string `json:"enable_for_single_data_node"`
+							FloodStageFrozen string `json:"flood_stage.frozen"`
+						}`json:"watermark"`
+					}`json:"disk"`
+				}`json:"allocation"`
+			}`json:"routing"`
+		}`json:"cluster"`
+	}`json:"persistent"`
+}
+
 type Esindices struct {
 	Health string `json:"health"`
 	Status string `json:"status"`

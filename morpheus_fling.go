@@ -187,7 +187,8 @@ func checkHealth(){
 	//elasticing.ElasticWatermarkSettings()
 	//esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
 	//fmt.Println("Watermark = "+string(esWaterMarkSettings))
-
+	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
+	fmt.Println("Low = " + esWaterMarkSettings.Low)
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 
 

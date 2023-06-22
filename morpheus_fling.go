@@ -191,7 +191,16 @@ func checkHealth(){
 	 
 	low := esWaterMarkSettings.Low
 	lowNumberOnly, err := strconv.Atoi(low[0:len(low)-1]) //Remove percent sign and convert to int
+
+	high := esWaterMarkSettings.High
+	highNumberOnly, err := strconv.Atoi(high[0:len(high)-1]) //Remove percent sign and convert to int64
+
+	flood := esWaterMarkSettings.FloodStage
+	floodNumberOnly, err := strconv.Atoi(flood[0:len(flood)-1]) //Remove percent sign and convert to int
+
 	fmt.Println("Low = " + strconv.Itoa(lowNumberOnly))
+	fmt.Println("High = " + strconv.Itoa(highNumberOnly))
+	fmt.Println("Flood Stage = " + strconv.Itoa(floodNumberOnly))
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 
 

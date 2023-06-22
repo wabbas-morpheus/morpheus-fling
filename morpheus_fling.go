@@ -189,8 +189,8 @@ func checkHealth(){
 	//fmt.Println("Watermark = "+string(esWaterMarkSettings))
 	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
 	 
-	low, err := esWaterMarkSettings.Low
-	lowNumberOnly := strconv.Atoi(low[0:len(low)-1]) //Remove percent sign and convert to int
+	low := esWaterMarkSettings.Low
+	lowNumberOnly, err := strconv.Atoi(low[0:len(low)-1]) //Remove percent sign and convert to int
 	fmt.Println("Low = " + strconv.Itoa(lowNumberOnly))
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 

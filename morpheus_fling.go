@@ -18,7 +18,7 @@ import (
 	filereader "github.com/wabbas-morpheus/morpheus-fling/fileReader"
 	portscanner "github.com/wabbas-morpheus/morpheus-fling/portScanner"
 	sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
-	healthcheck "morpheus-fling/healthcheck"
+	"morpheus-fling/healthcheck"
 	"github.com/mholt/archiver"
 	"github.com/zcalusic/sysinfo"
 	"golang.org/x/text/cases"

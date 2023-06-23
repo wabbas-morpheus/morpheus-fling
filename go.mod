@@ -40,3 +40,5 @@ replace github.com/wabbas-morpheus/morpheus-fling/portScanner => ./portScanner
 replace github.com/wabbas-morpheus/morpheus-fling/secParse => ./secParse
 
 replace github.com/wabbas-morpheus/morpheus-fling/sysGatherer => ./sysGatherer
+
+replace github.com/wabbas-morpheus/morpheus-fling/healthCheck => ./healthCheck

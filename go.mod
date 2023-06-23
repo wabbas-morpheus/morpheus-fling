@@ -8,7 +8,7 @@ replace github.com/wabbas-morpheus/morpheus-fling/rabbitIng => ./rabbitIng
 
 require (
 	github.com/mholt/archiver v3.1.1+incompatible
-	github.com/wabbas-morpheus/morpheus-fling/elasticIng v0.0.0-20230317162923-208ce5212288
+	github.com/wabbas-morpheus/morpheus-fling/elasticIng v0.0.0-20230623105021-a7a7b9cbf712
 	github.com/wabbas-morpheus/morpheus-fling/encryptText v0.0.0-20230317162923-208ce5212288
 	github.com/wabbas-morpheus/morpheus-fling/fileReader v0.0.0-00010101000000-000000000000
 	github.com/wabbas-morpheus/morpheus-fling/portScanner v0.0.0-20230317162923-208ce5212288
@@ -27,6 +27,7 @@ require (
 	github.com/nwaples/rardecode v1.1.3 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
+	github.com/wabbas-morpheus/morpheus-fling/healthCheck v0.0.0-00010101000000-000000000000 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 )

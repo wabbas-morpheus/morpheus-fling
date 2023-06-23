@@ -1,6 +1,0 @@
-github.com/elastic/go-elasticsearch/v7 v7.17.7 h1:pcYNfITNPusl+cLwLN6OLmVT+F73Els0nbaWOmYachs=
-github.com/elastic/go-elasticsearch/v7 v7.17.7/go.mod h1:OJ4wdbtDNk5g503kvlHLyErCgQwwzmDtaFC4XyOxXA4=
-github.com/mitchellh/mapstructure v1.5.0 h1:jeMsZIYE/09sWLaz43PL7Gy6RuMjD2eJVyuac5Z2hdY=
-github.com/mitchellh/mapstructure v1.5.0/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
-github.com/wabbas-morpheus/morpheus-fling/elasticIng v0.0.0-20230623105021-a7a7b9cbf712 h1:FJG3QuWK1ecr5ppGgB9SH1CthWNt1cCLwWuPo7NRt8o=
-github.com/wabbas-morpheus/morpheus-fling/elasticIng v0.0.0-20230623105021-a7a7b9cbf712/go.mod h1:VPYU7efPHCo/qfS3ST9wJwWL8lt8imNA39bylPXMTp4=

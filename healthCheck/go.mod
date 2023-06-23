@@ -1,4 +1,4 @@
-module github.com/wabbas-morpheus/morpheus-fling/healthCheck.go
+module healthCheck.go
 
 go 1.20
 

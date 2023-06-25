@@ -9,7 +9,7 @@ elasticing "github.com/wabbas-morpheus/morpheus-fling/elasticIng"
 "encoding/json"
 )
 
-func healthCheck (*logfile ){
+func checkHealth (*logfile ){
 
 	// Open our jsonFile
 	jsonFile, err := os.Open(*logfile)

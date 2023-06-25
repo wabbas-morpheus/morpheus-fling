@@ -100,18 +100,12 @@ func checkESWatermarkThreshold(){
 //    ]
 // }
 
-	a := make(map[string]interface{})
+	checkResults := make(map[string]interface{})
 
-	a["start"] = map[string]interface{}{
-		"hello": 2,
-		"world": 3,
-		"here": map[string]interface{}{
-			"test1": 123,
-			"test2": "dsd",
-			"level3": map[string]interface{}{
-				"ha1": "kuku",
-				"ha2": "nana",
-			},
+	checkResults["Elasticsearch Health"] = map[string]interface{}{
+		"status":true,
+		"checks": map[string]interface{}{
+			"watermark threshold": true,
 		},
 	}
 	fmt.Println(a)

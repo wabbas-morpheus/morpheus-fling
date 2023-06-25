@@ -100,15 +100,21 @@ func checkESWatermarkThreshold(){
 //    ]
 // }
 
-	person:=map[string]interface{
-   "name":"John",
-   "age":29,
-   "hobbies":[
-      "martial arts",
-      "breakfast foods",
-      "piano"
-   ]
-}
+	a := make(map[string]interface{})
+
+	a["start"] = map[string]interface{}{
+		"hello": 2,
+		"world": 3,
+		"here": map[string]interface{}{
+			"test1": 123,
+			"test2": "dsd",
+			"level3": map[string]interface{}{
+				"ha1": "kuku",
+				"ha2": "nana",
+			},
+		},
+	}
+	fmt.Println(a)
      
 
 }

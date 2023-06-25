@@ -12,7 +12,6 @@ import (
 	"os"
 	"path"
 	"time"
-	"strconv"
 
 	encryptText "github.com/wabbas-morpheus/morpheus-fling/encryptText"
 	filereader "github.com/wabbas-morpheus/morpheus-fling/fileReader"
@@ -21,8 +20,6 @@ import (
 	"morpheus-fling/healthCheck"
 	"github.com/mholt/archiver"
 	"github.com/zcalusic/sysinfo"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 var (

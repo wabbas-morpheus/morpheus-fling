@@ -148,7 +148,7 @@ func extractBundle(){
 	
 }
 
-func checkHealth(){
+func runHealthCheck(){
 	fmt.Println("Checking health status")
 
 	if *infilePtr != "" {
@@ -174,7 +174,7 @@ func main() {
 
 	} else if *healthPtr { //check health from log files
 
-		checkHealth()
+		runHealthCheck()
 
 	} else { // Encrypt and bundle log file
 

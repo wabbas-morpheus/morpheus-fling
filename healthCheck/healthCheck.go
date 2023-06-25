@@ -45,9 +45,13 @@ func CheckHealth (logfile string){
 	json.Unmarshal(byteValue, &appData)
 	caser := cases.Title(language.English) //Capitalise first letter
 	fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
-	//elasticing.ElasticWatermarkSettings()
-	//esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
-	//fmt.Println("Watermark = "+string(esWaterMarkSettings))
+	
+	checkESWatermarkThreshold()
+	
+}
+
+func checkESWatermarkThreshold(){
+
 	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
 	 
 	low := esWaterMarkSettings.Low
@@ -63,6 +67,7 @@ func CheckHealth (logfile string){
 	fmt.Println("High = " + strconv.Itoa(highNumberOnly))
 	fmt.Println("Flood Stage = " + strconv.Itoa(floodNumberOnly))
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
+
 
 }
 

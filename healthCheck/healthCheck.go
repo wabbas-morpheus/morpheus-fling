@@ -92,9 +92,6 @@ func checkESWatermarkThreshold(){
     	fmt.Println("Watermark threshold has not been reached")
     }
 
-    var check = map[string]interface{
-    	"Elasticsearch Health":true
-    }
 
     checkResults:=map[string]interface{
    "Elasticsearch Health":true,

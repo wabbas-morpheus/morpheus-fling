@@ -108,7 +108,7 @@ func checkESWatermarkThreshold(){
 			"watermark threshold": true,
 		},
 	}
-	fmt.Println(a)
+	fmt.Println(checkResults)
      
 
 }

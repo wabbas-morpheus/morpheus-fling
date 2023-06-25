@@ -110,7 +110,7 @@ func checkESWatermarkThreshold(){
 
 	for key,val := range checkResults["checks"]{
 
-		fmt.Println("- "+key+" :+"val)
+		fmt.Println("- "+key+" :+"+val)
 		
 
 	}

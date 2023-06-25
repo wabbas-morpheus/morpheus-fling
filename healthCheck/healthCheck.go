@@ -107,6 +107,14 @@ func checkESWatermarkThreshold(){
 			"watermark threshold": health,
 		},
 	}
+
+	for key,val := range checkResults["checks"]{
+
+		fmt.Println("- "+key+" :+"val)
+		
+
+	}
+
 	fmt.Println(checkResults)
      
 

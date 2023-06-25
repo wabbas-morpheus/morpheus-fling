@@ -93,10 +93,10 @@ func checkESWatermarkThreshold(){
     }
 
 
-    checkResults:=map[string]interface{
+    checkResults := map[string]interface{
    "Elasticsearch Health":true,
    "checks":[
-      "Watermark Threshold":true
+      "Watermark Threshold":"test"
    ]
 }
      

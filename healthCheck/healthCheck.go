@@ -13,7 +13,7 @@ elasticing "github.com/wabbas-morpheus/morpheus-fling/elasticIng"
 sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
 )
 
-func CheckHealth (){
+func CheckHealth (logfile string){
 
 	// Open our jsonFile
 	jsonFile, err := os.Open(logfile)

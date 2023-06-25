@@ -93,10 +93,20 @@ func checkESWatermarkThreshold(){
     }
 
 
-    checkResults := map[string]interface{
-   "Elasticsearch Health":true,
-   "checks":[
-      "Watermark Threshold":"test"
+//     checkResults := map[string]interface{
+//    "ElasticsearchHealth":true,
+//    "checks":[
+//       "Watermark Threshold":"test"
+//    ]
+// }
+
+	person:=map[string]interface{
+   "name":"John",
+   "age":29,
+   "hobbies":[
+      "martial arts",
+      "breakfast foods",
+      "piano"
    ]
 }
      

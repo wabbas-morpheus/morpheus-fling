@@ -95,6 +95,13 @@ func checkESWatermarkThreshold(){
     var check = map[string]interface{
     	"Elasticsearch Health":true
     }
+
+    checkResults:=map[string]interface{
+   "Elasticsearch Health":true,
+   "checks":[
+      "Watermark Threshold":true
+   ]
+}
      
 
 }

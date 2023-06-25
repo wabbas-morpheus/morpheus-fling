@@ -56,12 +56,21 @@ func checkESWatermarkThreshold(){
 	 
 	low := esWaterMarkSettings.Low
 	lowNumberOnly, err := strconv.Atoi(low[0:len(low)-1]) //Remove percent sign and convert to int
+	if err != nil {
+        fmt.Println(err)
+    }
 
 	high := esWaterMarkSettings.High
 	highNumberOnly, err := strconv.Atoi(high[0:len(high)-1]) //Remove percent sign and convert to int64
+	if err != nil {
+        fmt.Println(err)
+    }
 
 	flood := esWaterMarkSettings.FloodStage
 	floodNumberOnly, err := strconv.Atoi(flood[0:len(flood)-1]) //Remove percent sign and convert to int
+	if err != nil {
+        fmt.Println(err)
+    }
 
 	fmt.Println("Low = " + strconv.Itoa(lowNumberOnly))
 	fmt.Println("High = " + strconv.Itoa(highNumberOnly))

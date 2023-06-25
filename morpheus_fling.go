@@ -156,7 +156,7 @@ func checkHealth(){
 
 	if *infilePtr != "" {
 	
-		healthCheck.checkHealth(*infilePtr)
+		healthCheck.CheckHealth(*infilePtr)
 
 }
 }

@@ -72,10 +72,25 @@ func checkESWatermarkThreshold(){
         fmt.Println(err)
     }
 
+    currentStorage := sysgatherer.GetStorageUsed()
+
+
+    if (currentStorage >= lowNumberOnly && currentStorage < highNumberOnly){
+    	fmt.Println("Low watermark threshould has been reached")
+    } else if (currentStorage >= highNumberOnly && currentStorage < floodNumberOnly){
+    	fmt.Println("High watermark threshould has been reached")
+    } else if (currentStorage >= floodNumberOnly){
+    	fmt.Println("Flood watermark threshould has been reached")
+    } else{
+    	fmt.Println("Watermark threshold has not been reached")
+    }
+
 	fmt.Println("Low = " + strconv.Itoa(lowNumberOnly))
 	fmt.Println("High = " + strconv.Itoa(highNumberOnly))
 	fmt.Println("Flood Stage = " + strconv.Itoa(floodNumberOnly))
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
+
+
 
 
 }

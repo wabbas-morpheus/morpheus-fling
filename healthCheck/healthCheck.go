@@ -82,30 +82,29 @@ func checkESWatermarkThreshold(){
 	fmt.Println("Flood Stage = " + strconv.Itoa(floodNumberOnly))
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 
+	health := true 
 	if (currentStorage >= lowNumberOnly && currentStorage < highNumberOnly){
     	fmt.Println("Low watermark threshould has been reached")
+    	health = false
     } else if (currentStorage >= highNumberOnly && currentStorage < floodNumberOnly){
     	fmt.Println("High watermark threshould has been reached")
+    	health = false
     } else if (currentStorage >= floodNumberOnly){
     	fmt.Println("Flood watermark threshould has been reached")
+    	health = false
     } else{
     	fmt.Println("Watermark threshold has not been reached")
     }
 
 
-//     checkResults := map[string]interface{
-//    "ElasticsearchHealth":true,
-//    "checks":[
-//       "Watermark Threshold":"test"
-//    ]
-// }
+
 
 	checkResults := make(map[string]interface{})
 
 	checkResults["Elasticsearch Health"] = map[string]interface{}{
-		"status":true,
+		"status":health,
 		"checks": map[string]interface{}{
-			"watermark threshold": true,
+			"watermark threshold": health,
 		},
 	}
 	fmt.Println(checkResults)

@@ -79,11 +79,11 @@ func CheckHealth (logfile string,flingSettings string){
     // defer the closing of our jsonFile so that we can parse it later on
     defer jsonFile2.Close()
 
-    byteValue, _ := ioutil.ReadAll(jsonFile2)
+    byteValue2, _ := ioutil.ReadAll(jsonFile2)
 
     var flSettings FlingSettings
 
-	json.Unmarshal(byteValue, &flSettings)
+	json.Unmarshal(byteValue2, &flSettings)
 
 	fmt.Println("access token = "+flSettings.MorpheusApiToken)
 

@@ -35,7 +35,7 @@ type FlingSettings struct {
 	MorpheusApiToken string `json:"morpheus_api_token"`
 }
 
-func CheckHealth (logfile string,flingSettings){
+func CheckHealth (logfile string,flingSettings string){
 
 	var allChecks []HealthChecks
 	

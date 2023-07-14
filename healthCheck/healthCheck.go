@@ -32,7 +32,7 @@ type Check struct {
 
 func CheckHealth (logfile string){
 
-	var allChecks []
+	var allChecks []HealthChecks
 	
 	// Open our jsonFile
 	jsonFile, err := os.Open(logfile)

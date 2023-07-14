@@ -34,7 +34,7 @@ var (
 	privatekeyPtr = flag.String("privatefile", "/root/morpheus.pem", "a string")
 	extractPtr    = flag.Bool("extract",false,"a bool")
 	healthPtr    = flag.Bool("health",false,"a bool")
-	flingsettingsPtr = String("token","/etc/morpheus/morpheus-fling-settings.json","a string")
+	flingsettingsPtr = flag.String("token","/etc/morpheus/morpheus-fling-settings.json","a string")
 )
 
 const helpText = `morpheus-fling [options]

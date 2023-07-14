@@ -65,9 +65,9 @@ func CheckHealth (logfile string){
 	caser := cases.Title(language.English) //Capitalise first letter
 	fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
 	
-	esChecks = checkESWatermarkThreshold()
+	esChecks := checkESWatermarkThreshold()
 	allChecks = append(allChecks,esChecks)
-	
+
 	
 }
 

@@ -32,6 +32,7 @@ type Check struct {
 
 func CheckHealth (logfile string){
 
+	var allChecks []
 	
 	// Open our jsonFile
 	jsonFile, err := os.Open(logfile)
@@ -95,10 +96,10 @@ func checkESWatermarkThreshold(){
 
 
 
-	fmt.Println("Low = " + strconv.Itoa(lowNumberOnly))
-	fmt.Println("High = " + strconv.Itoa(highNumberOnly))
-	fmt.Println("Flood Stage = " + strconv.Itoa(floodNumberOnly))
-	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
+	// fmt.Println("Low = " + strconv.Itoa(lowNumberOnly))
+	// fmt.Println("High = " + strconv.Itoa(highNumberOnly))
+	// fmt.Println("Flood Stage = " + strconv.Itoa(floodNumberOnly))
+	// fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 
 	healthy := true
 	checkInfo := ""
@@ -138,45 +139,6 @@ hc.Checks = append(hc.Checks,c)
         return
     }
     fmt.Println(string(e))
-
-
-// c := HealthChecks{
-// 		HealthCheckName: "Elasticsearch",
-// 		HealthCheckStatus: healthy,
-// 		Checks: []Check{
-// 				Check{
-// 					CheckName: "Watermark",
-// 					CheckStatus: health,
-// 				},
-// 				Check{
-// 					CheckName: "Watermark2",
-// 					CheckStatus: health,
-// 				},
-// 			},
-// 		}
-
-fmt.Println(hc.HealthCheckName,hc.HealthCheckStatus)
-
-	// checkResults := make(map[string]interface{})
-
-	// checkResults["Elasticsearch Health"] = map[string]interface{}{
-	// 	"status":health,
-	// 	"checks": map[string]interface{}{
-	// 		"watermark threshold": health,
-	// 	},
-	// }
-
-	// for _,m := range checkResults{
-
-	// 	for k, v := range m {
-	// 		fmt.Println(k," value is ", v)
-	// 	}
-		
-
-	// }
-
-	// fmt.Println(checkResults)
-     
 
 }
 

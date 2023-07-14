@@ -71,15 +71,15 @@ func CheckHealth (logfile string,flingSettings string){
 	fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
 	
 	// Open our jsonFile
-	jsonFile, err := os.Open(flingSettings)
+	jsonFile2, err := os.Open(flingSettings)
 	if err != nil {
         fmt.Println(err)
     }
     fmt.Println("Successfully Opened morpheus-fling-settings.json")
     // defer the closing of our jsonFile so that we can parse it later on
-    defer jsonFile.Close()
+    defer jsonFile2.Close()
 
-    byteValue, _ := ioutil.ReadAll(jsonFile)
+    byteValue, _ := ioutil.ReadAll(jsonFile2)
 
     var flSettings FlingSettings
 

@@ -122,7 +122,7 @@ func checkESWatermarkThreshold(){
     c := Check {
     	CheckName: "Watermark",
     	CheckStatus:healthy,
-    	checkInfo:checkInfo,
+    	CheckInfo:checkInfo,
     }
 
 

@@ -101,7 +101,7 @@ func checkESWatermarkThreshold(){
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 
 	healthy := true
-	checkInfo = ""
+	checkInfo := ""
 	if (currentStorage >= lowNumberOnly && currentStorage < highNumberOnly){
     	fmt.Println("Low watermark threshould has been reached")
     	healthy = false

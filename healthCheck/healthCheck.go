@@ -16,17 +16,17 @@ sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
 
 type HealthChecks struct {
 
-	HealthCheckName string
-	HealthCheckStatus bool
-	Checks []Check
+	HealthCheckName string `json:"healthCheckName"`
+	HealthCheckStatus bool `json:"healthCheckStatus"`
+	Checks []Check `json:"checks"`
 
 }
 
 type Check struct {
 
-	CheckName string
-	CheckStatus bool
-	CheckInfo string
+	CheckName string `json:"checkName"`
+	CheckStatus bool `json:"checkStatus"`
+	CheckInfo string `json:"checkInfo"`
 
 }
 
@@ -103,19 +103,16 @@ func checkESWatermarkThreshold(){
 	healthy := true
 	checkInfo := ""
 	if (currentStorage >= lowNumberOnly && currentStorage < highNumberOnly){
-    	fmt.Println("Low watermark threshould has been reached")
+    
     	healthy = false
     	checkInfo = "Low ("+strconv.Itoa(lowNumberOnly)+") watermark threshould has been reached"
     } else if (currentStorage >= highNumberOnly && currentStorage < floodNumberOnly){
-    	fmt.Println("High watermark threshould has been reached")
     	healthy = false
     	checkInfo = "High ("+strconv.Itoa(highNumberOnly)+") watermark threshould has been reached"
     } else if (currentStorage >= floodNumberOnly){
-    	fmt.Println("Flood watermark threshould has been reached")
     	healthy = false
     	checkInfo = "Flood ("+strconv.Itoa(floodNumberOnly)+") watermark threshould has been reached"
     } else{
-    	fmt.Println("Watermark threshold has not been reached")
     	checkInfo = "Watermark threshold has not been reached"
     }
 
@@ -133,6 +130,14 @@ hc := HealthChecks{
 			},
 		}
 hc.Checks = append(hc.Checks,c)
+
+
+    e, err := json.Marshal(hc)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(string(e))
 
 
 // c := HealthChecks{

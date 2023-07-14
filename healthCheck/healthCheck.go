@@ -135,12 +135,12 @@ hc := HealthChecks{
 hc.Checks = append(hc.Checks,c)
 
 
-    e, err := json.Marshal(hc)
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(string(e))
+    // e, err := json.Marshal(hc)
+    // if err != nil {
+    //     fmt.Println(err)
+    //     return
+    // }
+    // fmt.Println(string(e))
 
 return hc
 

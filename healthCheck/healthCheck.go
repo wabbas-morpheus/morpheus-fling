@@ -119,16 +119,16 @@ func checkESWatermarkThreshold(){
 c := HealthChecks{
 		HealthCheckName: "Elasticsearch",
 		HealthCheckStatus: health,
-		Checks: []Check
-				{
+		Checks: []Check{
+				Check{
 					CheckName: "Watermark",
 					CheckStatus: health
 				},
-				{
+				Check{
 					CheckName: "Watermark2",
 					CheckStatus: health
-				}
-			
+				},
+			},
 		}
 
 fmt.Println(c.HealthChecks)

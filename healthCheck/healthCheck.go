@@ -122,11 +122,11 @@ c := HealthChecks{
 		Checks: []Check{
 				Check{
 					CheckName: "Watermark",
-					CheckStatus: health
+					CheckStatus: health,
 				},
 				Check{
 					CheckName: "Watermark2",
-					CheckStatus: health
+					CheckStatus: health,
 				},
 			},
 		}

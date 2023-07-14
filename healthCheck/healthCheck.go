@@ -85,7 +85,7 @@ func CheckHealth (logfile string,flingSettings string){
 
 	json.Unmarshal(byteValue2, &flSettings)
 
-	fmt.Println("access token = "+flSettings.MorpheusApiToken)
+	fmt.Println("access token = "+flSettings)
 
 	esChecks := checkESWatermarkThreshold()
 	allChecks = append(allChecks,esChecks)

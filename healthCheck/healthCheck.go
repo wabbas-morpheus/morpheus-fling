@@ -13,8 +13,25 @@ elasticing "github.com/wabbas-morpheus/morpheus-fling/elasticIng"
 sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
 )
 
+
+type HealthChecks struct {
+
+	HealthCheckName string
+	HealthCheckStatus bool
+	Checks []Check
+
+}
+
+type Check struct {
+
+	CheckName string
+	CheckStatus bool
+
+}
+
 func CheckHealth (logfile string){
 
+	
 	// Open our jsonFile
 	jsonFile, err := os.Open(logfile)
 	if err != nil {
@@ -98,6 +115,23 @@ func checkESWatermarkThreshold(){
 
 
 
+
+c := HealthChecks{
+		HealthCheckName: "Elasticsearch",
+		HealthCheckStatus: health,
+		Checks: []Check{
+				{
+					CheckName: "Watermark",
+					CheckStatus: health
+				},
+				{
+					CheckName: "Watermark2",
+					CheckStatus: health
+				}
+			}
+		}
+
+fmt.Println(c.HealthChecks)
 
 	// checkResults := make(map[string]interface{})
 

@@ -65,11 +65,13 @@ func CheckHealth (logfile string){
 	caser := cases.Title(language.English) //Capitalise first letter
 	fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
 	
-	checkESWatermarkThreshold()
+	esChecks = checkESWatermarkThreshold()
+	allChecks = append(allChecks,esChecks)
+	
 	
 }
 
-func checkESWatermarkThreshold(){
+func checkESWatermarkThreshold() HealthChecks{
 
 	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
 	 
@@ -139,6 +141,8 @@ hc.Checks = append(hc.Checks,c)
         return
     }
     fmt.Println(string(e))
+
+return hc
 
 }
 

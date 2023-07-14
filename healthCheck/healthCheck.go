@@ -131,7 +131,7 @@ c := HealthChecks{
 			},
 		}
 
-fmt.Println(c.HealthChecks)
+fmt.Println(c.HealthChecks.HealthCheckName)
 
 	// checkResults := make(map[string]interface{})
 

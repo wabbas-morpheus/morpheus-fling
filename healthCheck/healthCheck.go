@@ -26,6 +26,7 @@ type Check struct {
 
 	CheckName string
 	CheckStatus bool
+	CheckInfo string
 
 }
 
@@ -99,39 +100,57 @@ func checkESWatermarkThreshold(){
 	fmt.Println("Flood Stage = " + strconv.Itoa(floodNumberOnly))
 	fmt.Println("Storage Used = " + strconv.Itoa(sysgatherer.GetStorageUsed()))
 
-	health := true 
+	healthy := true
+	checkInfo = ""
 	if (currentStorage >= lowNumberOnly && currentStorage < highNumberOnly){
     	fmt.Println("Low watermark threshould has been reached")
-    	health = false
+    	healthy = false
+    	checkInfo = "Low ("+strconv.Itoa(lowNumberOnly)+") watermark threshould has been reached"
     } else if (currentStorage >= highNumberOnly && currentStorage < floodNumberOnly){
     	fmt.Println("High watermark threshould has been reached")
-    	health = false
+    	healthy = false
+    	checkInfo = "High ("+strconv.Itoa(highNumberOnly)+") watermark threshould has been reached"
     } else if (currentStorage >= floodNumberOnly){
     	fmt.Println("Flood watermark threshould has been reached")
-    	health = false
+    	healthy = false
+    	checkInfo = "Flood ("+strconv.Itoa(floodNumberOnly)+") watermark threshould has been reached"
     } else{
     	fmt.Println("Watermark threshold has not been reached")
+    	checkInfo = "Watermark threshold has not been reached"
+    }
+
+    c := Check {
+    	CheckName: "Watermark",
+    	CheckStatus:healthy,
+    	checkInfo:checkInfo,
     }
 
 
-
-
-c := HealthChecks{
+hc := HealthChecks{
 		HealthCheckName: "Elasticsearch",
-		HealthCheckStatus: health,
+		HealthCheckStatus: healthy,
 		Checks: []Check{
-				Check{
-					CheckName: "Watermark",
-					CheckStatus: health,
-				},
-				Check{
-					CheckName: "Watermark2",
-					CheckStatus: health,
-				},
 			},
 		}
+hc.Checks = append(hc.Checks,c)
 
-fmt.Println(c.HealthCheckName,c.HealthCheckStatus)
+
+// c := HealthChecks{
+// 		HealthCheckName: "Elasticsearch",
+// 		HealthCheckStatus: healthy,
+// 		Checks: []Check{
+// 				Check{
+// 					CheckName: "Watermark",
+// 					CheckStatus: health,
+// 				},
+// 				Check{
+// 					CheckName: "Watermark2",
+// 					CheckStatus: health,
+// 				},
+// 			},
+// 		}
+
+fmt.Println(hc.HealthCheckName,hc.HealthCheckStatus)
 
 	// checkResults := make(map[string]interface{})
 

@@ -101,7 +101,7 @@ func CheckHealth (flingSettings string){
 
 func checkESStats(){
 
-	Esstats := elasticing.ElasticHealth()
+	Esstats := &elasticing.ElasticHealth()
 
 	// cluster_status := Esstats.Status
 	// node_total := Esstats.NodeTotal

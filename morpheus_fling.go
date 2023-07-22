@@ -149,11 +149,11 @@ func extractBundle() {
 func runHealthCheck() {
 	fmt.Println("Checking health status")
 
-	if *infilePtr != "" {
+	
 
-		healthCheck.CheckHealth(*infilePtr, *flingsettingsPtr)
+		healthCheck.CheckHealth(*flingsettingsPtr)
 
-	}
+	
 }
 
 // Need to initialize the ini file and pass into another function to iterate?

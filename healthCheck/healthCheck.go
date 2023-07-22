@@ -40,40 +40,32 @@ func prettyPrint(i interface{}) string {
     return string(s)
 }
 
-func CheckHealth (logfile string,flingSettings string){
+func CheckHealth (flingSettings string){
 
 	var allChecks []HealthChecks
 	
 	// Open our jsonFile
-	jsonFile, err := os.Open(logfile)
-	if err != nil {
-        fmt.Println(err)
-    }
-    fmt.Println("Successfully Opened logfile")
-    // defer the closing of our jsonFile so that we can parse it later on
-    defer jsonFile.Close()
+	// jsonFile, err := os.Open(logfile)
+	// if err != nil {
+    //     fmt.Println(err)
+    // }
+    // fmt.Println("Successfully Opened logfile")
+    // // defer the closing of our jsonFile so that we can parse it later on
+    // defer jsonFile.Close()
 
-    byteValue, _ := ioutil.ReadAll(jsonFile)
-
-    // var result map[string]interface{}
-    // json.Unmarshal([]byte(byteValue), &result)
-
-	// for key, value := range result {
-	// 	fmt.Printf("Key: %s === Value: %s \n", key, value)
-	// }
-    // fmt.Println(result["es_stats"][0])
+    // byteValue, _ := ioutil.ReadAll(jsonFile)
 
 	
-	type APP_DATA struct {
-		ElasticStats     elasticing.Esstats       `json:"es_stats"`
-	}
+	// type APP_DATA struct {
+	// 	ElasticStats     elasticing.Esstats       `json:"es_stats"`
+	// }
 
 
-	var appData APP_DATA
+	// var appData APP_DATA
 
-	json.Unmarshal(byteValue, &appData)
-	caser := cases.Title(language.English) //Capitalise first letter
-	fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
+	// json.Unmarshal(byteValue, &appData)
+	// caser := cases.Title(language.English) //Capitalise first letter
+	// fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
 	
 	// Open our jsonFile
 	jsonFile2, err := os.Open(flingSettings)

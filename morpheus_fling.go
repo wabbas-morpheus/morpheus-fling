@@ -13,28 +13,28 @@ import (
 	"path"
 	"time"
 
+	"github.com/mholt/archiver"
 	encryptText "github.com/wabbas-morpheus/morpheus-fling/encryptText"
 	filereader "github.com/wabbas-morpheus/morpheus-fling/fileReader"
 	portscanner "github.com/wabbas-morpheus/morpheus-fling/portScanner"
 	sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
-	"morpheus-fling/healthCheck"
-	"github.com/mholt/archiver"
 	"github.com/zcalusic/sysinfo"
+	"morpheus-fling/healthCheck"
 )
 
 var (
-	infilePtr  = flag.String("infile", "", "a string")
-	secfilePtr = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
-	outfilePtr = flag.String("outfile", path.Join(".", "output.json"), "a string")
-	uLimit     = flag.Int64("ulimit", 1024, "an integer")
-	logfilePtr = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
-	bundlerPtr = flag.String("bundler", "/tmp/bundler.zip", "a string")
-	keyfilePtr = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
-	pubPtr     = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
-	privatekeyPtr = flag.String("privatefile", "/root/morpheus.pem", "a string")
-	extractPtr    = flag.Bool("extract",false,"a bool")
-	healthPtr    = flag.Bool("health",false,"a bool")
-	flingsettingsPtr = flag.String("token","/etc/morpheus/morpheus-fling-settings.json","a string")
+	infilePtr        = flag.String("infile", "", "a string")
+	secfilePtr       = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
+	outfilePtr       = flag.String("outfile", path.Join(".", "output.json"), "a string")
+	uLimit           = flag.Int64("ulimit", 1024, "an integer")
+	logfilePtr       = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
+	bundlerPtr       = flag.String("bundler", "/tmp/bundler.zip", "a string")
+	keyfilePtr       = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
+	pubPtr           = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
+	privatekeyPtr    = flag.String("privatefile", "/root/morpheus.pem", "a string")
+	extractPtr       = flag.Bool("extract", false, "a bool")
+	healthPtr        = flag.Bool("health", false, "a bool")
+	flingsettingsPtr = flag.String("token", "/etc/morpheus/morpheus-fling-settings.json", "a string")
 )
 
 const helpText = `morpheus-fling [options]
@@ -61,105 +61,100 @@ Specify current directory for bundler and keyfile path
 `
 
 type Results struct {
-	ElasticStats     *elasticing.Esstats       `json:"es_stats"`
-	ElasticIndices   []elasticing.Esindices    `json:"es_indices"`
+	ElasticStats     *elasticing.Esstats             `json:"es_stats"`
+	ElasticIndices   []elasticing.Esindices          `json:"es_indices"`
 	ElasticSettings  *elasticing.ESWaterMarkSettings `json:"es_settings"`
-	System           *sysinfo.SysInfo          `json:"system_stats"`
-	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
-	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
-	MorphLogs        string                    `json:"morpheus_logs"`
+	System           *sysinfo.SysInfo                `json:"system_stats"`
+	Scans            []portscanner.ScanResult        `json:"port_scans,omitempty"`
+	RabbitStatistics []rabbiting.RabbitResults       `json:"rabbit_stats"`
+	MorphLogs        string                          `json:"morpheus_logs"`
 }
-
-
 
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
-		//Remove existing files
-		if (fileExists(fileName)){
-			e := os.Remove(fileName)
-			if e != nil {
-				log.Fatal(e)
-			}
+	//Remove existing files
+	if fileExists(fileName) {
+		e := os.Remove(fileName)
+		if e != nil {
+			log.Fatal(e)
 		}
-		f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			log.Println(err)
-		}
-		defer f.Close()
-		if _, err := f.WriteString(content); err != nil {
-			log.Println(err)
-		}
-	
+	}
+	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer f.Close()
+	if _, err := f.WriteString(content); err != nil {
+		log.Println(err)
+	}
+
 }
 
 func fileExists(filename string) bool {
-    info, err := os.Stat(filename)
-    if os.IsNotExist(err) {
-        return false
-    }
-    return !info.IsDir()
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }
 
-func createBundle(){
+func createBundle() {
 
-		//Remove exiting bundle file
-		if (fileExists(*bundlerPtr)){
-			fmt.Println("Bundler File already exists. Replacing file")
-			e := os.Remove(*bundlerPtr)
-			if e != nil {
-				log.Fatal(e)
-			}
+	//Remove exiting bundle file
+	if fileExists(*bundlerPtr) {
+		fmt.Println("Bundler File already exists. Replacing file")
+		e := os.Remove(*bundlerPtr)
+		if e != nil {
+			log.Fatal(e)
 		}
+	}
 
-		files := []string{
-			*outfilePtr,
-			*keyfilePtr,
-		}
-		// Bundle the whole shebang
-		if err := archiver.Archive(files, *bundlerPtr); err != nil {
-			log.Fatal(err)
-		}
-		
-	
+	files := []string{
+		*outfilePtr,
+		*keyfilePtr,
+	}
+	// Bundle the whole shebang
+	if err := archiver.Archive(files, *bundlerPtr); err != nil {
+		log.Fatal(err)
+	}
+
 }
 
-func extractBundle(){
+func extractBundle() {
 
 	// Extract the encrypted bundle
 	t := time.Now()
 	timeStamp := t.Format("20060102150405")
-	folderName := "extracted_"+timeStamp
-	if err := archiver.Unarchive(*bundlerPtr,folderName+"/"); err != nil {
+	folderName := "extracted_" + timeStamp
+	if err := archiver.Unarchive(*bundlerPtr, folderName+"/"); err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Extracting Bundle File")
-	nonText, err := os.ReadFile(folderName+"/output.json")
+	nonText, err := os.ReadFile(folderName + "/output.json")
 	if err != nil {
 		log.Fatal("Can't load output file", err)
 	}
 
-	nonKey, err := os.ReadFile(folderName+"/bundlerkey.enc")
+	nonKey, err := os.ReadFile(folderName + "/bundlerkey.enc")
 	if err != nil {
 		log.Fatal("Can't load key file", err)
 	}
 
-	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText,nonKey)
+	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText, nonKey)
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
-	
+
 }
 
-func runHealthCheck(){
+func runHealthCheck() {
 	fmt.Println("Checking health status")
 
 	if *infilePtr != "" {
-	
-		healthCheck.CheckHealth(*infilePtr,*flingsettingsPtr)
 
+		healthCheck.CheckHealth(*infilePtr, *flingsettingsPtr)
+
+	}
 }
-}
-
-
 
 // Need to initialize the ini file and pass into another function to iterate?
 func main() {
@@ -167,11 +162,9 @@ func main() {
 	flag.Usage = help
 	flag.Parse()
 
-	
-	if *extractPtr{ //Extract 
+	if *extractPtr { //Extract
 
 		extractBundle()
-
 
 	} else if *healthPtr { //check health from log files
 
@@ -179,70 +172,63 @@ func main() {
 
 	} else { // Encrypt and bundle log file
 
-	
+		// Initialize an empty ScanResult slice, omitted from result if empty
+		var destArray []portscanner.ScanResult
+		if *infilePtr != "" {
+			psArray := filereader.FileToStructArray(*infilePtr, *uLimit)
+			destArray = portscanner.Start(psArray, 500*time.Millisecond)
+		}
 
-	
+		superSecrets := secparse.ParseSecrets(*secfilePtr)
+		rmqpassword := superSecrets.Rabbitmq.MorpheusPassword
 
-	// Initialize an empty ScanResult slice, omitted from result if empty
-	var destArray []portscanner.ScanResult
-	if *infilePtr != "" {
-		psArray := filereader.FileToStructArray(*infilePtr, *uLimit)
-		destArray = portscanner.Start(psArray, 500*time.Millisecond)
+		// Gather system stats into a si array
+		sysStats := sysgatherer.SysGather()
+
+		// Gather elasticsearch health and indices into structs for results
+		esHealth := elasticing.ElasticHealth()
+		esIndices := elasticing.ElasticIndices()
+		esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
+
+		rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
+
+		morpheus, err := ioutil.ReadFile(*logfilePtr)
+		if err != nil {
+			log.Fatalf("Error reading public key file: %s", err)
+		}
+
+		// Create instance of results struct from packages returns
+		results := Results{
+			ElasticStats:     esHealth,
+			ElasticIndices:   esIndices,
+			ElasticSettings:  esWaterMarkSettings,
+			System:           sysStats,
+			Scans:            destArray,
+			RabbitStatistics: rabbitStuff,
+			MorphLogs:        string(morpheus),
+		}
+
+		resultjson, err := json.MarshalIndent(results, "", " ")
+		if err != nil {
+			log.Fatal("Can't encode to JSON", err)
+		}
+
+		//fmt.Fprintf(os.Stdout, "%s", resultjson)
+		//FileWrtr("\nULTIMATE:\n" + string(resultjson), *outfilePtr)
+
+		// Base resultjson into Encryption package and write encrypted file and key
+		nonSense := encryptText.EncryptItAll(*pubPtr, string(resultjson))
+		nonText := nonSense.Ciphertext
+		nonKey := nonSense.EncryptedKey
+		_ = nonText
+		_ = nonKey
+		FileWrtr(string(nonText), *outfilePtr)
+		FileWrtr(string(nonKey), *keyfilePtr)
+
+		createBundle()
+
 	}
 
-	superSecrets := secparse.ParseSecrets(*secfilePtr)
-	rmqpassword := superSecrets.Rabbitmq.MorpheusPassword
-
-	// Gather system stats into a si array
-	sysStats := sysgatherer.SysGather()
-
-	// Gather elasticsearch health and indices into structs for results
-	esHealth := elasticing.ElasticHealth()
-	esIndices := elasticing.ElasticIndices()
-	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
-	
-	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
-
-	morpheus, err := ioutil.ReadFile(*logfilePtr)
-	if err != nil {
-		log.Fatalf("Error reading public key file: %s", err)
-	}
-
-	// Create instance of results struct from packages returns
-	results := Results{
-		ElasticStats:     esHealth,
-		ElasticIndices:   esIndices,
-		ElasticSettings:  esWaterMarkSettings,
-		System:           sysStats,
-		Scans:            destArray,
-		RabbitStatistics: rabbitStuff,
-		MorphLogs:        string(morpheus),
-	}
-
-	resultjson, err := json.MarshalIndent(results, "", " ")
-	if err != nil {
-		log.Fatal("Can't encode to JSON", err)
-	}
-
-	//fmt.Fprintf(os.Stdout, "%s", resultjson)
-	//FileWrtr("\nULTIMATE:\n" + string(resultjson), *outfilePtr)
-
-	// Base resultjson into Encryption package and write encrypted file and key
-	nonSense := encryptText.EncryptItAll(*pubPtr, string(resultjson))
-	nonText := nonSense.Ciphertext
-	nonKey := nonSense.EncryptedKey
-	_ = nonText
-	_ = nonKey
-	FileWrtr(string(nonText), *outfilePtr)
-	FileWrtr(string(nonKey), *keyfilePtr)
-
-
-	createBundle()
-	
-}
-
-	
-	
 }
 
 func help() {

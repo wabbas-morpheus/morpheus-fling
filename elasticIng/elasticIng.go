@@ -200,7 +200,7 @@ func ElasticWatermarkSettings() *ESWaterMarkSettings{
 
 	json.Unmarshal(responseData, &elastic_settings)
 
-    fmt.Println(string(responseData))
+    //fmt.Println(string(responseData))
 
 	
 

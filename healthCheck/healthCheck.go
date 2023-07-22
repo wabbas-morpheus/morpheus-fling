@@ -103,8 +103,8 @@ func checkESStats(){
 
 	Esstats := elasticing.ElasticHealth()
 
-	cluster_status := Esstats[0].Status
-	node_total := Esstats[0].NodeTotal
+	cluster_status := Esstats.Status
+	node_total := Esstats.NodeTotal
 	fmt.Println(prettyPrint(Esstats))
 	fmt.Println("Cluster Status = "+cluster_status)
 	fmt.Println("Total Nodes = "+node_total)

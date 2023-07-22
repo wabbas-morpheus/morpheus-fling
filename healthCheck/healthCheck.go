@@ -103,12 +103,12 @@ func checkESStats(){
 
 	Esstats := elasticing.ElasticHealth()
 
-	cluster_status := Esstats.Status
-	node_total := Esstats.NodeTotal
+	// cluster_status := Esstats.Status
+	// node_total := Esstats.NodeTotal
 	fmt.Printf("%+v\n", Esstats)
 	//fmt.Println(prettyPrint(Esstats))
-	fmt.Println("Cluster Status = "+cluster_status)
-	fmt.Println("Total Nodes = "+node_total)
+	// fmt.Println("Cluster Status = "+cluster_status)
+	// fmt.Println("Total Nodes = "+node_total)
 }
 
 func checkESWatermarkThreshold() HealthChecks{

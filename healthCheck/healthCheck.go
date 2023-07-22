@@ -102,6 +102,8 @@ func CheckHealth (logfile string,flingSettings string){
     }
     fmt.Println(string(e))
 
+    checkESStats()
+
 	
 }
 

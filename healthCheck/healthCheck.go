@@ -107,7 +107,7 @@ func CheckHealth (logfile string,flingSettings string){
 
 func checkESStats(){
 
-var Esstats = elasticing.Esstats
+var Esstats elasticing.Esstats
 
 	Esstats = elasticing.ElasticHealth()
 	fmt.Println(prettyPrint(Esstats))

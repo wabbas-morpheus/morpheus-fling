@@ -213,8 +213,8 @@ func ElasticWatermarkSettings() *ESWaterMarkSettings{
 	wmSettings.FloodStageFrozen = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStageFrozen
 
 
-	fmt.Println("Watermark= "+elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage)
-	fmt.Printf("struct: %+v\n", elastic_settings)
+	//fmt.Println("Watermark= "+elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage)
+	//fmt.Printf("struct: %+v\n", elastic_settings)
 
 	return wmSettings
 }

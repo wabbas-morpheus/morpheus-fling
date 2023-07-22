@@ -105,6 +105,14 @@ func CheckHealth (logfile string,flingSettings string){
 	
 }
 
+func checkESStats() HealthChecks{
+
+type esstats = elasticing.Esstats
+
+	esstats = elasticing.ElasticHealth()
+	fmt.Println(prettyPrint(esstats))
+}
+
 func checkESWatermarkThreshold() HealthChecks{
 
 	//Get water settings from elasticsearch

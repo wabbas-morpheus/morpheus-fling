@@ -90,7 +90,7 @@ func CheckHealth (logfile string,flingSettings string){
 
 	json.Unmarshal(byteValue2, &flSettings)
 
-	prettyPrint(flSettings)
+	fmt.Println(prettyPrint(flSettings))
 
 	esChecks := checkESWatermarkThreshold()
 	allChecks = append(allChecks,esChecks)

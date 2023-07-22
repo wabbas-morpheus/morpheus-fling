@@ -105,12 +105,12 @@ func CheckHealth (logfile string,flingSettings string){
 	
 }
 
-func checkESStats() HealthChecks{
+func checkESStats(){
 
-type esstats = elasticing.Esstats
+type Esstats = elasticing.Esstats
 
-	esstats = elasticing.ElasticHealth()
-	fmt.Println(prettyPrint(esstats))
+	Esstats = elasticing.ElasticHealth()
+	fmt.Println(prettyPrint(Esstats))
 }
 
 func checkESWatermarkThreshold() HealthChecks{

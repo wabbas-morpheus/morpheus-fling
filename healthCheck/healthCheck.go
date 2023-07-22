@@ -35,6 +35,11 @@ type FlingSettings struct {
 	MorpheusApiToken string `json:"morpheus_api_token"`
 }
 
+func prettyPrint(i interface{}) string {
+    s, _ := json.MarshalIndent(i, "", "\t")
+    return string(s)
+}
+
 func CheckHealth (logfile string,flingSettings string){
 
 	var allChecks []HealthChecks
@@ -85,7 +90,7 @@ func CheckHealth (logfile string,flingSettings string){
 
 	json.Unmarshal(byteValue2, &flSettings)
 
-	fmt.Println("access token = "+flSettings)
+	prettyPrint(flSettings)
 
 	esChecks := checkESWatermarkThreshold()
 	allChecks = append(allChecks,esChecks)

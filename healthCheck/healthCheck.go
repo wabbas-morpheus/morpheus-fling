@@ -126,7 +126,7 @@ func checkESStats(){
 		healthy = false
     	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status
 
-	} else if (node_total > 1 y && cluster_status =="yellow"){
+	} else if (node_total > 1 && cluster_status =="yellow"){
     
     	healthy = false
     	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status

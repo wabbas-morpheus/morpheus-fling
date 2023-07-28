@@ -47,7 +47,7 @@ func GetStorageUsed() int{
     }
 
 
-    outputES := string(out[:])
+    outputES := string(outESFile[:])
     fPath := ""
     scanner := bufio.NewScanner(strings.NewReader(outputES))
         for scanner.Scan() { //iterate of each line

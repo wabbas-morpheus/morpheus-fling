@@ -39,7 +39,7 @@ func SysGather() *sysinfo.SysInfo {
 
 func GetStorageUsed() int{
 
-    out, err := exec.Command("df","-h").Output()
+    out, err := exec.Command("df","-h","/var/opt/morpheus/elasticsearch-7.17.5/data").Output()
 
     // if there is an error with our execution
     // handle it here

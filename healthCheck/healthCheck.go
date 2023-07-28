@@ -45,29 +45,7 @@ func CheckHealth (flingSettings string){
 	var allHealthChecks []HealthChecks
 	var allESChecks []Check
 	
-	// Open our jsonFile
-	// jsonFile, err := os.Open(logfile)
-	// if err != nil {
-    //     fmt.Println(err)
-    // }
-    // fmt.Println("Successfully Opened logfile")
-    // // defer the closing of our jsonFile so that we can parse it later on
-    // defer jsonFile.Close()
 
-    // byteValue, _ := ioutil.ReadAll(jsonFile)
-
-	
-	// type APP_DATA struct {
-	// 	ElasticStats     elasticing.Esstats       `json:"es_stats"`
-	// }
-
-
-	// var appData APP_DATA
-
-	// json.Unmarshal(byteValue, &appData)
-	// caser := cases.Title(language.English) //Capitalise first letter
-	// fmt.Println("Elasticsearch-> \n\t\tStatus: "+caser.String(appData.ElasticStats[0].Status) + "\n\t\tTotal Nodes: "+appData.ElasticStats[0].NodeTotal)
-	
 	// Open our jsonFile
 	jsonFile2, err := os.Open(flingSettings)
 	if err != nil {
@@ -85,8 +63,6 @@ func CheckHealth (flingSettings string){
 
 	fmt.Println(prettyPrint(flSettings))
 
-
-	// allChecks = append(allChecks,esChecks)
 
 
 	allESChecks = append(allESChecks,checkESWatermarkThreshold())

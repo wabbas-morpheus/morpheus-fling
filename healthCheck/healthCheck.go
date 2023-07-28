@@ -106,7 +106,7 @@ func CheckHealth (flingSettings string){
 	
 }
 
-func setHealthCheckStatus(checks []Check) HealthChecks{
+func setHealthCheckStatus(checks []Check){
 
 	for _, c := range checks {
         fmt.Printf("Name: %s\n", c.CheckName)
@@ -120,6 +120,8 @@ func setHealthCheckStatus(checks []Check) HealthChecks{
 // 		},
 // 	}
 // hc.Checks = append(hc.Checks,c)
+
+
 
 }
 
@@ -137,7 +139,7 @@ func checkESStats(){
 	healthy := true
 	checkInfo := ""
 
-	if (cluster_status=="red"){
+	if (strconv.Atoi(node_total) >= 1 && cluster_status=="red"){
 
 		healthy = false
     	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status

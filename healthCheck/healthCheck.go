@@ -92,7 +92,8 @@ func CheckHealth (flingSettings string){
 	allESChecks = append(allESChecks,checkESWatermarkThreshold())
 	allESChecks = append(allESChecks,checkESStats())
 	
-	allHealthChecks = setHealthCheckStatus(allESChecks,"Elasticsearch")
+	allHealthChecks = append(allHealthChecks,setHealthCheckStatus(allESChecks,"Elasticsearch"))
+	
 
 
 	e, err := json.Marshal(allHealthChecks)

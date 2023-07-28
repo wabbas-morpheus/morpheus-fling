@@ -50,9 +50,9 @@ func GetStorageUsed() int{
 
     outputES := string(outESFile[:])
     fPath := ""
-    scanner := bufio.NewScanner(strings.NewReader(outputES))
-        for scanner.Scan() { //iterate of each line
-                line := strings.Fields(scanner.Text())//convert line text in a list
+    scannerES := bufio.NewScanner(strings.NewReader(outputES))
+        for scannerES.Scan() { //iterate of each line
+                line := strings.Fields(scannerES.Text())//convert line text in a list
                 fPath = line[1] //get storage used info
                 fmt.Printf("fpath = %s\n",fPath)
                 

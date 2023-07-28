@@ -91,7 +91,7 @@ func CheckHealth (flingSettings string){
 
 	allESChecks = append(allESChecks,checkESWatermarkThreshold())
 	// allChecks = append(allESChecks,checkESStats())
-	setHealthCheckStatus(allESChecks)
+	hc := setHealthCheckStatus(allESChecks)
 
 
 	// e, err := json.Marshal(allChecks)
@@ -142,7 +142,7 @@ func checkESStats(){
 		healthy = false
     	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status
 
-	} else if (node_total > 1 && cluster_status =="yellow"){
+	} else if (strconv.Atoi(node_total) > 1 && cluster_status =="yellow"){
     
     	healthy = false
     	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status

@@ -29,18 +29,12 @@ func SysGather() *sysinfo.SysInfo {
 
 	return &si
 
-	//data, err := json.MarshalIndent(&si, "", "  ")
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//fmt.Println(string(data))
-	//return string(data)
+	
 }
 
 func GetStorageUsed() int{
 
-      
+    //get path of the elasticsearch data  
     outESFile, err := exec.Command("grep","data","/opt/morpheus/embedded/elasticsearch/config/elasticsearch.yml").Output()
 
     if err != nil {
@@ -63,6 +57,7 @@ func GetStorageUsed() int{
                 log.Fatal(err)
         }
 
+    //Get available storage info on elasticsearch mount point
     out, err := exec.Command("df","-h",fPath).Output()
 
     // if there is an error with our execution

@@ -54,7 +54,6 @@ func GetStorageUsed() int{
     scanner := bufio.NewScanner(strings.NewReader(output))
         for scanner.Scan() { //iterate of each line
                 line := strings.Fields(scanner.Text())//convert line text in a list
-                mountPoint := line[5] //get mount point info
                 storageUsedPercent := line[4] //get storage used info
                 used = storageUsedPercent[0:len(storageUsedPercent)-1]
                         

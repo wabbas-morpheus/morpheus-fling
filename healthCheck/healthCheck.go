@@ -106,7 +106,7 @@ func CheckHealth (flingSettings string){
 	
 }
 
-func setHealthCheckStatus([]checks) HealthChecks{
+func setHealthCheckStatus(checks []Check) HealthChecks{
 
 	for _, c := range checks {
         fmt.Printf("Name: %s\n", c.CheckName)

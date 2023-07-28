@@ -59,7 +59,7 @@ func GetStorageUsed() int{
                         
                 
         }
-        if err := scanner.Err(); err != nil {
+        if err := scannerES.Err(); err != nil {
                 log.Fatal(err)
         }
 

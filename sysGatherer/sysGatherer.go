@@ -56,11 +56,9 @@ func GetStorageUsed() int{
                 line := strings.Fields(scanner.Text())//convert line text in a list
                 mountPoint := line[5] //get mount point info
                 storageUsedPercent := line[4] //get storage used info
-                if mountPoint=="/"{
-                        //fmt.Println(line)
-                        used = storageUsedPercent[0:len(storageUsedPercent)-1]
-                        //fmt.Println(used)
-                }
+                used = storageUsedPercent[0:len(storageUsedPercent)-1]
+                        
+                
         }
         if err := scanner.Err(); err != nil {
                 log.Fatal(err)

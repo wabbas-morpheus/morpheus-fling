@@ -39,6 +39,29 @@ func SysGather() *sysinfo.SysInfo {
 
 func GetStorageUsed() int{
 
+      
+    outESFile, err := exec.Command("grep","data","/opt/morpheus/embedded/elasticsearch/config/elasticsearch.yml").Output()
+
+    if err != nil {
+        log.Fatal(err)
+    }
+
+
+    outputES := string(out[:])
+    fPath := ""
+    scanner := bufio.NewScanner(strings.NewReader(outputES))
+        for scanner.Scan() { //iterate of each line
+                line := strings.Fields(scanner.Text())//convert line text in a list
+                fPath := line[1] //get storage used info
+                fmt.Printf("fpath = %s\n",fPath)
+                
+                        
+                
+        }
+        if err := scanner.Err(); err != nil {
+                log.Fatal(err)
+        }
+
     out, err := exec.Command("df","-h","/var/opt/morpheus/elasticsearch-7.17.5/data").Output()
 
     // if there is an error with our execution

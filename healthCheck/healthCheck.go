@@ -138,19 +138,19 @@ func checkESStats(){
 
 	fmt.Printf("%+v\n", Esstats)
 	//fmt.Println(prettyPrint(Esstats))
-	fmt.Println("Cluster Status = "+cluster_status)
-	fmt.Println("Total Nodes = "+node_total)
+	fmt.Printf("Cluster Status = %s",cluster_status)
+	fmt.Printf("Total Nodes = %d",node_total)
 
 	healthy := true
 	checkInfo := ""
 
 
-	if (strconv.Atoi(node_total) >= 1 && cluster_status=="red"){
+	if (node_total >= 1 && cluster_status=="red"){
 
 		healthy = false
     	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status
 
-	} else if (strconv.Atoi(node_total) > 1 && cluster_status =="yellow"){
+	} else if (node_total > 1 && cluster_status =="yellow"){
     
     	healthy = false
     	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status

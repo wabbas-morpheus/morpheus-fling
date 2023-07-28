@@ -90,7 +90,8 @@ func CheckHealth (flingSettings string){
 
 
 	allESChecks = append(allESChecks,checkESWatermarkThreshold())
-	allChecks = append(allESChecks,checkESStats())
+	allESChecks = append(allESChecks,checkESStats())
+	
 	setHealthCheckStatus(allESChecks)
 
 

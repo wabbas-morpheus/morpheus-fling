@@ -126,7 +126,7 @@ func setHealthCheckStatus(checks []Check){
 
 }
 
-func checkESStats(){
+func checkESStats() Check{
 
 	Esstats := elasticing.ElasticHealth()
 
@@ -169,6 +169,8 @@ func checkESStats(){
     // fmt.Println("Check name = "+c.CheckName)
     // fmt.Printf("Check status = %t",c.CheckStatus)
     // fmt.Println("Check Info = "+c.CheckInfo)
+
+    return c
 }
 
 func checkESWatermarkThreshold() Check{

@@ -85,6 +85,14 @@ func CheckHealth (flingSettings string){
 	fmt.Println(prettyPrint(flSettings))
 
 	esChecks := checkESWatermarkThreshold()
+
+	// hc := HealthChecks{
+// 		HealthCheckName: "Elasticsearch",
+// 		HealthCheckStatus: healthy,
+// 		Checks: []Check{
+// 			},
+// 		}
+// hc.Checks = append(hc.Checks,c)
 	allChecks = append(allChecks,esChecks)
 
 	e, err := json.Marshal(allChecks)
@@ -109,9 +117,36 @@ func checkESStats(){
 	//fmt.Println(prettyPrint(Esstats))
 	fmt.Println("Cluster Status = "+cluster_status)
 	fmt.Println("Total Nodes = "+node_total)
+
+	healthy := true
+	checkInfo := ""
+
+	if (cluster_status=='red'){
+
+		healthy = false
+    	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status
+
+	} else if (node_total > 1 y && cluster_status =='yellow'){
+    
+    	healthy = false
+    	checkInfo = "Elasticsearch cluster in a unhealthy state - "+cluster_status
+    
+    } else{
+    	checkInfo = "Cluster is healthy"
+    }
+
+    c := Check {
+    	CheckName: "Cluster status",
+    	CheckStatus:healthy,
+    	CheckInfo:checkInfo,
+    }
+
+    fmt.Println('Check name = '+c.CheckName)
+    fmt.Println('Check status = '+c.CheckStatus)
+    fmt.Println('Check Info = '+c.CheckInfo)
 }
 
-func checkESWatermarkThreshold() HealthChecks{
+func checkESWatermarkThreshold() Check{
 
 	//Get water settings from elasticsearch
 	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
@@ -172,18 +207,12 @@ func checkESWatermarkThreshold() HealthChecks{
     }
 
 
-hc := HealthChecks{
-		HealthCheckName: "Elasticsearch",
-		HealthCheckStatus: healthy,
-		Checks: []Check{
-			},
-		}
-hc.Checks = append(hc.Checks,c)
 
 
 
 
-return hc
+
+return c
 
 }
 

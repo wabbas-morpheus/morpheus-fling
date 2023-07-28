@@ -130,7 +130,12 @@ func checkESStats(){
 	Esstats := elasticing.ElasticHealth()
 
 	cluster_status := (*Esstats)[0].Status
-	node_total,_ := (*Esstats)[0].NodeTotal
+
+	node_total, err := strconv.Atoi((*Esstats)[0].NodeTotal) //Remove percent sign and convert to int
+	if err != nil {
+        fmt.Println(err)
+    }
+
 	fmt.Printf("%+v\n", Esstats)
 	//fmt.Println(prettyPrint(Esstats))
 	fmt.Println("Cluster Status = "+cluster_status)
@@ -138,6 +143,7 @@ func checkESStats(){
 
 	healthy := true
 	checkInfo := ""
+
 
 	if (strconv.Atoi(node_total) >= 1 && cluster_status=="red"){
 

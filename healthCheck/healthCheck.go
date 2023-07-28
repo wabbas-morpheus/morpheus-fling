@@ -90,7 +90,7 @@ func CheckHealth (flingSettings string){
 
 
 	allESChecks = append(allESChecks,checkESWatermarkThreshold())
-	// allChecks = append(allESChecks,checkESStats())
+	allChecks = append(allESChecks,checkESStats())
 	setHealthCheckStatus(allESChecks)
 
 
@@ -165,9 +165,9 @@ func checkESStats(){
     	CheckInfo:checkInfo,
     }
 
-    fmt.Println("Check name = "+c.CheckName)
-    fmt.Printf("Check status = %t",c.CheckStatus)
-    fmt.Println("Check Info = "+c.CheckInfo)
+    // fmt.Println("Check name = "+c.CheckName)
+    // fmt.Printf("Check status = %t",c.CheckStatus)
+    // fmt.Println("Check Info = "+c.CheckInfo)
 }
 
 func checkESWatermarkThreshold() Check{

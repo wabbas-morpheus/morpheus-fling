@@ -54,7 +54,7 @@ func GetStorageUsed() int{
         for scannerES.Scan() { //iterate of each line
                 line := strings.Fields(scannerES.Text())//convert line text in a list
                 fPath = line[1] //get storage used info
-                fmt.Printf("fpath = %s\n",fPath)
+                //fmt.Printf("fpath = %s\n",fPath)
                 
                         
                 
@@ -63,7 +63,7 @@ func GetStorageUsed() int{
                 log.Fatal(err)
         }
 
-    out, err := exec.Command("df","-h","/var/opt/morpheus/elasticsearch-7.17.5/data").Output()
+    out, err := exec.Command("df","-h",fPath).Output()
 
     // if there is an error with our execution
     // handle it here

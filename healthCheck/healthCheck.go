@@ -85,10 +85,6 @@ func CheckHealth (flingSettings string){
 
 	fmt.Println(prettyPrint(flSettings))
 
-	esChecks := checkESWatermarkThreshold()
-
-
-
 
 	// allChecks = append(allChecks,esChecks)
 

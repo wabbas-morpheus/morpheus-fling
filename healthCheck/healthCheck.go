@@ -137,10 +137,7 @@ func checkESStats() Check{
         fmt.Println(err)
     }
 
-	fmt.Printf("%+v\n", Esstats)
-	//fmt.Println(prettyPrint(Esstats))
-	fmt.Printf("Cluster Status = %s",cluster_status)
-	fmt.Printf("Total Nodes = %d",node_total)
+	
 
 	healthy := true
 	checkInfo := ""

@@ -141,9 +141,9 @@ func checkESStats(){
     	CheckInfo:checkInfo,
     }
 
-    fmt.Println('Check name = '+c.CheckName)
-    fmt.Println('Check status = '+c.CheckStatus)
-    fmt.Println('Check Info = '+c.CheckInfo)
+    fmt.Println("Check name = "+c.CheckName)
+    fmt.Println("Check status = "+c.CheckStatus)
+    fmt.Println("Check Info = "+c.CheckInfo)
 }
 
 func checkESWatermarkThreshold() Check{

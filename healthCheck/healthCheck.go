@@ -42,7 +42,8 @@ func prettyPrint(i interface{}) string {
 
 func CheckHealth (flingSettings string){
 
-	var allChecks []HealthChecks
+	// var allChecks []HealthChecks
+	var allESChecks []Check
 	
 	// Open our jsonFile
 	// jsonFile, err := os.Open(logfile)
@@ -86,25 +87,44 @@ func CheckHealth (flingSettings string){
 
 	esChecks := checkESWatermarkThreshold()
 
-	// hc := HealthChecks{
-// 		HealthCheckName: "Elasticsearch",
-// 		HealthCheckStatus: healthy,
-// 		Checks: []Check{
-// 			},
-// 		}
-// hc.Checks = append(hc.Checks,c)
-	allChecks = append(allChecks,esChecks)
 
-	e, err := json.Marshal(allChecks)
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(string(e))
 
-    checkESStats()
+
+	// allChecks = append(allChecks,esChecks)
+
+
+	allESChecks = append(allESChecks,checkESWatermarkThreshold())
+	// allChecks = append(allESChecks,checkESStats())
+	setHealthCheckStatus(allESChecks)
+
+
+	// e, err := json.Marshal(allChecks)
+    // if err != nil {
+    //     fmt.Println(err)
+    //     return
+    // }
+    // fmt.Println(string(e))
+
+    
 
 	
+}
+
+func setHealthCheckStatus([]checks) HealthChecks{
+
+	for _, c := range checks {
+        fmt.Printf("Name: %s\n", c.CheckName)
+        fmt.Printf("Status: %s\n",c.CheckStatus)
+    }
+
+// 	hc := HealthChecks{
+// 	HealthCheckName: "Elasticsearch",
+// 	HealthCheckStatus: healthy,
+// 	Checks: []Check{
+// 		},
+// 	}
+// hc.Checks = append(hc.Checks,c)
+
 }
 
 func checkESStats(){

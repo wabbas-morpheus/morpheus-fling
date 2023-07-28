@@ -166,7 +166,7 @@ func checkESStats(){
     }
 
     fmt.Println("Check name = "+c.CheckName)
-    fmt.Println("Check status = "+c.CheckStatus)
+    fmt.Printf("Check status = %t",c.CheckStatus)
     fmt.Println("Check Info = "+c.CheckInfo)
 }
 

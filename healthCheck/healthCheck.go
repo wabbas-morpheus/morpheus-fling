@@ -110,7 +110,7 @@ func setHealthCheckStatus(checks []Check){
 
 	for _, c := range checks {
         fmt.Printf("Name: %s\n", c.CheckName)
-        fmt.Printf("Status: %s\n",c.CheckStatus)
+        fmt.Printf("Status: %t\n",c.CheckStatus)
     }
 
 // 	hc := HealthChecks{

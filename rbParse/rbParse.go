@@ -31,7 +31,10 @@ func ParseRb(rbfilePtr string) {
 		fmt.Println(sc.Text()) // GET the line string
 		rbLine := strings.Trim(sc.Text(), " ")
 		s := strings.Split(rbLine, "'")
-		fmt.Printf("s key = %s value = %s", s[0], s[1])
+		if len(s) == 2 {
+			fmt.Printf("s key = %s value = %s", s[0], s[1])
+		}
+
 	}
 	if err := sc.Err(); err != nil {
 		log.Fatalf("scan file error: %v", err)

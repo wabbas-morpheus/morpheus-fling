@@ -36,7 +36,7 @@ var (
 	extractPtr       = flag.Bool("extract", false, "a bool")
 	healthPtr        = flag.Bool("health", false, "a bool")
 	flingsettingsPtr = flag.String("token", "/etc/morpheus/morpheus-fling-settings.json", "a string")
-	rbfilePtr       = flag.String("rbfile", "/etc/morpheus/morpheus.rb", "a string")
+	rbfilePtr        = flag.String("rbfile", "/etc/morpheus/morpheus2.rb", "a string")
 )
 
 const helpText = `morpheus-fling [options]
@@ -151,11 +151,9 @@ func extractBundle() {
 func runHealthCheck() {
 	fmt.Println("Checking health status")
 
-	
-		rbParse.ParseRb(*rbfilePtr)
-		healthCheck.CheckHealth(*flingsettingsPtr)
+	rbParse.ParseRb(*rbfilePtr)
+	healthCheck.CheckHealth(*flingsettingsPtr)
 
-	
 }
 
 // Need to initialize the ini file and pass into another function to iterate?

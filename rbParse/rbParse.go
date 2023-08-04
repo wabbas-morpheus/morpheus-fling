@@ -31,7 +31,7 @@ func ParseRb(rbfilePtr string) {
 		fmt.Println(sc.Text()) // GET the line string
 		rbLine := strings.Trim(sc.Text(), " ")
 		s := strings.Split(rbLine, "'")
-		if len(s) == 2 {
+		if len(s) == 3 {
 			fmt.Printf("s key = %s value = %s", s[0], s[1])
 		}
 

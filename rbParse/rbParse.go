@@ -23,7 +23,7 @@ func ParseRb(rbfilePtr string){
 
     sc := bufio.NewScanner(morpheusRBFile)
     for sc.Scan() {
-        _ = sc.Text()  // GET the line string
+        fmt.Println(sc.Text())  // GET the line string
     }
     if err := sc.Err(); err != nil {
         log.Fatalf("scan file error: %v", err)

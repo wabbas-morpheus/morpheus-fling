@@ -152,7 +152,7 @@ func runHealthCheck() {
 	fmt.Println("Checking health status")
 
 	
-		rbfilePtr.ParseRb(*rbfilePtr)
+		rbParse.ParseRb(*rbfilePtr)
 		healthCheck.CheckHealth(*flingsettingsPtr)
 
 	

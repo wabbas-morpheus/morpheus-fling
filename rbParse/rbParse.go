@@ -37,10 +37,10 @@ func ParseRb(rbfilePtr string) {
 			}
 		}
 
-		if strings.Count(rbLine, "'") == 2 {
+		if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 {
 			s := strings.Split(rbLine, "'")
 			if len(s) == 3 {
-				fmt.Printf("s key = %s value = %s'n", s[0], s[1])
+				fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 			}
 		}
 

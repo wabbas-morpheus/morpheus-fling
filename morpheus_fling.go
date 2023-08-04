@@ -20,6 +20,7 @@ import (
 	sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
 	"github.com/zcalusic/sysinfo"
 	"morpheus-fling/healthCheck"
+	"morpheus-fling/rbParse"
 )
 
 var (
@@ -35,6 +36,7 @@ var (
 	extractPtr       = flag.Bool("extract", false, "a bool")
 	healthPtr        = flag.Bool("health", false, "a bool")
 	flingsettingsPtr = flag.String("token", "/etc/morpheus/morpheus-fling-settings.json", "a string")
+	rbfilePtr       = flag.String("rbfile", "/etc/morpheus/morpheus.rb", "a string")
 )
 
 const helpText = `morpheus-fling [options]
@@ -150,7 +152,7 @@ func runHealthCheck() {
 	fmt.Println("Checking health status")
 
 	
-
+		rbfilePtr.ParseRb(*rbfilePtr)
 		healthCheck.CheckHealth(*flingsettingsPtr)
 
 	

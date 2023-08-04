@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 func ParseRb(rbfilePtr string) {
-
+	rbSettings := make(map[string]string)
 	// Open our rbfile
 	morpheusRBFile, err := os.Open(rbfilePtr)
 	if err != nil {
@@ -28,6 +29,9 @@ func ParseRb(rbfilePtr string) {
 	sc := bufio.NewScanner(morpheusRBFile)
 	for sc.Scan() {
 		fmt.Println(sc.Text()) // GET the line string
+		rbLine := strings.Trim(sc.Text(), " ")
+		s := strings.Split(rbLine, "'")
+		fmt.Printf("s key = %s value = %s", s[0], s[1])
 	}
 	if err := sc.Err(); err != nil {
 		log.Fatalf("scan file error: %v", err)

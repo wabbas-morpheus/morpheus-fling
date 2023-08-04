@@ -9,7 +9,7 @@ import (
 )
 
 func ParseRb(rbfilePtr string) {
-	rbSettings := make(map[string]string)
+	//rbSettings := make(map[string]string)
 	// Open our rbfile
 	morpheusRBFile, err := os.Open(rbfilePtr)
 	if err != nil {

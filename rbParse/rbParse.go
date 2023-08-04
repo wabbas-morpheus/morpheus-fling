@@ -30,14 +30,14 @@ func ParseRb(rbfilePtr string) {
 	for sc.Scan() {
 		//fmt.Println(sc.Text()) // GET the line string
 		rbLine := strings.Trim(sc.Text(), " ")
-		if strings.Count(rbLine, "'") > 3 {
+		if strings.Count(rbLine, "'") > 3 && strings.Count(rbLine, "#") == 0 {
 			s := strings.Split(rbLine, "=")
 			if len(s) == 2 {
 				fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 			}
 		}
 
-		if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 {
+		if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 && strings.Count(rbLine, "#") == 0 {
 			s := strings.Split(rbLine, "'")
 			if len(s) == 3 {
 				fmt.Printf("s key = %s value = %s\n", s[0], s[1])

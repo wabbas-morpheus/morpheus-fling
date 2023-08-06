@@ -50,9 +50,9 @@ func ParseRb(rbfilePtr string) {
 			if firstChar != "#" { //skip comment line
 
 				s := strings.Split(rbLine, "=")
-				//if len(s) == 2 {
-				fmt.Printf("s key = %s value = %s\n", s[0], s[1])
-				//}
+				if len(s) == 2 {
+					fmt.Printf("s key = %s value = %s\n", s[0], s[1])
+				}
 			}
 
 			if strings.Count(rbLine, "appliance_url") == 1 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {

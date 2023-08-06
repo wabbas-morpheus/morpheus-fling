@@ -38,19 +38,19 @@ func ParseRb(rbfilePtr string) {
 		var firstChar string = ""
 		if rbLine != "" {
 			firstChar = string(getChar(rbLine, 0))
-			if strings.Count(rbLine, "'") > 3 && firstChar != "#" {
+			if firstChar != "#" { //skip comment line
 				s := strings.Split(rbLine, "=")
 				if len(s) == 2 {
 					fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
 				}
 			}
 
-			if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
-				s := strings.Split(rbLine, "'")
-				if len(s) == 3 {
-					fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
-				}
-			}
+			//if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
+			//	s := strings.Split(rbLine, "'")
+			//	if len(s) == 3 {
+			//		fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
+			//	}
+			//}
 		}
 	}
 	if err := sc.Err(); err != nil {

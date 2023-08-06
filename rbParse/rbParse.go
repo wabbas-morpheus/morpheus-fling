@@ -8,6 +8,10 @@ import (
 	"strings"
 )
 
+func getChar(str string, index int) rune {
+	return []rune(str)[index]
+}
+
 func ParseRb(rbfilePtr string) {
 	//rbSettings := make(map[string]string)
 	// Open our rbfile

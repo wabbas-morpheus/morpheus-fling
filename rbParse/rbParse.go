@@ -47,7 +47,10 @@ func ParseRb(rbfilePtr string) {
 			firstChar = string(getChar(rbLine, 0))
 			if firstChar != "#" { //skip comment line
 				i := strings.Index(rbLine, "#")
-				rbLine = rbLine[0:i]
+				if i > 0 {
+					rbLine = rbLine[0:i]
+				}
+
 				s := strings.Split(rbLine, "=") //Get setting name and value
 				if len(s) == 2 {
 					fmt.Printf("s key = %s value = %s\n", s[0], s[1])

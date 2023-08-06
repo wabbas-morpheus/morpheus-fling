@@ -35,21 +35,23 @@ func ParseRb(rbfilePtr string) {
 		//fmt.Println(sc.Text()) // GET the line string
 
 		rbLine := strings.Trim(sc.Text(), " ")
-		var firstChar string = string(getChar(rbLine, 0))
-		if strings.Count(rbLine, "'") > 3 && firstChar != "#" {
-			s := strings.Split(rbLine, "=")
-			if len(s) == 2 {
-				fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
+		var firstChar string = ""
+		if rbLine != "" {
+			firstChar = string(getChar(rbLine, 0))
+			if strings.Count(rbLine, "'") > 3 && firstChar != "#" {
+				s := strings.Split(rbLine, "=")
+				if len(s) == 2 {
+					fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
+				}
+			}
+
+			if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
+				s := strings.Split(rbLine, "'")
+				if len(s) == 3 {
+					fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
+				}
 			}
 		}
-
-		if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
-			s := strings.Split(rbLine, "'")
-			if len(s) == 3 {
-				fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
-			}
-		}
-
 	}
 	if err := sc.Err(); err != nil {
 		log.Fatalf("scan file error: %v", err)

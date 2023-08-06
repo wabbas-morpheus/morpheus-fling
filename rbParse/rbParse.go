@@ -39,8 +39,9 @@ func ParseRb(rbfilePtr string) {
 		if rbLine != "" {
 			firstChar = string(getChar(rbLine, 0))
 			if firstChar != "#" { //skip comment line
+				rbLine = strings.ReplaceAll(rbLine, "=>", "-")
 				s := strings.Split(rbLine, "=")
-				if len(s) >= 2 {
+				if len(s) == 2 {
 					fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
 				}
 			}

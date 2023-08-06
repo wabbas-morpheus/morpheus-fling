@@ -47,7 +47,7 @@ func ParseRb(rbfilePtr string) {
 			firstChar = string(getChar(rbLine, 0))
 			if firstChar != "#" { //skip comment line
 				i := strings.Index(rbLine, "#")
-				if i > 0 {
+				if i > 0 { //Remove inline comments
 					rbLine = rbLine[0:i]
 				}
 
@@ -56,7 +56,7 @@ func ParseRb(rbfilePtr string) {
 					fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 				}
 			}
-			//obtain appliance url settings
+			//obtain appliance url setting
 			if strings.Count(rbLine, "appliance_url") == 1 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
 				s := strings.Split(rbLine, " ")
 				fmt.Printf("s key = %s value = %s\n", s[0], s[1])

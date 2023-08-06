@@ -29,15 +29,16 @@ func ParseRb(rbfilePtr string) {
 	sc := bufio.NewScanner(morpheusRBFile)
 	for sc.Scan() {
 		//fmt.Println(sc.Text()) // GET the line string
+		var firstChar string = string(getChar(str, 0))
 		rbLine := strings.Trim(sc.Text(), " ")
-		if strings.Count(rbLine, "'") > 3 && strings.Count(rbLine, "#") == 0 {
+		if strings.Count(rbLine, "'") > 3 && firstChar != "#" {
 			s := strings.Split(rbLine, "=")
 			if len(s) == 2 {
 				fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
 			}
 		}
 
-		if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 && strings.Count(rbLine, "#") == 0 {
+		if strings.Count(rbLine, "'") == 2 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
 			s := strings.Split(rbLine, "'")
 			if len(s) == 3 {
 				fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))

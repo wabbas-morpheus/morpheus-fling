@@ -33,8 +33,9 @@ func ParseRb(rbfilePtr string) {
 	sc := bufio.NewScanner(morpheusRBFile)
 	for sc.Scan() {
 		//fmt.Println(sc.Text()) // GET the line string
-		var firstChar string = string(getChar(str, 0))
+
 		rbLine := strings.Trim(sc.Text(), " ")
+		var firstChar string = string(getChar(rbLine, 0))
 		if strings.Count(rbLine, "'") > 3 && firstChar != "#" {
 			s := strings.Split(rbLine, "=")
 			if len(s) == 2 {

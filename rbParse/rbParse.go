@@ -12,6 +12,15 @@ func getChar(str string, index int) rune {
 	return []rune(str)[index]
 }
 
+func cleanRBLine(str string) string {
+	str = strings.Trim(str, " ")
+	str = strings.ReplaceAll(str, "=>", "-")
+	str = strings.ReplaceAll(str, "{", "")
+	str = strings.ReplaceAll(str, "}", "")
+	str = strings.ReplaceAll(str, "'", "")
+	return str
+}
+
 func ParseRb(rbfilePtr string) {
 	//rbSettings := make(map[string]string)
 	// Open our rbfile
@@ -33,25 +42,22 @@ func ParseRb(rbfilePtr string) {
 	sc := bufio.NewScanner(morpheusRBFile)
 	for sc.Scan() {
 		//fmt.Println(sc.Text()) // GET the line string
-
-		rbLine := strings.Trim(sc.Text(), " ")
+		rbLine := cleanRBLine(sc.Text())
 		var firstChar string = ""
 		if rbLine != "" {
 			firstChar = string(getChar(rbLine, 0))
 			if firstChar != "#" { //skip comment line
-				rbLine = strings.ReplaceAll(rbLine, "=>", "-")
-				rbLine = strings.ReplaceAll(rbLine, "{", "")
-				rbLine = strings.ReplaceAll(rbLine, "}", "")
+
 				s := strings.Split(rbLine, "=")
 				if len(s) == 2 {
-					fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
+					fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 				}
 			}
 
 			if strings.Count(rbLine, "appliance_url") == 1 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
 				s := strings.Split(rbLine, "'")
 				if len(s) == 3 {
-					fmt.Printf("s key = %s value = %s\n", s[0], strings.ReplaceAll(s[1], "'", ""))
+					fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 				}
 			}
 		}

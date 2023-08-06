@@ -38,23 +38,22 @@ func ParseRb(rbfilePtr string) {
 		}
 	}(morpheusRBFile)
 
-	// byteValue, _ := ioutil.ReadAll(morpheusRBFile)
-
 	sc := bufio.NewScanner(morpheusRBFile)
 	for sc.Scan() {
-		//fmt.Println(sc.Text()) // GET the line string
-		rbLine := cleanRBLine(sc.Text())
+
+		rbLine := cleanRBLine(sc.Text()) //Remove unwanted characters from rb line
 		var firstChar string = ""
 		if rbLine != "" {
 			firstChar = string(getChar(rbLine, 0))
 			if firstChar != "#" { //skip comment line
-
-				s := strings.Split(rbLine, "=")
+				i := strings.Index(rbLine, "#")
+				rbLine = rbLine[0:i]
+				s := strings.Split(rbLine, "=") //Get setting name and value
 				if len(s) == 2 {
 					fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 				}
 			}
-
+			//obtain appliance url settings
 			if strings.Count(rbLine, "appliance_url") == 1 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
 				s := strings.Split(rbLine, " ")
 				fmt.Printf("s key = %s value = %s\n", s[0], s[1])

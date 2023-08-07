@@ -1,7 +1,7 @@
 package rbParse
 
 func GetApplianceInstallType(rbPtr string) string {
-	installType := "AIO"
+	installType := "All In One"
 	rb := ParseRb(rbPtr)
 	for k, v := range rb {
 		//fmt.Printf("setting = %s value = %s\n", k, v)

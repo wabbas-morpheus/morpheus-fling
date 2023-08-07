@@ -153,7 +153,7 @@ func runHealthCheck() {
 
 	rb := rbParse.ParseRb(*rbfilePtr)
 	for k, v := range rb {
-		fmt.Printf("s key = %s value = %s\n", k, v)
+		fmt.Printf("setting = %s value = %s\n", k, v)
 	}
 	healthCheck.CheckHealth(*flingsettingsPtr)
 

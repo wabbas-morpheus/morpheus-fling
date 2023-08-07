@@ -9,6 +9,7 @@ import (
 	secparse "github.com/wabbas-morpheus/morpheus-fling/secParse"
 	"io/ioutil"
 	"log"
+	"morpheus-fling/rbParse"
 	"os"
 	"path"
 	"time"
@@ -20,7 +21,6 @@ import (
 	sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
 	"github.com/zcalusic/sysinfo"
 	"morpheus-fling/healthCheck"
-	"morpheus-fling/rbParse"
 )
 
 var (
@@ -150,12 +150,9 @@ func extractBundle() {
 
 func runHealthCheck() {
 	fmt.Println("Checking health status")
-
-	rb := rbParse.ParseRb(*rbfilePtr)
-	for k, v := range rb {
-		fmt.Printf("setting = %s value = %s\n", k, v)
-	}
 	healthCheck.CheckHealth(*flingsettingsPtr)
+
+	fmt.Printf("Install Type = %s", rbParse.GetApplianceInstallType(*rbfilePtr))
 
 }
 

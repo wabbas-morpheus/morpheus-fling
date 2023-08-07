@@ -151,7 +151,10 @@ func extractBundle() {
 func runHealthCheck() {
 	fmt.Println("Checking health status")
 
-	rbParse.ParseRb(*rbfilePtr)
+	rb := rbParse.ParseRb(*rbfilePtr)
+	for k, v := range rb {
+		fmt.Printf("s key = %s value = %s\n", k, v)
+	}
 	healthCheck.CheckHealth(*flingsettingsPtr)
 
 }

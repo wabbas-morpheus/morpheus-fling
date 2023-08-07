@@ -22,7 +22,7 @@ func cleanRBLine(str string) string {
 	return str
 }
 
-func ParseRb(rbfilePtr string) {
+func ParseRb(rbfilePtr string) map[string]string {
 	rbSettings := make(map[string]string)
 	// Open our rbfile
 	morpheusRBFile, err := os.Open(rbfilePtr)
@@ -53,21 +53,22 @@ func ParseRb(rbfilePtr string) {
 
 				s := strings.Split(rbLine, "=") //Get setting name and value
 				if len(s) == 2 {
-					fmt.Printf("s key = %s value = %s\n", s[0], s[1])
+					//fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 					rbSettings[s[0]] = s[1]
 				}
 			}
 			//obtain appliance url setting
 			if strings.Count(rbLine, "appliance_url") == 1 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
 				s := strings.Split(rbLine, " ")
-				fmt.Printf("s key = %s value = %s\n", s[0], s[1])
+				//fmt.Printf("s key = %s value = %s\n", s[0], s[1])
 				rbSettings[s[0]] = s[1]
 			}
 		}
 	}
 	if err := sc.Err(); err != nil {
 		log.Fatalf("scan file error: %v", err)
-		return
 	}
+
+	return rbSettings
 
 }

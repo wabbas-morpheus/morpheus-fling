@@ -54,14 +54,14 @@ func ParseRb(rbfilePtr string) map[string]string {
 				s := strings.Split(rbLine, "=") //Get setting name and value
 				if len(s) == 2 {
 					//fmt.Printf("s key = %s value = %s\n", s[0], s[1])
-					rbSettings[s[0]] = s[1]
+					rbSettings[strings.Trim(s[0], " ")] = strings.Trim(s[1], " ")
 				}
 			}
 			//obtain appliance url setting
 			if strings.Count(rbLine, "appliance_url") == 1 && strings.Count(rbLine, "=") == 0 && firstChar != "#" {
 				s := strings.Split(rbLine, " ")
 				//fmt.Printf("s key = %s value = %s\n", s[0], s[1])
-				rbSettings[s[0]] = s[1]
+				rbSettings[strings.Trim(s[0], " ")] = strings.Trim(s[1], " ")
 			}
 		}
 	}

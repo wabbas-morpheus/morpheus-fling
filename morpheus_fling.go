@@ -152,7 +152,7 @@ func runHealthCheck() {
 	fmt.Println("Checking health status")
 	healthCheck.CheckHealth(*flingsettingsPtr)
 
-	fmt.Printf("Install Type = %s", rbParse.GetApplianceInstallType(*rbfilePtr))
+	fmt.Printf("Install Type = %s\n", rbParse.GetApplianceInstallType(*rbfilePtr))
 
 }
 

@@ -7,6 +7,7 @@ func GetApplianceInstallType(rbPtr string) string {
 		//fmt.Printf("setting = %s value = %s\n", k, v)
 		if k == "mysql['enable']" && v == "true" {
 			installType = "HA"
+			break
 		}
 	}
 

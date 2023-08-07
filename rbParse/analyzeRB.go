@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func GetApplianceInstallType(string rbPtr) string {
+func GetApplianceInstallType(rbPtr string) string {
 	installType := "AIO"
 	rb := ParseRb(rbPtr)
 	for k, v := range rb {

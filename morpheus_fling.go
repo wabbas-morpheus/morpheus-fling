@@ -153,7 +153,7 @@ func runHealthCheck() {
 	healthCheck.CheckHealth(*flingsettingsPtr)
 
 	fmt.Printf("Install Type = %s\n", rbParse.GetApplianceInstallType(*rbfilePtr))
-	fmt.Printf("Total DB Nodes = %s\n", rbParse.GetTotalNumberOfDBNodes(*rbfilePtr))
+	fmt.Printf("Total DB Nodes = %d\n", rbParse.GetTotalNumberOfDBNodes(*rbfilePtr))
 
 }
 

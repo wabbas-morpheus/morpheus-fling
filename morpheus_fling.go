@@ -149,9 +149,10 @@ func extractBundle() {
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-	fmt.Printf("%+v", results.MorphLogs)
+	//fmt.Printf("%+v", results.MorphLogs)
 	//fmt.Println("Decrypted Text = ",decryptedText)
-	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
+	//FileWrtr(decryptedText, folderName+"/morpheus_.json")
+	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
 
 }
 
@@ -216,7 +217,7 @@ func main() {
 			MorphLogs:        string(morpheus),
 		}
 
-		fmt.Printf("%+v", results.MorphLogs)
+		//fmt.Printf("%+v", results.MorphLogs)
 
 		resultjson, err := json.MarshalIndent(results, "", " ")
 		if err != nil {

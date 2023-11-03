@@ -7,7 +7,6 @@ import (
 	elasticing "github.com/wabbas-morpheus/morpheus-fling/elasticIng"
 	rabbiting "github.com/wabbas-morpheus/morpheus-fling/rabbitIng"
 	secparse "github.com/wabbas-morpheus/morpheus-fling/secParse"
-	"io/ioutil"
 	"log"
 	"morpheus-fling/rbParse"
 	"os"
@@ -201,7 +200,7 @@ func main() {
 
 		rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
 
-		morpheus, err := ioutil.ReadFile(*logfilePtr)
+		morpheus, err := os.ReadFile(*logfilePtr)
 		if err != nil {
 			log.Fatalf("Error reading public key file: %s", err)
 		}
@@ -216,6 +215,8 @@ func main() {
 			RabbitStatistics: rabbitStuff,
 			MorphLogs:        string(morpheus),
 		}
+
+		fmt.Printf("%+v", results.MorphLogs)
 
 		resultjson, err := json.MarshalIndent(results, "", " ")
 		if err != nil {

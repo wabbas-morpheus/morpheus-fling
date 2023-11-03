@@ -150,7 +150,7 @@ func extractBundle() {
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-	fmt.Printf("%+v", results)
+	fmt.Printf("%+v", results.MorphLogs)
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
 

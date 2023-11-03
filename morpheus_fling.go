@@ -143,6 +143,14 @@ func extractBundle() {
 	}
 
 	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText, nonKey)
+	var jsonBlob = []byte(decryptedText)
+	var results Results
+
+	err = json.Unmarshal(jsonBlob, &results)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	fmt.Printf("%+v", results)
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	FileWrtr(decryptedText, folderName+"/morpheus_log.json")
 

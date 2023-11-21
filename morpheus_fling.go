@@ -71,6 +71,20 @@ type Results struct {
 	MorphLogs        string                          `json:"morpheus_logs"`
 }
 
+type ESResults struct {
+	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
+	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
+	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
+}
+
+type RabbitResults struct {
+	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
+}
+
+type SystemResults struct {
+	System *sysinfo.SysInfo `json:"system_stats"`
+}
+
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
 	//Remove existing files
@@ -144,15 +158,25 @@ func extractBundle() {
 	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText, nonKey)
 	var jsonBlob = []byte(decryptedText)
 	var results Results
+	var es_results ESResults
+	var rabbit_results RabbitResults
+	var system_results SystemResults
 
 	err = json.Unmarshal(jsonBlob, &results)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
+
+	es_results.ElasticStats = results.ElasticStats
+	es_results.ElasticSettings = results.ElasticSettings
+	es_results.ElasticIndices = results.ElasticIndices
+	rabbit_results.RabbitStatistics = results.RabbitStatistics
+	system_results.System = results.System
+
 	//fmt.Printf("%+v", results.MorphLogs)
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	//FileWrtr(decryptedText, folderName+"/morpheus_.json")
-	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
+	FileWrtr(results.MorphLogs, folderName+"/Morpheus_CURRENT.log")
 
 }
 

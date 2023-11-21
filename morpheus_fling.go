@@ -177,13 +177,21 @@ func extractBundle() {
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	//FileWrtr(decryptedText, folderName+"/morpheus_.json")
 
-	resultjson, err := json.MarshalIndent(results.RabbitStatistics, "", " ")
+	FileWrtr(results.MorphLogs, folderName+"/Morpheus_Current.log")
+	FileWrtr(dumps(results.RabbitStatistics), folderName+"/Rabbit_Stats.log")
+	FileWrtr(dumps(results.ElasticStats), folderName+"/Elastic_Stats.log")
+	FileWrtr(dumps(results.ElasticSettings), folderName+"/Elastic_Settings.log")
+	FileWrtr(dumps(results.ElasticIndices), folderName+"/Elastic_Indices.log")
+	FileWrtr(dumps(results.System), folderName+"/system.log")
+
+}
+
+func dumps(data) string {
+	jData, err := json.MarshalIndent(data, "", " ")
 	if err != nil {
 		log.Fatal("Can't encode to JSON", err)
 	}
-	FileWrtr(results.MorphLogs, folderName+"/Morpheus_CURRENT.log")
-	FileWrtr(string(resultjson), folderName+"/Rabbit_Stats.log")
-
+	return string(jData)
 }
 
 func runHealthCheck() {

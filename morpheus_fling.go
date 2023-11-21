@@ -176,7 +176,13 @@ func extractBundle() {
 	//fmt.Printf("%+v", results.MorphLogs)
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	//FileWrtr(decryptedText, folderName+"/morpheus_.json")
+
+	resultjson, err := json.MarshalIndent(results.RabbitStatistics, "", " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
+	}
 	FileWrtr(results.MorphLogs, folderName+"/Morpheus_CURRENT.log")
+	FileWrtr(string(resultjson), folderName+"/Rabbit_Stats.log")
 
 }
 

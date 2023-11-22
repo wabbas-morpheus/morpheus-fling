@@ -25,7 +25,7 @@ import (
 var (
 	infilePtr        = flag.String("infile", "", "a string")
 	secfilePtr       = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
-	outfilePtr       = flag.String("outfile", path.Join(".", "output.json"), "a string")
+	outfilePtr       = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
 	uLimit           = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr       = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	bundlerPtr       = flag.String("bundler", "/tmp/bundler.zip", "a string")
@@ -145,7 +145,7 @@ func extractBundle() {
 		log.Fatal(err)
 	}
 	fmt.Println("Extracting Bundle File")
-	nonText, err := os.ReadFile(folderName + "/output.json")
+	nonText, err := os.ReadFile(folderName + "/encrypted_logs")
 	if err != nil {
 		log.Fatal("Can't load output file", err)
 	}
@@ -175,13 +175,12 @@ func extractBundle() {
 
 	//fmt.Printf("%+v", results.MorphLogs)
 	//fmt.Println("Decrypted Text = ",decryptedText)
-	//FileWrtr(decryptedText, folderName+"/morpheus_.json")
-
-	FileWrtr(results.MorphLogs, folderName+"/Morpheus_Current.log")
-	FileWrtr(dumps(results.RabbitStatistics), folderName+"/Rabbit_Stats.log")
-	FileWrtr(dumps(results.ElasticStats), folderName+"/Elastic_Stats.log")
-	FileWrtr(dumps(results.ElasticSettings), folderName+"/Elastic_Settings.log")
-	FileWrtr(dumps(results.ElasticIndices), folderName+"/Elastic_Indices.log")
+	FileWrtr(decryptedText, folderName+"/all_logs.json")
+	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
+	FileWrtr(dumps(results.RabbitStatistics), folderName+"/rabbit_stats.log")
+	FileWrtr(dumps(results.ElasticStats), folderName+"/elastic_stats.log")
+	FileWrtr(dumps(results.ElasticSettings), folderName+"/elastic_settings.log")
+	FileWrtr(dumps(results.ElasticIndices), folderName+"/elastic_indices.log")
 	FileWrtr(dumps(results.System), folderName+"/system.log")
 
 }

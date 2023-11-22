@@ -186,7 +186,7 @@ func extractBundle() {
 
 }
 
-func dumps(data) string {
+func dumps(data interface{}) string {
 	jData, err := json.MarshalIndent(data, "", " ")
 	if err != nil {
 		log.Fatal("Can't encode to JSON", err)

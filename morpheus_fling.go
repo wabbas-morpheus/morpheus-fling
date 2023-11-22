@@ -145,7 +145,7 @@ func extractBundle() {
 		log.Fatal(err)
 	}
 	fmt.Println("Extracting Bundle File")
-	nonText, err := os.ReadFile(folderName + "/encrypted_logs")
+	nonText, err := os.ReadFile(folderName + "/encrypted_logs.json")
 	if err != nil {
 		log.Fatal("Can't load output file", err)
 	}

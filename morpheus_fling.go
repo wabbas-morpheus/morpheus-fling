@@ -23,12 +23,13 @@ import (
 )
 
 var (
+	defaultPath      = "."
 	infilePtr        = flag.String("infile", "", "a string")
 	secfilePtr       = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
 	outfilePtr       = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
 	uLimit           = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr       = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
-	bundlerPtr       = flag.String("bundler", "/tmp/bundler.zip", "a string")
+	bundlerPtr       = flag.String("bundler", path.Join(defaultPath, "bundler.zip"), "a string")
 	keyfilePtr       = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
 	pubPtr           = flag.String("pubfile", "/tmp/morpheus.pub", "a string")
 	privatekeyPtr    = flag.String("privatefile", "/root/morpheus.pem", "a string")

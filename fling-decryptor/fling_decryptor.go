@@ -9,7 +9,7 @@ import (
 	encryptText "github.com/wabbas-morpheus/morpheus-fling/encryptText"
 	portscanner "github.com/wabbas-morpheus/morpheus-fling/portScanner"
 	rabbiting "github.com/wabbas-morpheus/morpheus-fling/rabbitIng"
-	"github.com/zcalusic/sysinfo"
+	//"github.com/zcalusic/sysinfo"
 	"log"
 	"os"
 	"path"
@@ -24,13 +24,13 @@ var (
 )
 
 type Results struct {
-	ElasticStats     *elasticing.Esstats             `json:"es_stats"`
-	ElasticIndices   []elasticing.Esindices          `json:"es_indices"`
-	ElasticSettings  *elasticing.ESWaterMarkSettings `json:"es_settings"`
-	System           *sysinfo.SysInfo                `json:"system_stats"`
-	Scans            []portscanner.ScanResult        `json:"port_scans,omitempty"`
-	RabbitStatistics []rabbiting.RabbitResults       `json:"rabbit_stats"`
-	MorphLogs        string                          `json:"morpheus_logs"`
+	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
+	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
+	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
+	//System           *sysinfo.SysInfo                `json:"system_stats"`
+	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
+	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
+	MorphLogs        string                    `json:"morpheus_logs"`
 }
 
 type ESResults struct {
@@ -43,9 +43,9 @@ type RabbitResults struct {
 	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
 }
 
-type SystemResults struct {
-	System *sysinfo.SysInfo `json:"system_stats"`
-}
+//type SystemResults struct {
+//	System *sysinfo.SysInfo `json:"system_stats"`
+//}
 
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
@@ -100,7 +100,7 @@ func extractBundle() {
 	var results Results
 	var es_results ESResults
 	var rabbit_results RabbitResults
-	var system_results SystemResults
+	//var system_results SystemResults
 
 	err = json.Unmarshal(jsonBlob, &results)
 	if err != nil {
@@ -111,7 +111,7 @@ func extractBundle() {
 	es_results.ElasticSettings = results.ElasticSettings
 	es_results.ElasticIndices = results.ElasticIndices
 	rabbit_results.RabbitStatistics = results.RabbitStatistics
-	system_results.System = results.System
+	//system_results.System = results.System
 
 	//fmt.Printf("%+v", results.MorphLogs)
 	//fmt.Println("Decrypted Text = ",decryptedText)
@@ -121,7 +121,7 @@ func extractBundle() {
 	FileWrtr(dumps(results.ElasticStats), folderName+"/elastic_stats.log")
 	FileWrtr(dumps(results.ElasticSettings), folderName+"/elastic_settings.log")
 	FileWrtr(dumps(results.ElasticIndices), folderName+"/elastic_indices.log")
-	FileWrtr(dumps(results.System), folderName+"/system.log")
+	//FileWrtr(dumps(results.System), folderName+"/system.log")
 
 }
 

@@ -20,8 +20,24 @@ var (
 	defaultPath   = "."
 	bundlerPtr    = flag.String("bundler", path.Join(defaultPath, "bundler.zip"), "a string")
 	privatekeyPtr = flag.String("privkey", path.Join(defaultPath, "morpheus.pem"), "a string")
-	//extractPtr    = flag.Bool("extract", false, "a bool")
+	extractPtr    = flag.Bool("extract", true, "a bool")
 )
+
+const helpText = `morpheus-fling [options]
+Options:
+
+-bundler	Path to bundled encrypted file.  Defaults to "./bundler.zip".
+-privkey	Path to the private key file used for decryption.  Defaults to "./morpheus.pub"
+-help		Prints this text.
+
+Examples:
+	Decrypt the encrypted bundled file at /Users/wabbas/Dev/tmp/bundler.zip
+   		$ ./morpheus-fling-osx -bundler /Users/wabbas/Dev/tmp/bundler.zip
+
+	Decrypt the encrypted bundled file at '/Users/wabbas/Dev/tmp/bundler.zip' with private key at '../../bin/morpheus.pem'
+   		$ ./morpheus-fling-osx -privkey ../../bin/morpheus.pem -bundler /Users/wabbas/Dev/tmp/bundler.zip
+
+`
 
 type Results struct {
 	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
@@ -98,8 +114,8 @@ func extractBundle() {
 	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText, nonKey)
 	var jsonBlob = []byte(decryptedText)
 	var results Results
-	var es_results ESResults
-	var rabbit_results RabbitResults
+	var esResults ESResults
+	var rabbitResults RabbitResults
 	//var system_results SystemResults
 
 	err = json.Unmarshal(jsonBlob, &results)
@@ -107,10 +123,10 @@ func extractBundle() {
 		fmt.Println("error:", err)
 	}
 
-	es_results.ElasticStats = results.ElasticStats
-	es_results.ElasticSettings = results.ElasticSettings
-	es_results.ElasticIndices = results.ElasticIndices
-	rabbit_results.RabbitStatistics = results.RabbitStatistics
+	esResults.ElasticStats = results.ElasticStats
+	esResults.ElasticSettings = results.ElasticSettings
+	esResults.ElasticIndices = results.ElasticIndices
+	rabbitResults.RabbitStatistics = results.RabbitStatistics
 	//system_results.System = results.System
 
 	//fmt.Printf("%+v", results.MorphLogs)
@@ -134,5 +150,17 @@ func dumps(data interface{}) string {
 }
 
 func main() {
-	fmt.Println("Hello, World!")
+	flag.Usage = help
+	flag.Parse()
+
+	if *extractPtr { //Extract
+
+		extractBundle()
+
+	}
+}
+
+func help() {
+	fmt.Println(helpText)
+	os.Exit(1)
 }

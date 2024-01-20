@@ -72,20 +72,6 @@ type Results struct {
 	MorphLogs        string                    `json:"morpheus_logs"`
 }
 
-//type ESResults struct {
-//	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
-//	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
-//	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
-//}
-
-//type RabbitResults struct {
-//	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
-//}
-
-//type SystemResults struct {
-//	System *sysinfo.SysInfo `json:"system_stats"`
-//}
-
 // FileWrtr takes content and an outfile and appends content to the outfile
 func FileWrtr(content string, fileName string) {
 	//Remove existing files
@@ -136,14 +122,6 @@ func createBundle() {
 	}
 
 }
-
-//func dumps(data interface{}) string {
-//	jData, err := json.MarshalIndent(data, "", " ")
-//	if err != nil {
-//		log.Fatal("Can't encode to JSON", err)
-//	}
-//	return string(jData)
-//}
 
 func runHealthCheck() {
 	fmt.Println("Checking health status")

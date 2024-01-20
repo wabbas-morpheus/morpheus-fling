@@ -134,7 +134,7 @@ func extractBundle() {
 	FileWrtr(decryptedText, folderName+"/all_logs.json")
 	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
 	FileWrtr(dumps(results.RabbitStatistics), folderName+"/rabbit_stats.log")
-	FileWrtr(dumps(results.ElasticStats), folderName+"/elastic_stats.log")
+	FileWrtr(dumps(results.ElasticStats), folderName+"/elastic_status.log")
 	FileWrtr(dumps(results.ElasticSettings), folderName+"/elastic_settings.log")
 	FileWrtr(dumps(results.ElasticIndices), folderName+"/elastic_indices.log")
 	//FileWrtr(dumps(results.System), folderName+"/system.log")

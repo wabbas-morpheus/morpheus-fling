@@ -23,17 +23,17 @@ import (
 )
 
 var (
-	defaultPath      = "."
-	infilePtr        = flag.String("infile", "", "a string")
-	secfilePtr       = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
-	outfilePtr       = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
-	uLimit           = flag.Int64("ulimit", 1024, "an integer")
-	logfilePtr       = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
-	bundlerPtr       = flag.String("bundler", path.Join(defaultPath, "bundler.zip"), "a string")
-	keyfilePtr       = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
-	pubPtr           = flag.String("pubkey", path.Join(defaultPath, "morpheus.pub"), "a string")
-	privatekeyPtr    = flag.String("privkey", path.Join(defaultPath, "morpheus.pem"), "a string")
-	extractPtr       = flag.Bool("extract", false, "a bool")
+	defaultPath = "."
+	infilePtr   = flag.String("infile", "", "a string")
+	secfilePtr  = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
+	outfilePtr  = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
+	uLimit      = flag.Int64("ulimit", 1024, "an integer")
+	logfilePtr  = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
+	bundlerPtr  = flag.String("bundler", path.Join(defaultPath, "bundler.zip"), "a string")
+	keyfilePtr  = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
+	pubPtr      = flag.String("pubkey", path.Join(defaultPath, "morpheus.pub"), "a string")
+	//privatekeyPtr    = flag.String("privkey", path.Join(defaultPath, "morpheus.pem"), "a string")
+	//extractPtr       = flag.Bool("extract", false, "a bool")
 	healthPtr        = flag.Bool("health", false, "a bool")
 	flingsettingsPtr = flag.String("token", "/etc/morpheus/morpheus-fling-settings.json", "a string")
 	rbfilePtr        = flag.String("rbfile", "/etc/morpheus/morpheus2.rb", "a string")
@@ -72,15 +72,15 @@ type Results struct {
 	MorphLogs        string                    `json:"morpheus_logs"`
 }
 
-type ESResults struct {
-	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
-	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
-	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
-}
+//type ESResults struct {
+//	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
+//	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
+//	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
+//}
 
-type RabbitResults struct {
-	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
-}
+//type RabbitResults struct {
+//	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
+//}
 
 //type SystemResults struct {
 //	System *sysinfo.SysInfo `json:"system_stats"`
@@ -100,6 +100,7 @@ func FileWrtr(content string, fileName string) {
 		log.Println(err)
 	}
 	defer f.Close()
+
 	if _, err := f.WriteString(content); err != nil {
 		log.Println(err)
 	}
@@ -136,63 +137,13 @@ func createBundle() {
 
 }
 
-func extractBundle() {
-
-	// Extract the encrypted bundle
-	t := time.Now()
-	timeStamp := t.Format("20060102150405")
-	folderName := "extracted_" + timeStamp
-	if err := archiver.Unarchive(*bundlerPtr, folderName+"/"); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Extracting Bundle File")
-	nonText, err := os.ReadFile(folderName + "/encrypted_logs.json")
-	if err != nil {
-		log.Fatal("Can't load output file", err)
-	}
-
-	nonKey, err := os.ReadFile(folderName + "/bundlerkey.enc")
-	if err != nil {
-		log.Fatal("Can't load key file", err)
-	}
-
-	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText, nonKey)
-	var jsonBlob = []byte(decryptedText)
-	var results Results
-	var es_results ESResults
-	var rabbit_results RabbitResults
-	//var system_results SystemResults
-
-	err = json.Unmarshal(jsonBlob, &results)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
-
-	es_results.ElasticStats = results.ElasticStats
-	es_results.ElasticSettings = results.ElasticSettings
-	es_results.ElasticIndices = results.ElasticIndices
-	rabbit_results.RabbitStatistics = results.RabbitStatistics
-	//system_results.System = results.System
-
-	//fmt.Printf("%+v", results.MorphLogs)
-	//fmt.Println("Decrypted Text = ",decryptedText)
-	FileWrtr(decryptedText, folderName+"/all_logs.json")
-	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
-	FileWrtr(dumps(results.RabbitStatistics), folderName+"/rabbit_stats.log")
-	FileWrtr(dumps(results.ElasticStats), folderName+"/elastic_stats.log")
-	FileWrtr(dumps(results.ElasticSettings), folderName+"/elastic_settings.log")
-	FileWrtr(dumps(results.ElasticIndices), folderName+"/elastic_indices.log")
-	//FileWrtr(dumps(results.System), folderName+"/system.log")
-
-}
-
-func dumps(data interface{}) string {
-	jData, err := json.MarshalIndent(data, "", " ")
-	if err != nil {
-		log.Fatal("Can't encode to JSON", err)
-	}
-	return string(jData)
-}
+//func dumps(data interface{}) string {
+//	jData, err := json.MarshalIndent(data, "", " ")
+//	if err != nil {
+//		log.Fatal("Can't encode to JSON", err)
+//	}
+//	return string(jData)
+//}
 
 func runHealthCheck() {
 	fmt.Println("Checking health status")
@@ -209,11 +160,7 @@ func main() {
 	flag.Usage = help
 	flag.Parse()
 
-	if *extractPtr { //Extract
-
-		extractBundle()
-
-	} else if *healthPtr { //check health from log files
+	if *healthPtr { //check health from log files
 
 		runHealthCheck()
 

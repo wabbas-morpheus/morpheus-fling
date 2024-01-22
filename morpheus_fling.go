@@ -70,6 +70,7 @@ type Results struct {
 	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
 	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
 	MorphLogs        string                    `json:"morpheus_logs"`
+	MorphRB          string                    `json:"morpheus_rb"`
 }
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -127,8 +128,8 @@ func runHealthCheck() {
 	fmt.Println("Checking health status")
 	healthCheck.CheckHealth(*flingsettingsPtr)
 
-	fmt.Printf("Install Type = %s\n", rbParse.GetApplianceInstallType(*rbfilePtr))
-	fmt.Printf("Total DB Nodes = %d\n", rbParse.GetTotalNumberOfDBNodes(*rbfilePtr))
+	//fmt.Printf("Install Type = %s\n", rbParse.GetApplianceInstallType(*rbfilePtr))
+	//fmt.Printf("Total DB Nodes = %d\n", rbParse.GetTotalNumberOfDBNodes(*rbfilePtr))
 
 }
 
@@ -143,6 +144,8 @@ func main() {
 		runHealthCheck()
 
 	} else { // Encrypt and bundle log file
+
+		rbParse.GetMorpheusRBFile(*rbfilePtr)
 
 		// Initialize an empty ScanResult slice, omitted from result if empty
 		var destArray []portscanner.ScanResult
@@ -166,7 +169,12 @@ func main() {
 
 		morpheus, err := os.ReadFile(*logfilePtr)
 		if err != nil {
-			log.Fatalf("Error reading public key file: %s", err)
+			log.Fatalf("Error reading morpheus current log file key file: %s", err)
+		}
+
+		morpheusRB, err := os.ReadFile(*rbfilePtr)
+		if err != nil {
+			log.Fatalf("Error reading morpheus current log file key file: %s", err)
 		}
 
 		// Create instance of results struct from packages returns
@@ -178,6 +186,7 @@ func main() {
 			Scans:            destArray,
 			RabbitStatistics: rabbitStuff,
 			MorphLogs:        string(morpheus),
+			MorphRB:          string(morpheusRB),
 		}
 
 		//fmt.Printf("%+v", results.MorphLogs)

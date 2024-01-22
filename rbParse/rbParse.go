@@ -22,6 +22,31 @@ func cleanRBLine(str string) string {
 	return str
 }
 
+func GetMorpheusRBFile(rbfilePtr string) {
+	morpheusRBFile, err := os.Open(rbfilePtr)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("Successfully Opened Morpheus rb file @ %s\n", rbfilePtr)
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer func(morpheusRBFile *os.File) {
+		err := morpheusRBFile.Close()
+		if err != nil {
+			log.Fatalf("unable to open rb file: %v", err)
+		}
+	}(morpheusRBFile)
+
+	sc := bufio.NewScanner(morpheusRBFile)
+	for sc.Scan() {
+		foundPassword := strings.Contains(sc.Text(), "password")
+		if foundPassword {
+			fmt.Printf("Password - %s", sc.Text())
+		}
+
+	}
+
+}
+
 func ParseRb(rbfilePtr string) map[string]string {
 	rbSettings := make(map[string]string)
 	// Open our rbfile

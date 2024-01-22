@@ -33,17 +33,17 @@ func GetMorpheusRBFile(rbfilePtr string) string {
 	defer func(morpheusRBFile *os.File) {
 		err := morpheusRBFile.Close()
 		if err != nil {
-			log.Fatalf("unable to open rb file: %v", err)
+			log.Fatalf("Unable to open rb file: %v", err)
 		}
 	}(morpheusRBFile)
 
 	sc := bufio.NewScanner(morpheusRBFile)
 	for sc.Scan() {
 		foundPassword := strings.Contains(sc.Text(), "password")
-		if foundPassword {
+		if foundPassword { //Redact passwords from rb file
 			fmt.Printf("Password - %s\n", sc.Text())
 			s := strings.Split(sc.Text(), "=")
-			rbLine = rbLine + s[0] + " = " + "Password Redacted\n"
+			rbLine = rbLine + s[0] + " = " + "'Password Redacted'\n"
 		} else {
 			rbLine = rbLine + sc.Text() + "\n"
 		}

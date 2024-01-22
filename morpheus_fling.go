@@ -117,8 +117,12 @@ func createBundle() {
 		*outfilePtr,
 		*keyfilePtr,
 	}
+
+	t := time.Now()
+	timeStamp := t.Format("20060102150405")
+	bundleName := "bundle_" + getHostName() + "_" + timeStamp
 	// Bundle the whole shebang
-	if err := archiver.Archive(files, *bundlerPtr); err != nil {
+	if err := archiver.Archive(files, bundleName); err != nil {
 		log.Fatal(err)
 	}
 
@@ -154,7 +158,7 @@ func main() {
 		runHealthCheck()
 
 	} else { // Encrypt and bundle log file
-		getHostName()
+
 		// Initialize an empty ScanResult slice, omitted from result if empty
 		var destArray []portscanner.ScanResult
 		if *infilePtr != "" {

@@ -22,7 +22,8 @@ func cleanRBLine(str string) string {
 	return str
 }
 
-func GetMorpheusRBFile(rbfilePtr string) {
+func GetMorpheusRBFile(rbfilePtr string) string {
+	rbLine := ""
 	morpheusRBFile, err := os.Open(rbfilePtr)
 	if err != nil {
 		fmt.Println(err)
@@ -40,11 +41,15 @@ func GetMorpheusRBFile(rbfilePtr string) {
 	for sc.Scan() {
 		foundPassword := strings.Contains(sc.Text(), "password")
 		if foundPassword {
-			fmt.Printf("Password - %s", sc.Text())
+			//fmt.Printf("Password - %s\n", sc.Text())
+			s := strings.Split(sc.Text(), "=")
+			rbLine = s[0] + " = " + "Password Redacted"
+		} else {
+			rbLine = sc.Text()
 		}
 
 	}
-
+	return rbLine
 }
 
 func ParseRb(rbfilePtr string) map[string]string {

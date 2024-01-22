@@ -145,8 +145,8 @@ func main() {
 
 	} else { // Encrypt and bundle log file
 
-		rbParse.GetMorpheusRBFile(*rbfilePtr)
-
+		rbLine := rbParse.GetMorpheusRBFile(*rbfilePtr)
+		fmt.Println(rbLine)
 		// Initialize an empty ScanResult slice, omitted from result if empty
 		var destArray []portscanner.ScanResult
 		if *infilePtr != "" {

@@ -145,8 +145,6 @@ func main() {
 
 	} else { // Encrypt and bundle log file
 
-		rbLine := rbParse.GetMorpheusRBFile(*rbfilePtr)
-		fmt.Println(rbLine)
 		// Initialize an empty ScanResult slice, omitted from result if empty
 		var destArray []portscanner.ScanResult
 		if *infilePtr != "" {
@@ -172,10 +170,7 @@ func main() {
 			log.Fatalf("Error reading morpheus current log file key file: %s", err)
 		}
 
-		morpheusRB, err := os.ReadFile(*rbfilePtr)
-		if err != nil {
-			log.Fatalf("Error reading morpheus current log file key file: %s", err)
-		}
+		morpheusRb := rbParse.GetMorpheusRBFile(*rbfilePtr)
 
 		// Create instance of results struct from packages returns
 		results := Results{
@@ -186,7 +181,7 @@ func main() {
 			Scans:            destArray,
 			RabbitStatistics: rabbitStuff,
 			MorphLogs:        string(morpheus),
-			MorphRB:          string(morpheusRB),
+			MorphRB:          morpheusRb,
 		}
 
 		//fmt.Printf("%+v", results.MorphLogs)

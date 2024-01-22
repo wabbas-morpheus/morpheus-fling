@@ -103,7 +103,7 @@ func fileExists(filename string) bool {
 }
 
 func createBundle() {
-	bundleName := ""
+	var bundleName = ""
 	files := []string{
 		*outfilePtr,
 		*keyfilePtr,

@@ -122,6 +122,7 @@ func createBundle() {
 		t := time.Now()
 		timeStamp := t.Format("20060102150405")
 		bundleName = "bundle_" + getHostName() + "_" + timeStamp + ".zip"
+		fmt.Printf("bundleName = %s", bundleName)
 
 	}
 	// Bundle the whole shebang

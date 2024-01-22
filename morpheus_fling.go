@@ -124,6 +124,16 @@ func createBundle() {
 
 }
 
+func getHostName() string {
+	name, err := os.Hostname()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("hostname:", name)
+	return name
+}
+
 func runHealthCheck() {
 	fmt.Println("Checking health status")
 	healthCheck.CheckHealth(*flingsettingsPtr)
@@ -144,7 +154,7 @@ func main() {
 		runHealthCheck()
 
 	} else { // Encrypt and bundle log file
-
+		getHostName()
 		// Initialize an empty ScanResult slice, omitted from result if empty
 		var destArray []portscanner.ScanResult
 		if *infilePtr != "" {

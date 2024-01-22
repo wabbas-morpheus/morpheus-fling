@@ -47,6 +47,7 @@ type Results struct {
 	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
 	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
 	MorphLogs        string                    `json:"morpheus_logs"`
+	MorphRB          string                    `json:"morpheus_rb"`
 }
 
 type ESResults struct {
@@ -133,6 +134,7 @@ func extractBundle() {
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	FileWrtr(decryptedText, folderName+"/all_logs.json")
 	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
+	FileWrtr(results.MorphRB, folderName+"/morpheus.rb")
 	FileWrtr(dumps(results.RabbitStatistics), folderName+"/rabbit_stats.log")
 	FileWrtr(dumps(results.ElasticStats), folderName+"/elastic_status.log")
 	FileWrtr(dumps(results.ElasticSettings), folderName+"/elastic_settings.log")

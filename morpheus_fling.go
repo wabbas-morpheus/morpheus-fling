@@ -108,7 +108,7 @@ func createBundle() {
 		*outfilePtr,
 		*keyfilePtr,
 	}
-	if *bundlerPtr != "" { //If filename specified use that
+	if *bundlerPtr != "." { //If filename specified use that
 		//Remove exiting bundle file
 		if fileExists(*bundlerPtr) {
 			fmt.Println("Bundler File already exists. Replacing file")

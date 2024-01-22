@@ -2,13 +2,11 @@ package rabbiting
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
-	"os"
 )
 
-type RabbitResults struct{
+type RabbitResults struct {
 	Name      string `json:name`
 	VHost     string `json:vhost`
 	Messages  int    `json:messages`
@@ -37,11 +35,11 @@ func RabbitStats(user string, password string) []RabbitResults {
 
 	json.NewDecoder(resp.Body).Decode(&value)
 
-	resultjson, err := json.MarshalIndent(value, "", " ")
-	if err != nil {
-		log.Fatal("Can't encode to JSON", err)
-	}
+	//resultjson, err := json.MarshalIndent(value, "", " ")
+	//if err != nil {
+	//	log.Fatal("Can't encode to JSON", err)
+	//}
 
-	fmt.Fprintf(os.Stdout, "%s", resultjson)
+	//fmt.Fprintf(os.Stdout, "%s", resultjson)
 	return value
 }

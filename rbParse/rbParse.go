@@ -41,9 +41,9 @@ func GetMorpheusRBFile(rbfilePtr string) string {
 	for sc.Scan() {
 		foundPassword := strings.Contains(sc.Text(), "password")
 		if foundPassword {
-			//fmt.Printf("Password - %s\n", sc.Text())
+			fmt.Printf("Password - %s\n", sc.Text())
 			s := strings.Split(sc.Text(), "=")
-			rbLine = s[0] + " = " + "Password Redacted"
+			rbLine = rbLine + s[0] + " = " + "Password Redacted"
 		} else {
 			rbLine = sc.Text()
 		}

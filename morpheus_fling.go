@@ -122,12 +122,12 @@ func createBundle() {
 		t := time.Now()
 		timeStamp := t.Format("20060102150405")
 		bundleName = "bundle_" + getHostName() + "_" + timeStamp + ".zip"
-		fmt.Printf("bundleName = %s", bundleName)
+		//fmt.Printf("bundleName = %s", bundleName)
 
 	}
 	// Bundle the whole shebang
 	if err := archiver.Archive(files, bundleName); err != nil {
-		log.Fatalf("hello %s", err)
+		log.Fatal(err)
 	}
 
 }
@@ -138,7 +138,7 @@ func getHostName() string {
 		panic(err)
 	}
 
-	fmt.Println("hostname:", name)
+	//fmt.Println("hostname:", name)
 	return name
 }
 

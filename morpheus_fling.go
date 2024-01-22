@@ -126,7 +126,7 @@ func createBundle() {
 	}
 	// Bundle the whole shebang
 	if err := archiver.Archive(files, bundleName); err != nil {
-		log.Fatal(err)
+		log.Fatalf("hello %s", err)
 	}
 
 }

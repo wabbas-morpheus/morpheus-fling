@@ -29,7 +29,7 @@ var (
 	outfilePtr  = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
 	uLimit      = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr  = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
-	bundlerPtr  = flag.String("bundler", path.Join(defaultPath, "bundler.zip"), "a string")
+	bundlerPtr  = flag.String("bundler", path.Join(defaultPath, ""), "a string")
 	keyfilePtr  = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
 	pubPtr      = flag.String("pubkey", path.Join(defaultPath, "morpheus.pub"), "a string")
 	//privatekeyPtr    = flag.String("privkey", path.Join(defaultPath, "morpheus.pem"), "a string")
@@ -103,24 +103,27 @@ func fileExists(filename string) bool {
 }
 
 func createBundle() {
-
-	//Remove exiting bundle file
-	if fileExists(*bundlerPtr) {
-		fmt.Println("Bundler File already exists. Replacing file")
-		e := os.Remove(*bundlerPtr)
-		if e != nil {
-			log.Fatal(e)
-		}
-	}
-
+	bundleName := ""
 	files := []string{
 		*outfilePtr,
 		*keyfilePtr,
 	}
+	if *bundlerPtr != "" { //If filename specified use that
+		//Remove exiting bundle file
+		if fileExists(*bundlerPtr) {
+			fmt.Println("Bundler File already exists. Replacing file")
+			e := os.Remove(*bundlerPtr)
+			if e != nil {
+				log.Fatal(e)
+			}
+		}
+		bundleName = *bundlerPtr
+	} else { //Otherwise assign hostname to bundle file
+		t := time.Now()
+		timeStamp := t.Format("20060102150405")
+		bundleName = "bundle_" + getHostName() + "_" + timeStamp + ".zip"
 
-	t := time.Now()
-	timeStamp := t.Format("20060102150405")
-	bundleName := "bundle_" + getHostName() + "_" + timeStamp
+	}
 	// Bundle the whole shebang
 	if err := archiver.Archive(files, bundleName); err != nil {
 		log.Fatal(err)

@@ -3,8 +3,6 @@ package healthCheck
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
 	//"golang.org/x/text/cases"
 	//"golang.org/x/text/language"
 	//sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
@@ -37,21 +35,21 @@ func CheckHealth(flingSettings string) {
 	var allESChecks []Check
 
 	// Open our jsonFile
-	jsonFile2, err := os.Open(flingSettings)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("Successfully Opened morpheus-fling-settings.json")
+	//jsonFile2, err := os.Open(flingSettings)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println("Successfully Opened morpheus-fling-settings.json")
 	// defer the closing of our jsonFile so that we can parse it later on
-	defer jsonFile2.Close()
+	//defer jsonFile2.Close()
+	//
+	//byteValue2, _ := ioutil.ReadAll(jsonFile2)
+	//
+	//var flSettings FlingSettings
+	//
+	//json.Unmarshal(byteValue2, &flSettings)
 
-	byteValue2, _ := ioutil.ReadAll(jsonFile2)
-
-	var flSettings FlingSettings
-
-	json.Unmarshal(byteValue2, &flSettings)
-
-	fmt.Println(prettyPrint(flSettings))
+	//fmt.Println(prettyPrint(flSettings))
 
 	allESChecks = append(allESChecks, checkESWatermarkThreshold())
 	allESChecks = append(allESChecks, checkESStats())

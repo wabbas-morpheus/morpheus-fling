@@ -11,19 +11,18 @@ import (
 	rand "math/rand"
 	"time"
 
+	"fmt"
 	//"golang.org/x/sync/errgroup"
 	"hash"
 	"io"
 	"io/ioutil"
 	"log"
-	"fmt"
 )
 
 type EncryptResult struct {
-	Ciphertext []byte
+	Ciphertext   []byte
 	EncryptedKey []byte
 }
-
 
 func genRandom() string {
 	rand.Seed(time.Now().UnixNano())
@@ -77,9 +76,9 @@ func decryptText(ciphertext []byte, key []byte) ([]byte, error) {
 	}
 
 	nonceSize := gcm.NonceSize()
-	 if len(ciphertext) < nonceSize {
-        fmt.Println(err)
-    }
+	if len(ciphertext) < nonceSize {
+		fmt.Println(err)
+	}
 	// if _, err = io.ReadFull(crand.Reader, nonce); err != nil {
 	// 	return nil, err
 	// }
@@ -119,7 +118,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 	message := []byte(plaintext)
 	key := []byte(genRandom())
-	fmt.Println("key before encryption = ",string(key))
+	fmt.Println("key before encryption = ", string(key))
 	ciphertext, err = encryptText(message, key)
 	if err != nil {
 		log.Fatalf("Error encrypting text: %s", err)
@@ -139,7 +138,7 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 	publicKey = parsedKey.(*rsa.PublicKey)
 	encryptedKey = encryptKey(publicKey, key, label)
 	resultStruct := EncryptResult{
-		Ciphertext: ciphertext,
+		Ciphertext:   ciphertext,
 		EncryptedKey: encryptedKey,
 	}
 
@@ -147,13 +146,12 @@ func EncryptItAll(pubKeyFile string, plaintext string) EncryptResult {
 
 }
 
-func DecryptItAll(privateKeyFile string, encryptedText []byte,encryptedKey []byte) string {
+func DecryptItAll(privateKeyFile string, encryptedText []byte, encryptedKey []byte) string {
 
 	var err error
 	var privateKey *rsa.PrivateKey
-	var decryptedKey,plaintext, label []byte
+	var decryptedKey, plaintext, label []byte
 	var parsedKey interface{}
-
 
 	pubby, err := ioutil.ReadFile(privateKeyFile)
 	if err != nil {
@@ -169,7 +167,7 @@ func DecryptItAll(privateKeyFile string, encryptedText []byte,encryptedKey []byt
 	//
 	privateKey = parsedKey.(*rsa.PrivateKey)
 	decryptedKey = decryptKey(privateKey, encryptedKey, label)
-	plaintext, _ = decryptText(encryptedText,decryptedKey)
-	fmt.Println("Decrypted Key =",string(decryptedKey))
+	plaintext, _ = decryptText(encryptedText, decryptedKey)
+	//fmt.Println("Decrypted Key =",string(decryptedKey))
 	return string(plaintext)
 }

@@ -9,11 +9,13 @@ import (
 	encryptText "github.com/wabbas-morpheus/morpheus-fling/encryptText"
 	portscanner "github.com/wabbas-morpheus/morpheus-fling/portScanner"
 	rabbiting "github.com/wabbas-morpheus/morpheus-fling/rabbitIng"
+	"path/filepath"
+	"strings"
+
 	//"github.com/zcalusic/sysinfo"
 	"log"
 	"os"
 	"path"
-	"time"
 )
 
 var (
@@ -95,13 +97,15 @@ func FileWrtr(content string, fileName string) {
 func extractBundle() {
 
 	// Extract the encrypted bundle
-	t := time.Now()
-	timeStamp := t.Format("20060102150405")
-	folderName := "extracted_" + timeStamp
+	//t := time.Now()
+	//timeStamp := t.Format("20060102150405")
+	//folderName := "extracted_" + timeStamp
+	//use the bundle filename when extracting
+	folderName := strings.TrimSuffix(filepath.Base(*bundlerPtr), ".zip")
 	if err := archiver.Unarchive(*bundlerPtr, folderName+"/"); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Extracting Bundle File")
+	fmt.Println("Extracting bundle file '" + *bundlerPtr + "'")
 	nonText, err := os.ReadFile(folderName + "/encrypted_logs.json")
 	if err != nil {
 		log.Fatal("Can't load output file", err)

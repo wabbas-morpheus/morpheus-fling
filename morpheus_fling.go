@@ -67,10 +67,11 @@ type Results struct {
 	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
 	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
 	//System           *sysinfo.SysInfo                `json:"system_stats"`
-	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
-	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
-	MorphLogs        string                    `json:"morpheus_logs"`
-	MorphRB          string                    `json:"morpheus_rb"`
+	Scans            []portscanner.ScanResult   `json:"port_scans,omitempty"`
+	RabbitStatistics []rabbiting.RabbitResults  `json:"rabbit_stats"`
+	MorphLogs        string                     `json:"morpheus_logs"`
+	MorphRB          string                     `json:"morpheus_rb"`
+	HealthChecks     []healthCheck.HealthChecks `json:"health_checks"`
 }
 
 // FileWrtr takes content and an outfile and appends content to the outfile
@@ -142,88 +143,75 @@ func getHostName() string {
 	return name
 }
 
-func runHealthCheck() {
-	fmt.Println("Checking health status")
-	healthCheck.CheckHealth(*flingsettingsPtr)
-
-	//fmt.Printf("Install Type = %s\n", rbParse.GetApplianceInstallType(*rbfilePtr))
-	//fmt.Printf("Total DB Nodes = %d\n", rbParse.GetTotalNumberOfDBNodes(*rbfilePtr))
-
-}
-
 // Need to initialize the ini file and pass into another function to iterate?
 func main() {
 
 	flag.Usage = help
 	flag.Parse()
 
-	if *healthPtr { //check health from log files
+	// Encrypt and bundle log file
 
-		runHealthCheck()
-
-	} else { // Encrypt and bundle log file
-
-		// Initialize an empty ScanResult slice, omitted from result if empty
-		var destArray []portscanner.ScanResult
-		if *infilePtr != "" {
-			psArray := filereader.FileToStructArray(*infilePtr, *uLimit)
-			destArray = portscanner.Start(psArray, 500*time.Millisecond)
-		}
-
-		superSecrets := secparse.ParseSecrets(*secfilePtr)
-		rmqpassword := superSecrets.Rabbitmq.MorpheusPassword
-
-		// Gather system stats into a si array
-		//sysStats := sysgatherer.SysGather()
-
-		// Gather elasticsearch health and indices into structs for results
-		esHealth := elasticing.ElasticHealth()
-		esIndices := elasticing.ElasticIndices()
-		esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
-
-		rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
-
-		morpheus, err := os.ReadFile(*logfilePtr)
-		if err != nil {
-			log.Fatalf("Error reading morpheus current log file key file: %s", err)
-		}
-
-		morpheusRb := rbParse.GetMorpheusRBFile(*rbfilePtr)
-
-		// Create instance of results struct from packages returns
-		results := Results{
-			ElasticStats:    esHealth,
-			ElasticIndices:  esIndices,
-			ElasticSettings: esWaterMarkSettings,
-			//System:           sysStats,
-			Scans:            destArray,
-			RabbitStatistics: rabbitStuff,
-			MorphLogs:        string(morpheus),
-			MorphRB:          morpheusRb,
-		}
-
-		//fmt.Printf("%+v", results.MorphLogs)
-
-		resultjson, err := json.MarshalIndent(results, "", " ")
-		if err != nil {
-			log.Fatal("Can't encode to JSON", err)
-		}
-
-		//fmt.Fprintf(os.Stdout, "%s", resultjson)
-		//FileWrtr("\nULTIMATE:\n" + string(resultjson), *outfilePtr)
-
-		// Base resultjson into Encryption package and write encrypted file and key
-		nonSense := encryptText.EncryptItAll(*pubPtr, string(resultjson))
-		nonText := nonSense.Ciphertext
-		nonKey := nonSense.EncryptedKey
-		_ = nonText
-		_ = nonKey
-		FileWrtr(string(nonText), *outfilePtr)
-		FileWrtr(string(nonKey), *keyfilePtr)
-
-		createBundle()
-
+	// Initialize an empty ScanResult slice, omitted from result if empty
+	var destArray []portscanner.ScanResult
+	if *infilePtr != "" {
+		psArray := filereader.FileToStructArray(*infilePtr, *uLimit)
+		destArray = portscanner.Start(psArray, 500*time.Millisecond)
 	}
+
+	superSecrets := secparse.ParseSecrets(*secfilePtr)
+	rmqpassword := superSecrets.Rabbitmq.MorpheusPassword
+
+	// Gather system stats into a si array
+	//sysStats := sysgatherer.SysGather()
+
+	// Gather elasticsearch health and indices into structs for results
+	esHealth := elasticing.ElasticHealth()
+	esIndices := elasticing.ElasticIndices()
+	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
+	healthChecks := healthCheck.CheckHealth(*flingsettingsPtr)
+
+	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
+
+	morpheus, err := os.ReadFile(*logfilePtr)
+	if err != nil {
+		log.Fatalf("Error reading morpheus current log file key file: %s", err)
+	}
+
+	morpheusRb := rbParse.GetMorpheusRBFile(*rbfilePtr)
+
+	// Create instance of results struct from packages returns
+	results := Results{
+		ElasticStats:    esHealth,
+		ElasticIndices:  esIndices,
+		ElasticSettings: esWaterMarkSettings,
+		//System:           sysStats,
+		Scans:            destArray,
+		RabbitStatistics: rabbitStuff,
+		MorphLogs:        string(morpheus),
+		MorphRB:          morpheusRb,
+		HealthChecks:     healthChecks,
+	}
+
+	//fmt.Printf("%+v", results.MorphLogs)
+
+	resultjson, err := json.MarshalIndent(results, "", " ")
+	if err != nil {
+		log.Fatal("Can't encode to JSON", err)
+	}
+
+	//fmt.Fprintf(os.Stdout, "%s", resultjson)
+	//FileWrtr("\nULTIMATE:\n" + string(resultjson), *outfilePtr)
+
+	// Base resultjson into Encryption package and write encrypted file and key
+	nonSense := encryptText.EncryptItAll(*pubPtr, string(resultjson))
+	nonText := nonSense.Ciphertext
+	nonKey := nonSense.EncryptedKey
+	_ = nonText
+	_ = nonKey
+	FileWrtr(string(nonText), *outfilePtr)
+	FileWrtr(string(nonKey), *keyfilePtr)
+
+	createBundle()
 
 }
 

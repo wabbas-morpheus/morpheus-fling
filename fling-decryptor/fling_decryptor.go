@@ -9,6 +9,7 @@ import (
 	encryptText "github.com/wabbas-morpheus/morpheus-fling/encryptText"
 	portscanner "github.com/wabbas-morpheus/morpheus-fling/portScanner"
 	rabbiting "github.com/wabbas-morpheus/morpheus-fling/rabbitIng"
+	"morpheus-fling/healthCheck"
 	"path/filepath"
 	"strings"
 
@@ -46,17 +47,18 @@ type Results struct {
 	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
 	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
 	//System           *sysinfo.SysInfo                `json:"system_stats"`
-	Scans            []portscanner.ScanResult  `json:"port_scans,omitempty"`
-	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
-	MorphLogs        string                    `json:"morpheus_logs"`
-	MorphRB          string                    `json:"morpheus_rb"`
+	Scans            []portscanner.ScanResult   `json:"port_scans,omitempty"`
+	RabbitStatistics []rabbiting.RabbitResults  `json:"rabbit_stats"`
+	MorphLogs        string                     `json:"morpheus_logs"`
+	MorphRB          string                     `json:"morpheus_rb"`
+	HealthChecks     []healthCheck.HealthChecks `json:"health_checks"`
 }
 
-type ESResults struct {
-	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
-	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
-	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
-}
+//type ESResults struct {
+//	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
+//	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
+//	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
+//}
 
 type RabbitResults struct {
 	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
@@ -119,8 +121,10 @@ func extractBundle() {
 	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText, nonKey)
 	var jsonBlob = []byte(decryptedText)
 	var results Results
-	var esResults ESResults
-	var rabbitResults RabbitResults
+	//var esResults ESResults
+	//var rabbitResults RabbitResults
+	//var healthChecks Results.HealthChecks
+
 	//var system_results SystemResults
 
 	err = json.Unmarshal(jsonBlob, &results)
@@ -128,16 +132,18 @@ func extractBundle() {
 		fmt.Println("error:", err)
 	}
 
-	esResults.ElasticStats = results.ElasticStats
-	esResults.ElasticSettings = results.ElasticSettings
-	esResults.ElasticIndices = results.ElasticIndices
-	rabbitResults.RabbitStatistics = results.RabbitStatistics
+	//esResults.ElasticStats = results.ElasticStats
+	//esResults.ElasticSettings = results.ElasticSettings
+	//esResults.ElasticIndices = results.ElasticIndices
+	//rabbitResults.RabbitStatistics = results.RabbitStatistics
+	//healthChecks = results.HealthChecks
 	//system_results.System = results.System
 
 	//fmt.Printf("%+v", results.MorphLogs)
 	//fmt.Println("Decrypted Text = ",decryptedText)
 	FileWrtr(decryptedText, folderName+"/all_logs.json")
 	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
+	FileWrtr(dumps(results.HealthChecks), folderName+"/morpheus_health_checks.log")
 	FileWrtr(results.MorphRB, folderName+"/morpheus.rb")
 	FileWrtr(dumps(results.RabbitStatistics), folderName+"/rabbit_stats.log")
 	FileWrtr(dumps(results.ElasticStats), folderName+"/elastic_status.log")

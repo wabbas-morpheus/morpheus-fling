@@ -2,7 +2,6 @@ package healthCheck
 
 import (
 	"encoding/json"
-	"fmt"
 	//"golang.org/x/text/cases"
 	//"golang.org/x/text/language"
 	//sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
@@ -29,7 +28,7 @@ func prettyPrint(i interface{}) string {
 	return string(s)
 }
 
-func CheckHealth(flingSettings string) {
+func CheckHealth(flingSettings string) []HealthChecks {
 
 	var allHealthChecks []HealthChecks
 	var allESChecks []Check
@@ -56,13 +55,12 @@ func CheckHealth(flingSettings string) {
 
 	allHealthChecks = append(allHealthChecks, setHealthCheckStatus(allESChecks, "Elasticsearch"))
 
-	e, err := json.Marshal(allHealthChecks)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(string(e))
-
+	//e, err := json.Marshal(allHealthChecks)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(string(e))
+	return allHealthChecks
 }
 
 func setHealthCheckStatus(checks []Check, checkHeading string) HealthChecks {

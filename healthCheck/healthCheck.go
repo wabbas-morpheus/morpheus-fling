@@ -31,7 +31,6 @@ func prettyPrint(i interface{}) string {
 func CheckHealth(flingSettings string) []HealthChecks {
 
 	var allHealthChecks []HealthChecks
-	var allESChecks []Check
 
 	// Open our jsonFile
 	//jsonFile2, err := os.Open(flingSettings)
@@ -50,10 +49,7 @@ func CheckHealth(flingSettings string) []HealthChecks {
 
 	//fmt.Println(prettyPrint(flSettings))
 
-	allESChecks = append(allESChecks, checkESWatermarkThreshold())
-	allESChecks = append(allESChecks, checkESStats())
-
-	allHealthChecks = append(allHealthChecks, setHealthCheckStatus(allESChecks, "Elasticsearch"))
+	allHealthChecks = append(allHealthChecks, setHealthCheckStatus(runESChecks(), "Elasticsearch"))
 
 	//e, err := json.Marshal(allHealthChecks)
 	//if err != nil {

@@ -6,6 +6,13 @@ import (
 	"strconv"
 )
 
+func runESChecks() []Check {
+	var allESChecks []Check
+	allESChecks = append(allESChecks, checkESStats())
+	allESChecks = append(allESChecks, checkESWatermarkThreshold())
+	return allESChecks
+}
+
 func checkESStats() Check {
 
 	Esstats := elasticing.ElasticHealth()
@@ -45,6 +52,7 @@ func checkESStats() Check {
 	// fmt.Println("Check Info = "+c.CheckInfo)
 
 	return c
+
 }
 
 func checkESWatermarkThreshold() Check {

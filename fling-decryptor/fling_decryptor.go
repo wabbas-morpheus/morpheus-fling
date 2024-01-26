@@ -54,12 +54,6 @@ type Results struct {
 	HealthChecks     []healthCheck.HealthChecks `json:"health_checks"`
 }
 
-//type ESResults struct {
-//	ElasticStats    *elasticing.Esstats             `json:"es_stats"`
-//	ElasticIndices  []elasticing.Esindices          `json:"es_indices"`
-//	ElasticSettings *elasticing.ESWaterMarkSettings `json:"es_settings"`
-//}
-
 type RabbitResults struct {
 	RabbitStatistics []rabbiting.RabbitResults `json:"rabbit_stats"`
 }
@@ -98,11 +92,6 @@ func FileWrtr(content string, fileName string) {
 
 func extractBundle() {
 
-	// Extract the encrypted bundle
-	//t := time.Now()
-	//timeStamp := t.Format("20060102150405")
-	//folderName := "extracted_" + timeStamp
-	//use the bundle filename when extracting
 	folderName := strings.TrimSuffix(filepath.Base(*bundlerPtr), ".zip")
 	if err := archiver.Unarchive(*bundlerPtr, folderName+"/"); err != nil {
 		log.Fatal(err)
@@ -121,9 +110,6 @@ func extractBundle() {
 	decryptedText := encryptText.DecryptItAll(*privatekeyPtr, nonText, nonKey)
 	var jsonBlob = []byte(decryptedText)
 	var results Results
-	//var esResults ESResults
-	//var rabbitResults RabbitResults
-	//var healthChecks Results.HealthChecks
 
 	//var system_results SystemResults
 
@@ -132,15 +118,7 @@ func extractBundle() {
 		fmt.Println("error:", err)
 	}
 
-	//esResults.ElasticStats = results.ElasticStats
-	//esResults.ElasticSettings = results.ElasticSettings
-	//esResults.ElasticIndices = results.ElasticIndices
-	//rabbitResults.RabbitStatistics = results.RabbitStatistics
-	//healthChecks = results.HealthChecks
-	//system_results.System = results.System
-
-	//fmt.Printf("%+v", results.MorphLogs)
-	//fmt.Println("Decrypted Text = ",decryptedText)
+	//Write logs to files
 	FileWrtr(decryptedText, folderName+"/all_logs.json")
 	FileWrtr(results.MorphLogs, folderName+"/morpheus_current.log")
 	FileWrtr(dumps(results.HealthChecks), folderName+"/morpheus_health_checks.log")

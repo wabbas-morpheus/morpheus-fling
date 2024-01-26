@@ -23,18 +23,15 @@ import (
 )
 
 var (
-	defaultPath = "."
-	infilePtr   = flag.String("infile", "", "a string")
-	secfilePtr  = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
-	outfilePtr  = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
-	uLimit      = flag.Int64("ulimit", 1024, "an integer")
-	logfilePtr  = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
-	bundlerPtr  = flag.String("bundler", path.Join(defaultPath, ""), "a string")
-	keyfilePtr  = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
-	pubPtr      = flag.String("pubkey", path.Join(defaultPath, "morpheus.pub"), "a string")
-	//privatekeyPtr    = flag.String("privkey", path.Join(defaultPath, "morpheus.pem"), "a string")
-	//extractPtr       = flag.Bool("extract", false, "a bool")
-	healthPtr        = flag.Bool("health", false, "a bool")
+	defaultPath      = "."
+	infilePtr        = flag.String("infile", "", "a string")
+	secfilePtr       = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
+	outfilePtr       = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
+	uLimit           = flag.Int64("ulimit", 1024, "an integer")
+	logfilePtr       = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
+	bundlerPtr       = flag.String("bundler", path.Join(defaultPath, ""), "a string")
+	keyfilePtr       = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
+	pubPtr           = flag.String("pubkey", path.Join(defaultPath, "morpheus.pub"), "a string")
 	flingsettingsPtr = flag.String("token", "/etc/morpheus/morpheus-fling-settings.json", "a string")
 	rbfilePtr        = flag.String("rbfile", "/etc/morpheus/morpheus2.rb", "a string")
 )

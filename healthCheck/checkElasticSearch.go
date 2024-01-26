@@ -130,7 +130,7 @@ func GetStorageUsed() int {
 	}
 
 	outputES := string(outESFile[:])
-	fmt.Printf("ouputES path =%s", outputES)
+
 	fPath := ""
 	scannerES := bufio.NewScanner(strings.NewReader(outputES))
 	for scannerES.Scan() { //iterate of each line
@@ -144,6 +144,7 @@ func GetStorageUsed() int {
 	}
 
 	//Get available storage info on elasticsearch mount point
+	fmt.Printf("fPath path =%s", fPath)
 	out, err := exec.Command("df", "-h", fPath).Output()
 
 	// if there is an error with our execution

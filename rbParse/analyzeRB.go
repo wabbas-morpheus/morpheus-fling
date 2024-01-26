@@ -1,7 +1,6 @@
 package rbParse
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -10,9 +9,9 @@ func GetApplianceInstallType(rbPtr string) string {
 	rb := ParseRb(rbPtr)
 	for k, v := range rb {
 		//fmt.Printf("setting = %s value = %s\n", k, v)
-		if k == "mysql[enable]" && v == "true" {
+		if k == "mysql[enable]" && strings.ToLower(v) == "false" {
 			installType = "HA"
-			fmt.Println("Found setting")
+			//fmt.Println("Found setting")
 			break
 		}
 	}
@@ -32,4 +31,53 @@ func GetTotalNumberOfDBNodes(rbPtr string) int {
 	}
 
 	return totalNodes
+
+}
+
+func externalDB(rbPtr string) bool {
+	externalDB := false
+	rb := ParseRb(rbPtr)
+	for k, v := range rb {
+		//fmt.Printf("setting = %s value = %s\n", k, v)
+		if k == "mysql[enable]" && strings.ToLower(v) == "false" {
+			externalDB = true
+			//fmt.Println("Found setting")
+			break
+		}
+	}
+
+	return externalDB
+
+}
+
+func externalRabbit(rbPtr string) bool {
+	externalRabbit := false
+	rb := ParseRb(rbPtr)
+	for k, v := range rb {
+		//fmt.Printf("setting = %s value = %s\n", k, v)
+		if k == "rabbitmq[enable]" && strings.ToLower(v) == "false" {
+			externalRabbit = true
+			//fmt.Println("Found setting")
+			break
+		}
+	}
+
+	return externalRabbit
+
+}
+
+func externalElastic(rbPtr string) bool {
+	externalElastic := false
+	rb := ParseRb(rbPtr)
+	for k, v := range rb {
+		//fmt.Printf("setting = %s value = %s\n", k, v)
+		if k == "elasticsearch[enable]" && strings.ToLower(v) == "false" {
+			externalElastic = true
+			//fmt.Println("Found setting")
+			break
+		}
+	}
+
+	return externalElastic
+
 }

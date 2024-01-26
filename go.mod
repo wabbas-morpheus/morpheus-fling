@@ -14,7 +14,7 @@ require (
 	github.com/wabbas-morpheus/morpheus-fling/portScanner v0.0.0-20230317162923-208ce5212288
 	github.com/wabbas-morpheus/morpheus-fling/rabbitIng v0.0.0-00010101000000-000000000000
 	github.com/wabbas-morpheus/morpheus-fling/secParse v0.0.0-20230317162923-208ce5212288
-	//github.com/wabbas-morpheus/morpheus-fling/sysGatherer v0.0.0-20230317162923-208ce5212288
+	github.com/wabbas-morpheus/morpheus-fling/sysGatherer v0.0.0-20230317162923-208ce5212288
 )
 
 require (

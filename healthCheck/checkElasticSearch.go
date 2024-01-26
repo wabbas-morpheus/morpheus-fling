@@ -3,6 +3,7 @@ package healthCheck
 import (
 	"fmt"
 	elasticing "github.com/wabbas-morpheus/morpheus-fling/elasticIng"
+	sysgatherer "github.com/wabbas-morpheus/morpheus-fling/sysGatherer"
 	"strconv"
 )
 
@@ -80,7 +81,7 @@ func checkESWatermarkThreshold() Check {
 
 	//get total used storage from the app node. Need to find another way to get current storage as the sysinfo not
 	//compatible with other OS
-	currentStorage := 0 //sysgatherer.GetStorageUsed()
+	currentStorage := sysgatherer.GetStorageUsed()
 
 	// fmt.Println("Low = " + strconv.Itoa(lowNumberOnly))
 	// fmt.Println("High = " + strconv.Itoa(highNumberOnly))

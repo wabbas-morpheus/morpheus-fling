@@ -34,7 +34,7 @@ func GetTotalNumberOfDBNodes(rbPtr string) int {
 
 }
 
-func externalDB(rbPtr string) bool {
+func ExternalDB(rbPtr string) bool {
 	externalDB := false
 	rb := ParseRb(rbPtr)
 	for k, v := range rb {
@@ -50,7 +50,7 @@ func externalDB(rbPtr string) bool {
 
 }
 
-func externalRabbit(rbPtr string) bool {
+func ExternalRabbit(rbPtr string) bool {
 	externalRabbit := false
 	rb := ParseRb(rbPtr)
 	for k, v := range rb {
@@ -66,7 +66,7 @@ func externalRabbit(rbPtr string) bool {
 
 }
 
-func externalElastic(rbPtr string) bool {
+func ExternalElastic(rbPtr string) bool {
 	externalElastic := false
 	rb := ParseRb(rbPtr)
 	for k, v := range rb {

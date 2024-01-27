@@ -14,7 +14,6 @@ require (
 	github.com/wabbas-morpheus/morpheus-fling/portScanner v0.0.0-20230317162923-208ce5212288
 	github.com/wabbas-morpheus/morpheus-fling/rabbitIng v0.0.0-00010101000000-000000000000
 	github.com/wabbas-morpheus/morpheus-fling/secParse v0.0.0-20230317162923-208ce5212288
-	github.com/wabbas-morpheus/morpheus-fling/sysGatherer v0.0.0-20230317162923-208ce5212288
 )
 
 require (
@@ -27,7 +26,6 @@ require (
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
-	github.com/zcalusic/sysinfo v0.9.5 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 )
 

@@ -33,7 +33,7 @@ var (
 	keyfilePtr       = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
 	pubPtr           = flag.String("pubkey", path.Join(defaultPath, "morpheus.pub"), "a string")
 	flingsettingsPtr = flag.String("token", "/etc/morpheus/morpheus-fling-settings.json", "a string")
-	rbfilePtr        = flag.String("rbfile", "/etc/morpheus/morpheus2.rb", "a string")
+	rbfilePtr        = flag.String("rbfile", "/etc/morpheus/morpheus.rb", "a string")
 )
 
 const helpText = `morpheus-fling [options]

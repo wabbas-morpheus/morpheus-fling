@@ -28,7 +28,7 @@ func GetMorpheusRBFile(rbfilePtr string) string {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Printf("Successfully Opened Morpheus rb file @ %s\n", rbfilePtr)
+	//fmt.Printf("Successfully Opened Morpheus rb file @ %s\n", rbfilePtr)
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer func(morpheusRBFile *os.File) {
 		err := morpheusRBFile.Close()

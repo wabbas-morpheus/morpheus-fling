@@ -168,6 +168,6 @@ func GetStorageUsed() int {
 		log.Fatal(err)
 	}
 	rtn, err := strconv.Atoi(used) //Convert to integer
-	fmt.Println("Storage used= " + used)
+	//fmt.Println("Storage used= " + used)
 	return rtn
 }

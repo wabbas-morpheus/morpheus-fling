@@ -47,7 +47,7 @@ func RabbitStats(user string, password string) []RabbitResults {
 
 	} else {
 		var r RabbitResults
-		r.Name = "API Error - Unable to retrieve rabbit stats"
+		r.Name = "API Error - Unable to retrieve rabbit stats. Make sure rabbitmq management plugin is enabled"
 		value = append(value, r)
 
 	}

@@ -43,7 +43,7 @@ func GetMorpheusRBFile(rbfilePtr string) string {
 		if len(s) >= 1 {
 			foundPassword := strings.Contains(s[0], "password")
 			if foundPassword { //Redact passwords from rb file
-				fmt.Printf("Password - %s\n", sc.Text())
+				//fmt.Printf("Password - %s\n", sc.Text())
 				rbLine = rbLine + s[0] + "= " + "'Password Redacted'\n"
 			} else {
 				rbLine = rbLine + sc.Text() + "\n"

@@ -144,7 +144,7 @@ func GetStorageUsed() int {
 	}
 
 	//Get available storage info on elasticsearch mount point
-	fmt.Printf("fPath path =%s", fPath)
+	//fmt.Printf("fPath path =%s", fPath)
 	out, err := exec.Command("df", "-h", fPath).Output()
 
 	// if there is an error with our execution

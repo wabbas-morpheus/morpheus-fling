@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 )
 
 type RabbitResults struct {
@@ -17,29 +19,48 @@ type RabbitResults struct {
 }
 
 func RabbitStats(user string, password string) []RabbitResults {
-	manager := "http://127.0.0.1:15672/api/queues/"
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", manager, nil)
-	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
-	}
-
-	req.SetBasicAuth(user, password)
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
-	}
-
-	//value := &RabbitResults{}
 	value := make([]RabbitResults, 0)
+	if RabbitManagementEnabled() {
+		manager := "http://127.0.0.1:15672/api/queues/"
+		client := &http.Client{}
+		req, err := http.NewRequest("GET", manager, nil)
+		if err != nil {
+			log.Fatalf("Error getting response: %s", err)
+		}
 
-	json.NewDecoder(resp.Body).Decode(&value)
+		req.SetBasicAuth(user, password)
+		resp, err := client.Do(req)
+		if err != nil {
+			log.Fatalf("Error getting response: %s", err)
+		}
 
-	//resultjson, err := json.MarshalIndent(value, "", " ")
-	//if err != nil {
-	//	log.Fatal("Can't encode to JSON", err)
-	//}
+		//value := &RabbitResults{}
 
-	//fmt.Fprintf(os.Stdout, "%s", resultjson)
+		json.NewDecoder(resp.Body).Decode(&value)
+
+		//resultjson, err := json.MarshalIndent(value, "", " ")
+		//if err != nil {
+		//	log.Fatal("Can't encode to JSON", err)
+		//}
+
+		//fmt.Fprintf(os.Stdout, "%s", resultjson)
+
+	} else {
+		var r RabbitResults
+		r.Name = "API Error - Unable to retrieve rabbit stats"
+		value = append(value, r)
+
+	}
 	return value
+}
+
+func RabbitManagementEnabled() bool {
+	mgmStatus := false
+	data, err := os.ReadFile("/opt/morpheus/embedded/rabbitmq/etc/enabled_plugins")
+	if err != nil {
+		log.Fatal(err)
+	}
+	mgmStatus = strings.Contains(string(data), "rabbitmq_management")
+
+	return mgmStatus
 }

@@ -26,7 +26,7 @@ var (
 	defaultPath      = "."
 	infilePtr        = flag.String("infile", "", "a string")
 	secfilePtr       = flag.String("secfile", "/etc/morpheus/morpheus-secrets.json", "a string")
-	outfilePtr       = flag.String("outfile", path.Join(".", "encrypted_logs.json"), "a string")
+	outfilePtr       = flag.String("outfile", path.Join(defaultPath, "encrypted_logs.json"), "a string")
 	uLimit           = flag.Int64("ulimit", 1024, "an integer")
 	logfilePtr       = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	bundlerPtr       = flag.String("bundler", path.Join(defaultPath, ""), "a string")
@@ -43,20 +43,15 @@ Options:
 -outfile    The destination directory of the generated package, "output.txt" by default.
 -ulimit     Ulimit of the system, defaults to 1024.
 -logfile    Logfile to add to the bundle.  Defaults to "/var/log/morpheus/morpheus-ui/current".
--bundler    Path and file to bundle into.  Defaults to "/tmp/bundler.zip".
+-bundler    Path and file to bundle into.  Defaults to "./bundler.zip".
 -keyfile    Path and file to put the public key encrypted AES-GCM key into.  Defaults to "/tmp/bundlerkey.enc"
--pubfile    Path and file for the public key used for encrypting the AES-GCM key.  Defaults to "/tmp/morpheus.pub"
+-pubfile    Path and file for the public key used for encrypting the AES-GCM key.  Defaults to "./morpheus.pub"
 
 -help    Prints this text.
+
 Examples:
-Generates a bundle with port scans, system stats, elasticsearch results and morpheus logs
-   $ ./morpheus-fling -infile="/home/slimshady/network.txt"
-
-Generates a bundle with no portscans in it at /tmp/bundler.zip
+Generates a bundle file with all logs files at current directory 
    $ ./morpheus-fling
-
-Specify current directory for bundler and keyfile path
-   $ go run morpheus_fling.go -bundler bundler.zip -keyfile bundlerkey.enc
 `
 
 type Results struct {

@@ -1,8 +1,6 @@
 #!/bin/bash
 rm -rf ./bin
-env GOOS=darwin GOARCH=arm64 go build -o ./bin/morpheus-fling-osx
-env GOOS=windows GOARCH=amd64 go build -o ./bin/morpheus-fling-windows
-env GOOS=linux GOARCH=amd64 go build -o ./bin/morpheus-fling-linux
+env GOOS=linux GOARCH=amd64 go build -o ./bin/morpheus-fling
 cd ./fling-decryptor/
 rm -rf ./bin
 env GOOS=darwin GOARCH=arm64 go build -o ./bin/fling-decryptor-osx

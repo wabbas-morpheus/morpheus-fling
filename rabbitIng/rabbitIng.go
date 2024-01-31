@@ -21,7 +21,7 @@ type RabbitResults struct {
 
 func RabbitStats(user string, password string, rbfilePtr string) []RabbitResults {
 	value := make([]RabbitResults, 0)
-	if RabbitManagementEnabled() && rbParse.ExternalRabbit(rbfilePtr) {
+	if RabbitManagementEnabled() && !rbParse.ExternalRabbit(rbfilePtr) {
 		manager := "http://127.0.0.1:15672/api/queues/"
 		client := &http.Client{}
 		req, err := http.NewRequest("GET", manager, nil)

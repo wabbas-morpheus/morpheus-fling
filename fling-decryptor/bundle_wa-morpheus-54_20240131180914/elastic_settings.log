@@ -1,0 +1,8 @@
+{
+ "MaxHeadRoom": "20GB",
+ "FloodStage": "95%",
+ "High": "90%",
+ "Low": "85%",
+ "EnableSDN": "true",
+ "FloodStageFrozen": "95%"
+}

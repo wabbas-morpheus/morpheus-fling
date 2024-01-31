@@ -1,0 +1,18 @@
+[
+ {
+  "healthCheckName": "Elasticsearch",
+  "healthCheckStatus": true,
+  "checks": [
+   {
+    "checkName": "Cluster status",
+    "checkStatus": true,
+    "checkInfo": "Cluster is healthy"
+   },
+   {
+    "checkName": "Watermark",
+    "checkStatus": true,
+    "checkInfo": "Watermark threshold has not been reached"
+   }
+  ]
+ }
+]

@@ -25,6 +25,7 @@ require (
 	github.com/nwaples/rardecode v1.1.3 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
+	github.com/wabbas-morpheus/morpheus-fling/rbParse v0.0.0-00010101000000-000000000000 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 )
@@ -38,3 +39,5 @@ replace github.com/wabbas-morpheus/morpheus-fling/portScanner => ./portScanner
 replace github.com/wabbas-morpheus/morpheus-fling/secParse => ./secParse
 
 //replace github.com/wabbas-morpheus/morpheus-fling/sysGatherer => ./sysGatherer
+
+replace github.com/wabbas-morpheus/morpheus-fling/rbParse => ./rbParse

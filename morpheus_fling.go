@@ -6,9 +6,9 @@ import (
 	"fmt"
 	elasticing "github.com/wabbas-morpheus/morpheus-fling/elasticIng"
 	rabbiting "github.com/wabbas-morpheus/morpheus-fling/rabbitIng"
+	"github.com/wabbas-morpheus/morpheus-fling/rbParse"
 	secparse "github.com/wabbas-morpheus/morpheus-fling/secParse"
 	"log"
-	"morpheus-fling/rbParse"
 	"os"
 	"path"
 	"time"
@@ -162,7 +162,7 @@ func main() {
 	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
 	healthChecks := healthCheck.CheckHealth(*flingsettingsPtr)
 
-	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword)
+	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword, *rbfilePtr)
 
 	morpheus, err := os.ReadFile(*logfilePtr)
 	if err != nil {

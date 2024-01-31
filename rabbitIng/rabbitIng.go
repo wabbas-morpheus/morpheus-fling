@@ -2,6 +2,7 @@ package rabbiting
 
 import (
 	"encoding/json"
+	"github.com/wabbas-morpheus/morpheus-fling/rbParse"
 	"log"
 	"net/http"
 	"os"
@@ -18,9 +19,9 @@ type RabbitResults struct {
 	Consumers int    `json:consumer`
 }
 
-func RabbitStats(user string, password string) []RabbitResults {
+func RabbitStats(user string, password string, rbfilePtr string) []RabbitResults {
 	value := make([]RabbitResults, 0)
-	if RabbitManagementEnabled() {
+	if RabbitManagementEnabled() && rbParse.ExternalRabbit(rbfilePtr) {
 		manager := "http://127.0.0.1:15672/api/queues/"
 		client := &http.Client{}
 		req, err := http.NewRequest("GET", manager, nil)
@@ -47,7 +48,7 @@ func RabbitStats(user string, password string) []RabbitResults {
 
 	} else {
 		var r RabbitResults
-		r.Name = "API Error - Unable to retrieve rabbit stats. Make sure rabbitmq management plugin is enabled."
+		r.Name = "API Error - Unable to retrieve rabbit stats. Make sure rabbitmq management plugin is enabled. Please note external rabbit nodes currently not supported"
 		value = append(value, r)
 
 	}

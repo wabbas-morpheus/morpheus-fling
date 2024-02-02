@@ -173,6 +173,10 @@ func ElasticIndices(rbfilePtr string) []Esindices {
 		}
 		wg.Wait()
 
+	} else {
+		var e Esindices
+		e.Name = "Unable to get elastic indices. Please note external that elastic nodes currently not supported"
+		indexSlice = append(indexSlice, e)
 	}
 
 	return indexSlice

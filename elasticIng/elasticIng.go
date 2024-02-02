@@ -175,7 +175,7 @@ func ElasticIndices(rbfilePtr string) []Esindices {
 
 	} else {
 		var e Esindices
-		e.Status = "Unable to get elastic indices. Please note external that elastic nodes currently not supported"
+		e.Status = "Unable to get elastic indices. Please note that this morpheus fling currently doesn't support external Elastic nodes."
 		indexSlice = append(indexSlice, e)
 	}
 

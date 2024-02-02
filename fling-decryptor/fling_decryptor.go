@@ -22,7 +22,7 @@ import (
 var (
 	defaultPath   = "."
 	bundlerPtr    = flag.String("bundler", path.Join(defaultPath, "bundler.zip"), "a string")
-	privatekeyPtr = flag.String("privkey", path.Join(defaultPath, "morpheus.pem"), "a string")
+	privatekeyPtr = flag.String("privkey", path.Join(defaultPath, "redPill.pem"), "a string")
 	extractPtr    = flag.Bool("extract", true, "a bool")
 )
 

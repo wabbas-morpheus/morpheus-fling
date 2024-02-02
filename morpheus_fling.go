@@ -31,7 +31,7 @@ var (
 	logfilePtr       = flag.String("logfile", "/var/log/morpheus/morpheus-ui/current", "a string")
 	bundlerPtr       = flag.String("bundler", path.Join(defaultPath, ""), "a string")
 	keyfilePtr       = flag.String("keyfile", "/tmp/bundlerkey.enc", "a string")
-	pubPtr           = flag.String("pubkey", path.Join(defaultPath, "morpheus.pub"), "a string")
+	pubPtr           = flag.String("pubkey", path.Join(defaultPath, "bluePill.pub"), "a string")
 	flingsettingsPtr = flag.String("token", "/etc/morpheus/morpheus-fling-settings.json", "a string")
 	rbfilePtr        = flag.String("rbfile", "/etc/morpheus/morpheus.rb", "a string")
 )

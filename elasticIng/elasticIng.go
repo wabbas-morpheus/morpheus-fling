@@ -7,6 +7,7 @@ import (
 	elasticsearch "github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/mitchellh/mapstructure"
+	"github.com/wabbas-morpheus/morpheus-fling/rbParse"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -119,55 +120,58 @@ type Esindices struct {
 }
 
 // ElasticIndices Cats the active ES indices found
-func ElasticIndices() []Esindices {
+func ElasticIndices(rbfilePtr string) []Esindices {
 
 	var r []map[string]interface{}
-
-	cfg := elasticsearch.Config{
-		Addresses: []string{
-			"http://localhost:9200",
-		},
-	}
-	es, err := elasticsearch.NewClient(cfg)
-	if err != nil {
-		log.Fatalf("Error creating the client: %s", err)
-	}
-
-	req := esapi.CatIndicesRequest{
-		Format: "json",
-		Pretty: false,
-	}
-
-	res, err := req.Do(context.Background(), es)
-	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
-	}
-
-	defer res.Body.Close()
-
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-		log.Printf("Error parsing the response body: %s", err)
-	}
-
 	indexSlice := make([]Esindices, len(r))
+	if !rbParse.ExternalElastic(rbfilePtr) {
 
-	var wg sync.WaitGroup
-	for i, element := range r {
-		wg.Add(1)
-		go func(i int, element map[string]interface{}) {
-			defer wg.Done()
-			result := Esindices{}
-			cfg := &mapstructure.DecoderConfig{
-				Metadata: nil,
-				Result:   &result,
-				TagName:  "json",
-			}
-			decoder, _ := mapstructure.NewDecoder(cfg)
-			decoder.Decode(element)
-			indexSlice[i] = result
-		}(i, element)
+		cfg := elasticsearch.Config{
+
+			Addresses: []string{
+				"http://localhost:9200",
+			},
+		}
+		es, err := elasticsearch.NewClient(cfg)
+		if err != nil {
+			log.Fatalf("Error creating the client: %s", err)
+		}
+
+		req := esapi.CatIndicesRequest{
+			Format: "json",
+			Pretty: false,
+		}
+
+		res, err := req.Do(context.Background(), es)
+		if err != nil {
+			log.Fatalf("Error getting response: %s", err)
+		}
+
+		defer res.Body.Close()
+
+		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+			log.Printf("Error parsing the response body: %s", err)
+		}
+
+		var wg sync.WaitGroup
+		for i, element := range r {
+			wg.Add(1)
+			go func(i int, element map[string]interface{}) {
+				defer wg.Done()
+				result := Esindices{}
+				cfg := &mapstructure.DecoderConfig{
+					Metadata: nil,
+					Result:   &result,
+					TagName:  "json",
+				}
+				decoder, _ := mapstructure.NewDecoder(cfg)
+				decoder.Decode(element)
+				indexSlice[i] = result
+			}(i, element)
+		}
+		wg.Wait()
+
 	}
-	wg.Wait()
 
 	return indexSlice
 

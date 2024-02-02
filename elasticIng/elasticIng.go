@@ -123,7 +123,7 @@ type Esindices struct {
 func ElasticIndices(rbfilePtr string) []Esindices {
 
 	var r []map[string]interface{}
-	indexSlice := make([]Esindices, len(r))
+	var indexSlice []Esindices
 	if !rbParse.ExternalElastic(rbfilePtr) {
 
 		cfg := elasticsearch.Config{
@@ -152,6 +152,8 @@ func ElasticIndices(rbfilePtr string) []Esindices {
 		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 			log.Printf("Error parsing the response body: %s", err)
 		}
+
+		indexSlice = make([]Esindices, len(r))
 
 		var wg sync.WaitGroup
 		for i, element := range r {

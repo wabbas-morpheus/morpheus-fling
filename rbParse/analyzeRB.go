@@ -1,6 +1,7 @@
 package rbParse
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -73,7 +74,7 @@ func ExternalElastic(rbPtr string) bool {
 		//fmt.Printf("setting = %s value = %s\n", k, v)
 		if k == "elasticsearch[enable]" && strings.ToLower(v) == "false" {
 			externalElastic = true
-			//fmt.Println("Found setting")
+			fmt.Println("Found External Elastic")
 			break
 		}
 	}

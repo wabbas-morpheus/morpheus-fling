@@ -8,7 +8,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/mitchellh/mapstructure"
 	"github.com/wabbas-morpheus/morpheus-fling/rbParse"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -192,14 +192,17 @@ func ElasticWatermarkSettings() *ESWaterMarkSettings {
 		os.Exit(1)
 	}
 
-	responseData, err := ioutil.ReadAll(response.Body)
+	responseData, err := io.ReadAll(response.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var elastic_settings Essettings
 
-	json.Unmarshal(responseData, &elastic_settings)
+	err = json.Unmarshal(responseData, &elastic_settings)
+	if err != nil {
+		panic(err)
+	}
 
 	//fmt.Println(string(responseData))
 

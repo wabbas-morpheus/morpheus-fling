@@ -74,7 +74,7 @@ func ParseRb(rbfilePtr string) map[string]string {
 	for sc.Scan() {
 
 		rbLine := cleanRBLine(sc.Text()) //Remove unwanted characters from rb line
-		var firstChar string = ""
+		firstChar := ""
 		if rbLine != "" {
 			firstChar = string(getChar(rbLine, 0))
 			if firstChar != "#" { //skip comment line

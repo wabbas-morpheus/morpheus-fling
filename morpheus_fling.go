@@ -159,7 +159,7 @@ func main() {
 	// Gather elasticsearch health and indices into structs for results
 	esHealth := elasticing.ElasticHealth()
 	esIndices := elasticing.ElasticIndices(*rbfilePtr)
-	esWaterMarkSettings := elasticing.ElasticWatermarkSettings(*rbfilePtr)
+	esWaterMarkSettings := elasticing.ElasticWatermarkSettings()
 	healthChecks := healthCheck.CheckHealth(*flingsettingsPtr)
 
 	rabbitStuff := rabbiting.RabbitStats("morpheus", rmqpassword, *rbfilePtr)

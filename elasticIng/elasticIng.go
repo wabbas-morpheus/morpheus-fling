@@ -183,44 +183,39 @@ func ElasticIndices(rbfilePtr string) []Esindices {
 
 }
 
-func ElasticWatermarkSettings(rbfilePtr string) *ESWaterMarkSettings {
+func ElasticWatermarkSettings() *ESWaterMarkSettings {
 	wmSettings := new(ESWaterMarkSettings)
-	if !rbParse.ExternalElastic(rbfilePtr) {
-		response, err := http.Get("http://localhost:9200/_cluster/settings?pretty&include_defaults")
+	response, err := http.Get("http://localhost:9200/_cluster/settings?pretty&include_defaults")
 
-		if err != nil {
-			fmt.Print(err.Error())
-			os.Exit(1)
-		}
-
-		responseData, err := io.ReadAll(response.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		var elastic_settings Essettings
-
-		err = json.Unmarshal(responseData, &elastic_settings)
-		if err != nil {
-			panic(err)
-		}
-
-		//fmt.Println(string(responseData))
-
-		wmSettings.MaxHeadRoom = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.MaxHeadRoom
-		wmSettings.FloodStage = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage
-		wmSettings.High = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.High
-		wmSettings.Low = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.Low
-		wmSettings.EnableSDN = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.EnableSDN
-		wmSettings.FloodStageFrozen = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStageFrozen
-
-		//fmt.Println("Watermark= "+elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage)
-		//fmt.Printf("struct: %+v\n", elastic_settings)
-	} else {
-
-		wmSettings.MaxHeadRoom = "Unable to get elastic settings. Please note that morpheus fling currently doesn't support external Elastic nodes."
-
+	if err != nil {
+		fmt.Print(err.Error())
+		os.Exit(1)
 	}
+
+	responseData, err := io.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var elastic_settings Essettings
+
+	err = json.Unmarshal(responseData, &elastic_settings)
+	if err != nil {
+		panic(err)
+	}
+
+	//fmt.Println(string(responseData))
+
+	wmSettings.MaxHeadRoom = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.MaxHeadRoom
+	wmSettings.FloodStage = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage
+	wmSettings.High = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.High
+	wmSettings.Low = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.Low
+	wmSettings.EnableSDN = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.EnableSDN
+	wmSettings.FloodStageFrozen = elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStageFrozen
+
+	//fmt.Println("Watermark= "+elastic_settings.Defaults.Cluster.Routing.Allocation.Disk.Watermark.FloodStage)
+	//fmt.Printf("struct: %+v\n", elastic_settings)
+
 	return wmSettings
 }
 
